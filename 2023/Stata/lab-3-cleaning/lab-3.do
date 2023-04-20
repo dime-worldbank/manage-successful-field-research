@@ -13,4 +13,16 @@
 
 // Cleaning and combining original data with new data
 
+
+  // Save the combined household data
+  iecodebook export ///
+    using "${msfr}/lab-3-hh-clean.dta" ///
+    , [options]
+
+  // Save the combined crop data
+  iecodebook export ///
+    using "${msfr}/lab-3-crop-clean.dta" ///
+    , [options]
+
+
 // End of do-file
