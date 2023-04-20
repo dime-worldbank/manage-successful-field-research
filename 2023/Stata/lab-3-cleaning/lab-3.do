@@ -16,12 +16,12 @@
 
   // Save the combined household data
   iecodebook export ///
-    using "${msfr}/lab-3-hh-clean.dta" ///
+    using "${msfr}/lab-3-hh-clean.xlsx" ///
     , [options]
 
   // Save the combined crop data
   iecodebook export ///
-    using "${msfr}/lab-3-crop-clean.dta" ///
+    using "${msfr}/lab-3-crop-clean.xlsx" ///
     , [options]
 
 
