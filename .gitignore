@@ -53,6 +53,12 @@
 # Still ignore user file for R projects
 .Rproj.user
 
+# R xaringan presentations
+
+!/**/*.html
+!/**/*.png
+!/**/*.pptx
+
 # LaTeX
 !/**/*.tex
 !/**/*.bib
