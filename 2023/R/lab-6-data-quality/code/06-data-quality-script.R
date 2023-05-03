@@ -24,7 +24,10 @@
   library(openxlsx)
 
   ## 2. Data Import ----
-
+  
+# Currently set up using a personal .Rproj file in the folder: /Github/manage-successful-field-research/2023/R/.
+# Will need to be standardized/have users create their own or provide the R project in the .zip folder.
+  
   survey_raw <- read_csv(
       here("data", "LWH_FUP2_raw_data.csv"), na = ""
   )
@@ -254,7 +257,7 @@
           num_surveys = n()
       ) %>%
       left_join(
-          admin_data %>% select(province:village, num_to_survey) # To get the expected number of survey by village
+          admin_raw %>% select(province:village, num_to_survey) # To get the expected number of survey by village
       ) %>%
       mutate(
           progress = paste0(round(num_surveys / num_to_survey, 3) * 100, "%")
