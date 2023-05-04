@@ -1,7 +1,7 @@
 ---
 title: "Session 1 - Introduction to statistical programming and reproducibility"
 subtitle: "R labs - Manage Successful Field Research"
-author: "Luis Eduardo San Martin"
+author: "Galileu Kim, Luis Eduardo San Martin"
 date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2023"
 output:
   xaringan::moon_reader:
@@ -80,6 +80,26 @@ name: about-this-training
 
 # About the R lab sessions of MSFR
 
+## Development research
+
+```{r echo = FALSE, out.width="40%"}
+knitr::include_graphics("img/session1/data-work-dev-research.png")
+```
+
+---
+
+# About the R lab sessions of MSFR
+
+## These labs
+
+```{r echo = FALSE, out.width="65%"}
+knitr::include_graphics("img/session1/data-work-labs.png")
+```
+
+---
+
+# About the R lab sessions of MSFR
+
 ## Learning objectives
 
 By the end of the lab sessions, you will know:
@@ -106,16 +126,6 @@ name: about-this-training
 # Statistical programming
 
 <html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
-
----
-
-# Statistical programming
-
-## Development research
-
-```{r echo = FALSE, out.width="40%"}
-knitr::include_graphics("img/session1/data-work-dev-research.png")
-```
 
 ---
 
@@ -163,24 +173,80 @@ knitr::include_graphics("img/session1/data-work-with-instructions.png")
 
 - You can think of statistical programming as writing a recipe
 
-```{r echo = FALSE, out.width="75%"}
+```{r echo = FALSE, out.width="68%"}
 knitr::include_graphics("img/session1/data-work-and-cooking.png")
+```
+
+- From now on, we're going to refer to these instructions for data processes as **code**
+
+---
+
+class: inverse, center, middle
+name: about-this-training
+
+# Reproducibility
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Reproducibility
+
+What if this happens?
+
+```{r echo = FALSE, out.width="75%"}
+knitr::include_graphics("img/session1/data-work-reproducibility.png")
 ```
 
 ---
 
-class: inverse, center, middle
-name: about-this-training
-
 # Reproducibility
 
-<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+```{r echo = FALSE, out.width="70%"}
+knitr::include_graphics("img/session1/retracted-study.png")
+```
 
 ---
 
 # Reproducibility
 
-What if your instructions (code) are not clear?
+In science, the formal definition of reproducibility was provided by [Bollen et al. (2015)](https://www.nsf.gov/sbe/AC_Materials/SBE_Robust_and_Reliable_Research_Report.pdf):
+
+*the ability […] to duplicate the results of a prior study using the same materials and procedures as were used by the original investigator*
+
+this translates to data work as:
+
+ **<font size="7">The ability to reproduce outputs using the same code and data inputs.</font>**
+
+This is also usually referred to as *computational reproducibility*.
+
+---
+
+# Reproducibility
+
+This may seem like a low bar, but:
+
+```{r echo = FALSE, out.width="40%"}
+knitr::include_graphics("img/session1/reproducibility-numbers.png")
+```
+
+[from Gertler, Galiani, Romero (2014)](https://www.nature.com/articles/d41586-018-02108-9)
+
+---
+
+# Reproducibility
+
+Reproducibility can fail because of many reasons:
+
+- Lack of inputs or code
+
+- Lack of clarity on how to execute (run) code
+
+- Code mistakes that inherently lead to unstable results (like the sorting example)
+
+- Differences in versions of software, programming languages, or functions
+
+But fear not! one of the learning objectives of these labs is to learn how to write reproducible R code.
 
 ---
 
@@ -197,15 +263,19 @@ name: about-this-training
 
 ## How to write R code?
 
-- The rest of this session focuses on the basics of writing R code
+The rest of this session focuses on the basics of writing R code...
+
+```{r echo = FALSE, out.width="50%"}
+knitr::include_graphics("img/session1/data-work-basis.png")
+```
+
+---
+
+# Writing R code
+
+## How to write R code?
 
 - We'll use RStudio to write R code in this training
-
----
-
-# Writing R code
-
-## How to write R code?
 
 - Now open RStudio in your computer
 
@@ -491,7 +561,7 @@ Knowing the data you use is very important. For the lab sessions, `admin_data` i
 - `Village` is the village name
 - `HH_Count` is the number of households in the village
 
-```{r echo = FALSE, out.width="60%"}
+```{r echo = FALSE, out.width="50%"}
 knitr::include_graphics("img/session1/data-viewer.png")
 ```
 
@@ -767,7 +837,212 @@ name: about-this-training
 
 # File paths
 
-ADD EXERCISE USING HERE AND READ CSV
+File paths are the location of a file or folder in your computer. For example:
+
+```{r eval=FALSE}
+C:/WBG/Repos/manage-successful-field-research/2023/R/Presentations/1-intro.Rmd
+```
+
+is the location of this presentation file in my computer.
+
+```{r echo = FALSE, out.width="40%"}
+knitr::include_graphics("img/session1/file-path-session1.png")
+```
+
+---
+
+# File paths
+
+- File paths are important because they define the route from which your computer reads input data or exports outputs
+
+- Remember when you manually loaded `admin_data.csv`? you were using a file path implicitly. This is how the command for loading the data was applied in my computer:
+
+```{r eval=FALSE}
+admin_data <- read.csv("C:/Users/wb532468/Downloads/admin_data.csv")
+```
+
+- This will look different for your computer because the path to your `Downloads` folder is not going to be the same
+
+---
+
+# File paths
+
+## Relative and absolute file paths
+
+- Absolute file paths define a location starting from a disk in Windows (`C:/`) or the folder `/Users/` in Mac.
+
+  + For example: `C:/Users/wb532468/Downloads/admin_data.csv`
+
+- Relative file paths define the location of a file relative to an "anchor" location.
+
+  + For example: `wb532468/Downloads/admin_data.csv` is the relative path of `admin_data.csv` with respect of `C:/Users`
+
+---
+
+# File paths
+
+## Relative and absolute file paths
+
+- You can use both in R
+
+- Relative file paths will work with respect of the current working directory where R is located. You can check it with the function `getwd()`
+
+```{r}
+getwd()
+```
+
+- In Windows, the default working directory when starting R is the Documents folder
+
+---
+
+# File paths
+
+## Relative and absolute file paths
+
+- The current working directory will always be the "anchor" for relative paths in R
+
+- You can change it with the function `setwd()`, as in:
+
+```{r eval=FALSE}
+setwd("C:/path/that/only/exists/in/my/computer")
+```
+
+- However, we absolutely recommend not to do it
+
+- Why? **Because having code that sets a working directory with a path that only exists in your computer will break reproducibility**
+
+---
+
+# File paths
+
+## RStudio projects and `here`
+
+- Instead, you should use RStudio projects and the library `here`
+
+- RStudio projects automatically sets the working directory to a "project" folder, so you can use it as anchor to work with relative paths that will work for everyone else that uses the same folder structure
+
+- This is crucial because it allows smooth interoperability between different computers where the exact path to the project root directory differs
+
+- This will become clearer with next two exercises
+
+---
+
+# File paths
+
+Save your current script by clicking in the floppy disk icon **before starting this exercise**.
+
+## Exercise 10
+
+1. Create a folder named `msfr-r-labs` in your preferred location in your computer
+
+1. Go to https://osf.io/XXXXX and download the file in: `DataWork.zip`
+
+1. Unzip `DataWork.zip` in the folder `msfr-r-labs`
+
+1. On RStudio, select `File` > `New Project...`
+
+1. Select `Existing Directory`
+
+1. Browse to the location of `msfr-r-labs` and select `Create Project`
+
+1. RStudio will restart after this
+
+---
+
+# File paths
+
+## RStudio projects
+
+```{r echo = FALSE, out.width="90%"}
+knitr::include_graphics("img/session1/exercise10.png")
+```
+
+---
+
+# File paths
+
+## RStudio projects
+
+```{r echo = FALSE, out.width="70%"}
+knitr::include_graphics("img/session1/exercise10a.png")
+```
+
+---
+
+# File paths
+
+## Using `here`
+
+- `here` locates files relative to your project root
+
+- It uses the root project directory to build paths to files easily
+
+- It allows for interoperability between different computers where the absolute path to the same file is not the same
+
+---
+
+# File paths
+
+## Using `here`
+
+- Now you'll be able to use `here()` to point the location of every file relative to your project root
+
+  + For example, to load a `csv` file located in: `C:/WBG/project-root-name/data/raw/data-file.csv`, you should use:
+  
+```{r, eval=FALSE}
+path <- here("data", "raw", "data-file.csv")
+df <- read.csv(path)
+```
+
+- __Notes:__
+
+  + Your project root is the directory that contains the `.Rproj` file
+  + The result of `here()` is an absolute path that points to a file or folder location in your computer
+
+---
+
+# File paths
+
+## Exercise 11
+
+1. Start a new script with `File` > `New File` > `R Script` 
+
+1. Create an object called `path` that will be a file path to `DataWork/data/raw/admin_data.dta`. Use here for this, as in `here("DataWork", "data", "raw", "admin_data.dta)`
+
+1. Use `read_stata()` to load the file and assign it to an object with `<-`. The argument of `read_stata()` should be the object `path`.
+
+Some notes:
+
++ `read_stata()` is a function from the library `haven`. You can only use it after loading `haven` with `library(haven)` (we did this already in exercise 9)
+  
++ The same happens with `here()`, which is a function from the library `here`. You can only use `here()` after having run `library(here)` (exercise 9)
+
++ Remember to assign the dataframe you're reading to an object. You can call it `admin_data` as we did before
+
+---
+
+# File paths
+
+```{r, eval=FALSE}
+path <- here("DataWork", "data", "raw", "admin_data.dta")
+admin_data <- read_stata(path)
+```
+
+or you could have used:
+
+```{r, eval=FALSE}
+admin_data <- read_stata(here("DataWork", "data", "raw", "admin_data.dta"))
+```
+
+---
+
+# File paths
+
+If you did the exercise correctly, you should see `admin_data` listed in the environment panel
+
+```{r echo = FALSE, out.width="70%"}
+knitr::include_graphics("img/session1/exercise11.png")
+```
 
 ---
 
