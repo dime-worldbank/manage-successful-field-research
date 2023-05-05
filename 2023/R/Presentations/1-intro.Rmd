@@ -1051,3 +1051,11 @@ class: inverse, center, middle
 # Thanks! // ¡Gracias!
 
 <html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+exclude: true
+
+```{R, include = FALSE, eval = FALSE}
+pagedown::chrome_print("1-intro.html", output = "1-intro.pdf")
+```
