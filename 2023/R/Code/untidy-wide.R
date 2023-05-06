@@ -23,22 +23,20 @@ df2 <- df1 %>%
          HHID = ID_05,
          income1 = INC_01,
          income2 = INC_02) %>%
-  select(district,
-         sector,
-         cell,
+  select(sector,
          village, 
          HHID,
          starts_with("inc"),
          starts_with("days"),
          starts_with("source")) %>%
-  distinct(district, sector, cell, village, HHID, .keep_all = TRUE)
+  distinct(sector, village, HHID, .keep_all = TRUE)
 
 ## Adding duplicates of two entire rows
 dups <- df2 %>%
   slice(343, 1111)
 df3 <- df2 %>%
   bind_rows(dups) %>%
-  arrange(district, sector, cell, village, HHID)
+  arrange(sector, village, HHID)
 
 # 3. Exporting result ----
 output <- here("Data", "DataWork", "data", "raw", "LWH_baseline_wide.csv")

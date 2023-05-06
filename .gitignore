@@ -114,3 +114,7 @@ token.*
 tokens.*
 token/
 tokens/
+
+#######################
+# Files for R markdown presentations
+!2023/R/**/*.png

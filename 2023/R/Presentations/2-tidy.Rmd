@@ -73,14 +73,9 @@ name: about-this-session
 
 # About this session
 
-.pull-left[
-```{r echo = FALSE, out.width="99%"}
+```{r echo = FALSE, out.width="45%"}
 knitr::include_graphics("img/session2/intro2.png")
 ```
-]
-.pull-right[
-We'll also cover piping, part of the basics of R that we couldn't do in the first session.
-]
 
 ---
 
@@ -90,240 +85,7 @@ We'll also cover piping, part of the basics of R that we couldn't do in the firs
 
 1. What is the ideal format to handle data in statistical programming?
 
-1. How can I get data into this format?
-
-1. Why is this format ideal?
-
----
-
-class: inverse, center, middle
-name: about-this-session
-
-# Piping
-
-<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
-
----
-
-# Piping
-
-Before diving into the concept of tidy data, there is one more aspect of the basics of R data work that you need to learn
-
-## Functions inside functions
-
-- R allows you to use functions inside functions. For example, this will show the summary of the logarithm of the dataframe `admin_data`
-
-```{r eval=FALSE}
-summary(log(admin_data))
-```
-
-- In this case, R is taking the *output* (result) of `log(admin_data)` as the *input* of `summary()`
-
-- The name of this programming technique is **function inception** or **metaprogramming**
-
----
-
-# Piping
-
-## Functions inside functions
-
-- This is convenient because it saves us from having to store intermediate results into objects frequently, keeping our R environment cleaner
-
-- However, it also has the big downside of making code convoluted and unclear, as in the example below
-
-```{r eval=FALSE}
-round(mean(log(admin_data)), 2)
-```
-
-- Piping helps keeping code clear in cases like this
-
----
-
-# Piping
-
-- The pipe operator is this: `%>%`
-
-- Pipes are used between objects or the results of functions, as in: `log(admin_data) %>% summary()`
-
-- The meaning of the operator is:
-
-<font size="6">Take the object or output of the function at the left and pass it as the first argument of the function at the right</font>
-
-In short:
-
-- `x %>% f()` is the same as `f(x)`
-
-- `x %>% f() %>% g()` is the same as `g(f(x))`
-
----
-
-# Piping
-
-- Hence, these are equivalent:
-
-```{r eval=FALSE}
-# The long way, with intermediate objects:
-log_admin <- log(admin_data)
-summary(log_admin)
-
-# Shorter, but code is less clear:
-summary(log(admin_data))
-
-# With pipes, clearer and with no intermediate objects:
-log(admin_data) %>% summary()
-
-# Note that you can also concatenate pipes and include line breaks:
-admin_data %>%
-  log() %>%
-  summary()
-```
-
-- Note that pipes are part of the libraries included in the tidyverse. When you load `dplyr`, the pipes become available for use
-
----
-
-# Piping
-
-## Exercise 1: Load data with pipes
-
-We'll now load the data we'll use in the next exercise. Make sure to have finished the RStudio project exercise of session 1 and have the package  `here` loaded before trying this.
-
-- Use the functions `here()` and `read.csv()` with pipes between them (`%>%`) to read the file `DataWork/data/raw/admin_data_long.csv`. Name the dataframe `admin_data_long`. Some hints:
-
-  + **Very important:** remember to save the data read into a dataframe object with `<-`, otherwise R will only print the dataframe and it will not be stored in the environment
-  
-  + Remember that the arguments of here are the names of the folders in the path to the file, with quotes (`" "`). The last argument is the file name with the file extension, as in: `here("DataWork", "data", "raw", "admin_data_long.csv")`
-
----
-
-# Piping
-
-```{r, eval=FALSE}
-# Adding line breaks for code clarity:
-admin_data_long <- 
-  here("DataWork", "data", "raw", "admin_data_long.csv") %>%
-  read.csv()
-```
-
-```{r eval=TRUE, echo=FALSE}
-# Adding line breaks for code clarity:
-admin_data_long <- 
-  here("Data", "DataWork", "data", "raw", "admin_data_long.csv") %>%
-  read.csv()
-```
-
-```{r echo = FALSE, out.width="70%"}
-knitr::include_graphics("img/session2/env-admin-data-long.png")
-```
-
----
-
-# Piping
-
-- This was the last of R basics!
-
-- Now we'll continue the session with tidy data
-
----
-
-class: inverse, center, middle
-name: about-this-session
-
-# Data formats
-
-<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
-
----
-
-# Data formats
-
-- Data can be acquired in multiple formats, bit in development research it is most commonly acquired as one or more **data tables**
-
-<font size="7"><b>Data table:</b> A format where data is organized into rows and columns</font>
-
-- It's also called *tabular data* or *rectangular data*
-
----
-
-# Data formats
-
-```{r echo = FALSE, out.width="90%"}
-knitr::include_graphics("img/session2/tabular-data.png")
-```
-
----
-
-# Data formats
-
-## Non-tabular data
-
-.pull-left[
-
-- Some examples of non-tabular data are images, text, and geospatial data
-
-- Everything we cover today doesn't apply to these other formats
-
-]
-.pull-right[
-```{r echo = FALSE, out.width="70%"}
-knitr::include_graphics("img/session2/non-tabular-data.png")
-```
-]
-
----
-
-# Data formats
-
-## Tabular data
-
-.pull-left[
-- Data tables can be organized in multiple ways
-
-- Not all of them result in easy to handle datasets
-]
-.pull-right[
-
-```{r echo = FALSE, out.width="95%"}
-knitr::include_graphics("img/session2/admin-data-long.png")
-```
-
-<p style="text-align: center;">Example: Data stacked by rows</p>
-]
-
----
-
-# Data formats
-
-## Tabular data
-
-- Data tables can be organized in multiple ways
-
-- Not all of them result in easy to handle datasets
-
-```{r echo = FALSE, out.width="70%"}
-knitr::include_graphics("img/session2/hh-data-wide.png")
-```
-
-<p style="text-align: center;">Example: Data spread over columns</p>
-
----
-
-# Data formats
-
-## Tabular data
-
-.pull-left[
-- Fortunately, a vast literature of database management has identified the format that makes interacting with the data as easy as it can be
-
-- In database management this is called **normalization**
-
-- When applied to statistics, we call data in this ideal format **tidy**
-]
-.pull-right[
-```{r echo = FALSE, out.width="95%"}
-knitr::include_graphics("img/session2/tidydata.png")
-```
-]
+1. How can I get data into this format using R?
 
 ---
 
@@ -333,6 +95,30 @@ name: about-this-session
 # Tidy data
 
 <html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Tidy data
+
+## Data tables
+
+- Data can be acquired in multiple formats, bit in development research it is most commonly acquired as one or more **data tables**
+
+.exercise[
+<font size="6"><b>Data table:</b><br>A data format where data is organized into rows and columns</br></font>
+]
+
+- It's also called *tabular data* or *rectangular data*
+
+---
+
+# Tidy data
+
+## Data tables
+
+```{r echo = FALSE, out.width="90%"}
+knitr::include_graphics("img/session2/tabular-data.png")
+```
 
 ---
 
@@ -377,12 +163,15 @@ In some statistical software, columns are usually called *variables* and rows ar
 ## Definitions in practice
 
 .pull-left[
-- What is the unit of observation represented in this table?
+- Unit of observation: **village**
 
-- What are the attributes measured in this table?
+- Attributes measured (variables):
+  + Province
+  + District
+  + Number of households
+  + Population
 
-- At what level are these attributes observed?
-
+- Level of the attributes: **village**
 
 ]
 .pull-right[
@@ -415,7 +204,7 @@ knitr::include_graphics("img/session2/admin-data-long.png")
 .pull-left[
 - <span style="color: green;">All variables have the **same unit of observation** (country)</span>
 
-- <span style="color: red;">There are **multiple variables** represented in a **single column**</span>
+- <span style="color: red;">There are **multiple variables** represented in a **single column** (number of households and population</span>
 ]
 .pull-right[
 ```{r echo = FALSE, out.width="97%"}
@@ -434,7 +223,7 @@ knitr::include_graphics("img/session2/admin-data-long-value-highlight.png")
 
 - <span style="color: red;">There are **multiple variables** represented in a **single column**</span>
 
-- <span style="color: red;">Each observation is **separated into multiple rows**</span>
+- <span style="color: red;">Each observation (village) is **separated into multiple rows**</span>
 ]
 .pull-right[
 ```{r echo = FALSE, out.width="97%"}
@@ -468,32 +257,10 @@ knitr::include_graphics("img/session2/tidying-admin-data.png")
 - When all variables in a data table have the same unit of observation,
 **reshaping** is enough to make untidy data tidy
 
-```{r echo = FALSE, out.width="70%"}
-knitr::include_graphics("img/session2/reshape-long-to-wide.png")
-```
-
----
-
-# Tidying a long dataset
-
-- When all variables in a data table have the same unit of observation,
-reshaping is enough to make untidy data tidy
-
-```{r echo = FALSE, out.width="70%"}
-knitr::include_graphics("img/session2/reshape-long-to-wide.png")
-```
-
 - Reshaping **does not change the content of the data points** in the table
 
----
-
-# Tidying a long dataset
-
-- When all variables in a data table have the same unit of observation,
-reshaping is enough to make untidy data tidy
-
-```{r echo = FALSE, out.width="70%"}
-knitr::include_graphics("img/session2/reshape-long-to-wide.png")
+```{r echo = FALSE, out.width="75%"}
+knitr::include_graphics("img/session2/tidying-admin-data.png")
 ```
 
 .exercise[
@@ -525,72 +292,77 @@ knitr::include_graphics("img/session2/tidyr.png")
 
 ## `tidyr`
 
+.pull-left[
 - `tidyr` has multiple functions to make dataframes tidy
 
-- When dataframes have data stacked by rows, you use the function `pivot_wider()` to make it tidy
+- When dataframes have data stacked by rows (long data), we use the function `pivot_wider()` to make it tidy
+]
+.pull-right[
+```{r echo = FALSE, out.width="60%"}
+knitr::include_graphics("img/session2/tidyr.png")
+```
+]
 
-- `pivot_wider()` takes the following arguments:
+---
+
+# Tidying a long dataset
+
+## Exercise 1: Reshape a long dataframe to make it tidy
+
+.pull-left[
+- Load the dataframe with:
 
 ```{r eval=FALSE}
-tidy_df <- pivot_wider(
-  untidy_df,
-  names_from = column_with_names,
-  values_from = column_with_values
-)
+admin_data_long <- here("DataWork",
+                        "data",
+                        "raw",
+                        "admin_data_long.csv") %>%
+  read.csv()
 ```
 
-- the first argument is the input dataframe
-  
-- `names_from` is the column that contains the variable names for the units
-  
-- `values_from` is the column that contains the data points
+- Load the library `tidyr` with `library(tidyr)`
 
----
-
-# Tidying a long dataset
-
-- Tidying any dataframe requires inspecting it to know which columns will be the used for the arguments `names_from` and `values_from`
-
-- Use `View(admin_data_long)` to inspect `admin_data_long` and see how it should be reshaped
-
-```{r echo = FALSE, out.width="45%"}
-knitr::include_graphics("img/session2/admin-data-long.png")
-```
-
----
-
-# Tidying a long dataset
-
-## Exercise 2: Reshape a long dataframe to make it tidy
-
-1. Load the library `tidyr` with `library(tidyr)`
-
-2. Use `pivot_wider()` to reshape the dataframe `admin_data_long`. Recall the syntax of `pivot_wider()`:
-
-```{r eval=FALSE}
-tidy_df <- pivot_wider(
-  untidy_df,
-  names_from = column_with_names,
-  values_from = column_with_values
-)
-```
-
-Hints:
-
-- `names_from` is the column that contains the variable names
-- `values_from` is the column that contains the data points
-- Remember to save the result in a new dataframe object with `<-`
-- Try using pipes: `%>%`
-
----
-
-# Tidying a long dataset
+- Use `pivot_wider()` to reshape the dataframe `admin_data_long` and inspect the result, as in:
 
 ```{r eval=FALSE}
 admin_data_tidy <- admin_data_long %>%
-  pivot_wider(names_from = group, values_from = count)
+  pivot_wider(names_from = group,
+              values_from = count)
 View(admin_data_tidy)
 ```
+]
+.pull-right[
+```{r echo = FALSE, out.width="99%"}
+knitr::include_graphics("img/session2/admin-data-long.png")
+```
+<p style="text-align: center;">Dataframe: admin_data_long</p>
+]
+
+---
+
+# Tidying a long dataset
+
+Notice the use and arguments of `pivot_wider()`:
+
+```{r eval=FALSE}
+admin_data_tidy <- admin_data_long %>%
+  pivot_wider(names_from = group,
+              values_from = count)
+```
+
+- We're storing the result with `<-` into a new object named `admin_data_tidy`
+
+- `admin_data_long` is the input dataframe of `pivot_wider()`, passed with pipes
+
+- `names_from =` is the column that contains the variable names (group)
+
+- `values_from =` is the column that contains the data points (count)
+
+---
+
+# Tidying a long dataset
+
+The result is a tidy dataframe:
 
 ```{r echo = FALSE, out.width="48%"}
 knitr::include_graphics("img/session2/admin-data-tidy.png")
@@ -619,7 +391,7 @@ name: about-this-session
 
 ## Is this dataset tidy?
 
-```{r echo = FALSE, out.width="85%"}
+```{r echo = FALSE, out.width="75%"}
 knitr::include_graphics("img/session2/hh-data-wide.png")
 ```
 
@@ -700,7 +472,7 @@ knitr::include_graphics("img/session2/food-security-module.PNG")
 
 ## So how would this table look in a tidy format?
 
-```{r echo = FALSE, out.width="95%"}
+```{r echo = FALSE, out.width="75%"}
 knitr::include_graphics("img/session2/hh-data-wide.PNG")
 ```
 
@@ -710,7 +482,7 @@ knitr::include_graphics("img/session2/hh-data-wide.PNG")
 
 ## So how would this table look in a tidy format?
 
-```{r echo = FALSE, out.width="95%"}
+```{r echo = FALSE, out.width="85%"}
 knitr::include_graphics("img/session2/data-wide-tidy.PNG")
 ```
 
@@ -743,47 +515,27 @@ knitr::include_graphics("img/session2/tidy-files.PNG")
 There are three additional components that are crucial to successfully managing a
 set of tidy tables:
 
-1.- You should remove duplicates before tidying the dataset
-  + We'll see how to do this in the next exercise
+1. You should remove duplicates before tidying the dataset
 
----
-
-# Tidying datasets with multiple units
-
-There are three additional components that are crucial to successfully managing a
-set of tidy tables:
-
-2.- Each observation of each data table must be uniquely and fully identified by
+1. Each observation of each data table must be uniquely and fully identified by
 one or a set of ID variables
-  + Unfortunately, neither `tidyr` nor `dplyr` have a function to check if one or more variables uniquely identify observations in a dataframe. However, this can be checked with a combination of the functions `nrow()` (counts rows in a dataframe) and `dplyr`'s `n_distinct()` (counts the number of unique observations in a dataframe or a set of columns)
+
+1. You must be able to use these ID variables to link all data tables to each other if needed
+
+We'll do this in the next exercises.
 
 ---
 
 # Tidying datasets with multiple units
 
-There are three additional components that are crucial to successfully managing a
-set of tidy tables:
-
-3.- You must be able to use these ID variables to link all data tables to each other if needed
-  + We will not cover dataframe linkage in the labs with an exercise, but this can be done with `dplyr`'s functions `left_join()`, `right_join()`, `inner_join()`, and `full_join()`
-
----
-
-# Tidying datasets with multiple units
-
-## Exercise 3: Load the HH wide dataset and check for duplicates
+## Exercise 2: Load the HH wide dataset and check for duplicates
 
 1. Load the HH wide dataset into R with:  `lwh_wide <- here("DataWork", "data", "raw", "LWH_baseline_wide.csv") %>% read.csv()`
+  + Recommended: inspect it with `View(lwh_wide)`
+  
+1. Count the number of rows in the dataframe with `nrow(lwh_wide)`. Remember this number
 
-1. Inspect it with `View(lwh_wide)` (note the uppercase "V") and note which are the identifying variables
-
-1. Use the function `nrow()` on `lwh_wide` to check its number of rows. Remember this number
-
-1. Now use `lwh_wide %>% n_distinct(....)` and replace the dots with the names of identifying variables, separated by commas and inside quotes (`" "`)
-  + `n_distinct()` returns the number of unique combinations over a set of variables
-  + its arguments are the set of variables it counts distinct combinations over
-
-1. If the supposedly identifying variables are indeed identifying, the result of `n_distinct()` should be the same as the one in `nrow()`. Is it the same?
+1. Count the number of distinct observation in the dataframe with `n_distinct(lwh_wide)`. Are the two numbers the same?
 
 ---
 
@@ -797,9 +549,414 @@ lwh_wide <- here("Data", "DataWork", "data", "raw", "LWH_baseline_wide.csv") %>%
 nrow(lwh_wide)
 ```
 
+This means that there are `r nrow(lwh_wide)` observations in `lwh_wide`.
+
 ```{r}
-lwh_wide %>% n_distinct("district", "sector", "cell", "village", "HHID")
+lwh_wide %>% n_distinct()
 ```
+
+This means that there are `r lwh_wide %>% n_distinct()` unique observations in `lwh_wide`.
+
+**Since these numbers are not the same, this means that we have duplicates.** We'll remove them in the next exercise
+
+---
+
+# Tidying datasets with multiple units
+
+## Exercise 3: Remove duplicates
+
+- Remove the duplicates and save the result in a new dataframe with:
+
+```{r eval=FALSE}
+lwh_wide_dedup <- distinct(lwh_wide)
+```
+
+```{r echo=FALSE}
+lwh_wide_dedup <- distinct(lwh_wide)
+```
+
+- Now run this condition to check that the number of observations is equal to the number of unique observations in `lwh_wide`
+
+```{r eval=FALSE}
+nrow(lwh_wide_dedup) == n_distinct(lwh_wide_dedup) #note the double equal
+```
+
+If the condition returns `TRUE`, then you removed the duplicates successfully.
+
+The next step before tidying is to check if the ID variables uniquely identify the observations.
+
+---
+
+# Tidying datasets with multiple units
+
+## Exercise 4: Check the identifying variables
+
+1. Inspect the deduplicated dataframe with `View(lwh_wide_dedup)` and take note of the identifying variables.
+
+1. Count the number of rows with `nrow(lwh_wide_dedup)` and the **number of distinct combinations in the identifying variables** with :
+
+```{r eval=FALSE}
+lwh_wide_dedup %>% select(sector, village, HHID) %>% n_distinct()
+```
+
+Are the two numbers the same? if so, then the identifying variables uniquely identify the observations.
+
+Also, note the following in this code:
+
+- `select()` is a function from `dplyr`, it subsets columns from a dataframe
+
+- `n_distinct()` is now counting the number of unique combinations in the subset dataframe resulting from `select()` (as opposed to counting the unique observations in `lwh_wide_dedup`, which is what we did in exercise 3)
+
+---
+
+# Tidying datasets with multiple units
+
+- The conclusion of the previous exercise is that the identifying variables uniquely identify the observations
+
+- By the way, this could have also been checked with the following code:
+
+```{r}
+nrow(lwh_wide_dedup) == lwh_wide_dedup %>% select(sector, village, HHID) %>% n_distinct()
+```
+
+- Now our dataframe is deduplicated and we have verified that the ID variables uniquely identify the observations
+
+- We can now proceed with making the dataframe tidy
+
+---
+
+# Tidying datasets with multiple units
+
+## Exercise 5: Create a tidy household level dataframe
+
+.pull-left[
+- Create a new dataframe at the household level with `select()`
+
+  + `select()` subsets columns from a dataframe
+  + The first argument is the dataframe and all the following arguments are the column names **without quotes**
+  + Remember to save the resulting dataframe in a new object (dataframe) with `<-`
+  
+```{r eval=FALSE}
+lwh_hh <-
+  lwh_wide_dedup %>%
+  select(sector, village, HHID, income1, income2)
+```
+
+- Inspect the result with `View(lwh_hh)`
+
+]
+.pull-right[
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session2/exercise6.png")
+```
+]
+
+---
+
+# Tidying datasets with multiple units
+
+.pull-left[
+- `lwh_hh` is now the HH level dataframe
+
+- Note that **this dataframe is tidy at the HH level**
+
+- There is no further need to reshape in this case
+
+]
+.pull-right[
+```{r echo = FALSE, out.width="70%"}
+knitr::include_graphics("img/session2/hh-tidy.png")
+```
+]
+
+---
+
+# Tidying datasets with multiple units
+
+.pull-left2[
+- Tidying the food source level dataframe requires a more careful analysis
+
+- We will not only have to select the ID and food-level columns, but also reshape the result from wide to long with `pivot_longer()`, from the package `tidyr`
+]
+.pull-right2[
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session2/food-tidy-explanation.png")
+```
+]
+
+---
+
+# Tidying datasets with multiple units
+
+## Exercise 6: Create a tidy food source level dataframe
+
+.pull-left[
+Apply the following operations in concatenated pipes:
+
+- Select the ID and food source level columns
+
+- Reshape the result
+
+```{r eval=FALSE}
+lwh_food <-
+  lwh_wide_dedup %>%
+  select(sector, village, HHID,
+         days_flour, days_bread,
+         source_flour, source_bread) %>%
+  pivot_longer(cols = c(days_flour, days_bread,
+                        source_flour, source_bread),
+               names_sep = "_",
+               names_to = c(".value", "food"))
+```
+
+- Inspect the result with `View(lwh_food)`
+
+]
+
+.pull-right[
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session2/food-tidy-explanation.png")
+```
+]
+
+---
+
+# Tidying datasets with multiple units
+
+Notice the meaning of the different arguments used in `pivot_longer()`
+
+```{r, eval=FALSE}
+pivot_longer(cols = c(days_flour, days_bread,
+                      source_flour, source_bread),
+             names_sep = "_",
+             names_to = c(".value", "food"))
+```
+
+- `cols = `: the columns to reshape from the input dataframe
+  + We only include the variables at the food source level
+  + We don't include the ID variables because they're not reshaped
+- `names_sep =`: the separator to distinguish variables and observations in the names of the columns to reshape
+- `names_to =`: the names of the new columns to generate after the reshaping
+  + `"food"` indicates that a new column named "food" should be generated
+  + `".value"` indicates that the corresponding component of the column name (the part before "_") defines the name of the output column containing the values
+
+---
+
+# Tidying datasets with multiple units
+
+Now the entire dataset is tidy with the two resulting dataframes.
+
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session2/hh-tidy-explained.png")
+```
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Collapsing
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Collapsing
+
+- Tidying a dataframe sometimes involves operations different than reshaping
+
+- One if such cases is **collapsing**
+
+- Imagine you are approached with the following request:
+
+*We would like to know how many households we surveyed in each sector to have a sense of how many we might have missed in the data collection. Can you estimate these numbers?*
+
+---
+
+# Collapsing
+
+.pull-left2[
+*We would like to know how many households we surveyed in each village...*
+
+- We can use the tidy dataframe `lwh_hh` for this
+
+- We would have to:
+
+  1. Change the units of observations from household to village
+  
+  2. Count the observations for each village that are currently in `lwh_hh`
+]
+.pull-right2[
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session2/collapsing-explained.png")
+```
+]
+
+---
+
+# Collapsing
+
+.pull-left2[
+This will require **collapsing**.
+
+.exercise[
+**Collapsing:** Transformation of data table in which the unit of observation changes from a lower-level unit (household) to an aggregated unit (village)
+]
+
+]
+.pull-right2[
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session2/collapsing-explained.png")
+```
+]
+
+---
+
+# Collapsing
+
+## Exercise 7: Collapse `lwh_hh` to the village level
+
+.pull-left2[
+- Use the functions `group_by()` and `summarize()` to collapse as in the code below.
+
+```{r eval=FALSE}
+lwh_village <- lwh_hh %>%
+  group_by(sector, village) %>%
+  summarize(n_households = n())
+```
+]
+.pull-right2[
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session2/collapsing-explained.png")
+```
+]
+
+---
+
+# Collapsing
+
+Notice the functions and arguments we used to collapse:
+
+```{r eval=FALSE}
+lwh_village <- lwh_hh %>%
+  group_by(sector, village) %>%
+  summarize(n_households = n())
+```
+
+- Both `group_by()` and `summarize()` are functions from `dplyr`
+
+- `group_by()` takes as arguments the columns you collapse by (village identifiers)
+
+- `summarize()` creates aggregated indicators for the collapsed dataframe
+
+  + `n_households = n()` means that we'll create a new column named `n_households` that counts the number of observations for each value we group by (villages)
+  
+  + Other possible aggregations are `mean()`, `max()`, `min()`, `sum()`
+
+---
+
+# Collapsing
+
+.pull-left[
+- The dataframe `lwh_village` is tidy at the village level
+
+- The ID variables are `sector` and `village`
+]
+.pull-right[
+```{r echo = FALSE, out.width="65%"}
+knitr::include_graphics("img/session2/village-tidy.png")
+```
+]
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Merging
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Merging
+
+- Lastly, we're going to see how to link tidy data tables between themselves into a single data table
+
+- This operation is called **merging**
+
+.exercise[
+**Merging**: Linking two data tables by one or more common variables into a single data table
+]
+
+---
+
+# Merging
+
+```{r echo = FALSE, out.width="65%"}
+knitr::include_graphics("img/session2/merging-explained.png")
+```
+
+---
+
+# Merging
+
+## Exercise 8: Merge two dataframes
+
+1. Inspect `lwh_hh` and `lwh_village` with `View(lwh_hh)` and `View(lwh_village)` and identify the columns they have in common
+
+2. Use these columns with the function `left_join()` to merge the two dataframes, as in the code below:
+
+```{r eval=FALSE}
+lwh_hh2 <- lwh_hh %>%
+  left_join(lwh_village,
+            by = c("sector", "village"))
+```
+
+---
+
+# Merging
+
+When two tidy data tables with different units of observations merge (villages and households), the resulting data table will have the most disagregated unit (households)
+
+```{r echo = FALSE, out.width="45%"}
+knitr::include_graphics("img/session2/lwh_hh2.png")
+```
+
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Saving the results
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Saving the results
+
+## Exercise 9: Save the tidy data tables
+
+- Use the function `saveRDS()` to save all your tidy dataframes into `.Rds` files in the folder `DataWork/data/intermediate`
+
+```{r eval=FALSE}
+# Output folder
+output_folder <- here("DataWork", "data", "intermediate")
+
+# Saving
+saveRDS(admin_data_tidy,
+        here(output_folder, "admin-data.Rds"))
+saveRDS(lwh_hh,
+        here(output_folder, "LWH-households.Rds"))
+saveRDS(lwh_food,
+        here(output_folder, "LWH-food-source.Rds"))
+saveRDS(lwh_village,
+        here(output_folder, "LWH-villages.Rds"))
+```
+
+- `.Rds` is the native file extension of R for dataframes
 
 ---
 
