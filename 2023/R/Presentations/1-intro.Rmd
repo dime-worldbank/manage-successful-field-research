@@ -19,6 +19,7 @@ output:
 library(knitr)
 library(xaringanExtra)
 library(here)
+library(dplyr)
 here::i_am("Presentations/1-intro.Rmd")
 options(htmltools.dir.version = FALSE)
 opts_chunk$set(
@@ -608,13 +609,13 @@ knitr::include_graphics("img/session1/exercise5-annotated.png")
 
 ## Exercise 6: Operating with data and storing the result
 
-1- Subset the dataframe again and save the result into a new dataframe called `admin_data_kayonza`. You can use this code for that:
+- Subset the dataframe again and save the result into a new dataframe called `admin_data_kayonza`. You can use this code for that:
 
   ```{r eval=FALSE}
-  `admin_data_kayonza <- subset(admin_data, District == "KAYONZA")`
+  admin_data_kayonza <- subset(admin_data, District == "KAYONZA")
   ```
 
-2- Use `View(admin_data_kayonza)` to visualize the result (notice the uppercase "V")
+- Use `View(admin_data_kayonza)` to visualize the result (notice the uppercase "V")
 
 ---
 
@@ -794,6 +795,8 @@ Now that `haven` and `here` are installed, we only need to load them to start us
 1. Load `haven` with: `library(haven)`
 
 1. Load `here` with `library(here)`
+
+1. Load `dplyr` with `library(dplyr)`
 
   + Run this code from the new script you just opened
   + Notice that we don't use quotes in the library names this time
@@ -1042,6 +1045,130 @@ If you did the exercise correctly, you should see `admin_data` listed in the env
 
 ```{r echo = FALSE, out.width="70%"}
 knitr::include_graphics("img/session1/exercise11.png")
+```
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Piping
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Piping
+
+## Functions inside functions
+
+- R allows you to use functions inside functions. For example, this will show the summary of the logarithm of the dataframe `admin_data`
+
+```{r eval=FALSE}
+summary(log(admin_data))
+```
+
+- In this case, R is taking the *output* (result) of `log(admin_data)` as the *input* of `summary()`
+
+- The name of this programming technique is **function inception** or **metaprogramming**
+
+---
+
+# Piping
+
+## Functions inside functions
+
+- This is convenient because it saves us from having to store intermediate results into objects frequently, keeping our R environment cleaner
+
+- However, it also has the big downside of making code convoluted and unclear, as in the example below
+
+```{r eval=FALSE}
+round(mean(log(admin_data)), 2)
+```
+
+- Piping helps keeping code clear in cases like this
+
+---
+
+# Piping
+
+- The pipe operator is this: `%>%`
+
+- Pipes are used between objects or the results of functions, as in: `log(admin_data) %>% summary()`
+
+- The meaning of the operator is:
+
+<font size="6">Take the object or output of the function at the left and pass it as the first argument of the function at the right</font>
+
+In short:
+
+- `x %>% f()` is the same as `f(x)`
+
+- `x %>% f() %>% g()` is the same as `g(f(x))`
+
+---
+
+# Piping
+
+Hence, these are equivalent:
+
+```{r eval=FALSE}
+# The long way, with intermediate objects:
+log_admin <- log(admin_data)
+summary(log_admin)
+
+# Shorter, but code is less clear:
+summary(log(admin_data))
+
+# With pipes, clearer and with no intermediate objects:
+log(admin_data) %>% summary()
+
+# Note that you can also concatenate pipes and include line breaks:
+admin_data %>%
+  log() %>%
+  summary()
+```
+
+Pipes are part of the libraries included in the tidyverse. When you loaded `dplyr` in exercise 9, the pipes become available for use
+
+---
+
+# Piping
+
+## Exercise 12: Load data with pipes
+
+- Use the functions `here()` and `read.csv()` with pipes between them (`%>%`) to read the file `DataWork/data/raw/admin_data_long.csv`. Name the dataframe `admin_data_long`. Some hints:
+
+  + **Very important:** always remember to save the data read into a dataframe object with `<-`, otherwise R will only print the dataframe and it will not be stored in the environment
+  
+  + Remember that the arguments of here are the names of the folders in the path to the file, with quotes (`" "`). The last argument is the file name with the file extension, as in: `here("DataWork", "data", "raw", "admin_data_long.csv")`
+
+- The solution is this:
+
+```{r eval=FALSE}
+admin_data_long <- here("DataWork", "data", "raw", "admin_data_long.csv") %>% read.csv()
+```
+
+---
+
+# Piping
+
+```{r, eval=FALSE}
+# Adding line breaks for code clarity:
+admin_data_long <- 
+  here("DataWork", "data", "raw", "admin_data_long.csv") %>%
+  read.csv()
+```
+
+```{r eval=TRUE, echo=FALSE}
+# Adding line breaks for code clarity:
+admin_data_long <- 
+  here("Data", "DataWork", "data", "raw", "admin_data_long.csv") %>%
+  read.csv()
+```
+
+```{r echo = FALSE, out.width="70%"}
+knitr::include_graphics("img/session1/env-admin-data-long.png")
 ```
 
 ---
