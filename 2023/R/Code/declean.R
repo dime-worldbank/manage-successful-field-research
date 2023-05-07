@@ -55,7 +55,8 @@ df_food <- df_survey %>%
                names_sep = '_') %>%
   mutate(
     food = case_when(food == 1 ~ "Flour",
-                     food == 2 ~ "Bread")
+                     food == 2 ~ "Bread"),
+    EXP26 = as.numeric(EXP26)
   ) %>%
   set_variable_labels(
     EXP25 = "How many days in the last 1 week has your household consumed?",
