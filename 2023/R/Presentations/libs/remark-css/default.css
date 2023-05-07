@@ -37,17 +37,25 @@ a, a > code {
   float: left;
   width: 47%;
 }
-.pull-left2 {
-  float: left;
-  width: 30%;
-}
 .pull-right {
   float: right;
   width: 47%;
 }
+.pull-left2 {
+  float: left;
+  width: 30%;
+}
 .pull-right2 {
   float: right;
   width: 64%;
+}
+.pull-left3 {
+  float: left;
+  width: 35%;
+}
+.pull-right3 {
+  float: right;
+  width: 59%;
 }
 .pull-right + * {
   clear: both;
@@ -77,4 +85,7 @@ th, td { padding: 5px; }
     top: 0 !important;
     left: 0 !important;
   }
+}
+.smaller-r-code {
+  font-size: 16px;
 }
