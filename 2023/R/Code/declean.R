@@ -65,7 +65,7 @@ df_food <- df_survey %>%
   )
 
 # 3. Saving dataframes ----
-output_path <- here("Data", "DataWork", "data", "intermediate")
+output_path <- here("Data", "DataWork", "data", "intermediate", "tidy")
 saveRDS(df_admin2,
         here(output_path, "tidy-village.Rds"))
 saveRDS(df_hh,
