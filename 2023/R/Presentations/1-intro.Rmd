@@ -1184,5 +1184,5 @@ class: inverse, center, middle
 exclude: true
 
 ```{R, include = FALSE, eval = FALSE}
-pagedown::chrome_print("1-intro.html", output = "1-intro.pdf")
+pagedown::chrome_print("Presentations/1-intro.html", output = "Presentations/1-intro.pdf")
 ```
