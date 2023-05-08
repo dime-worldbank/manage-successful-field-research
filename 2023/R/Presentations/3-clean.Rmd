@@ -162,7 +162,7 @@ knitr::include_graphics("img/session3/cleaning-packages-logos.png")
 
 # Data cleaning
 
-## Exercise 2: Read dataset and clean column names
+## Exercise 2: Read the dataset and clean column names
 
 - We'll load three tidy dataframes for the rest of the exercises:
 
