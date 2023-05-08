@@ -956,7 +956,7 @@ saveRDS(lwh_village,
         here(output_folder, "LWH-villages.Rds"))
 ```
 
-- `.Rds` is the native file extension of R for dataframes
+- `.Rds` is the native file extension of R for dataframes, similar to Excel's `.xlsx`
 
 ---
 
