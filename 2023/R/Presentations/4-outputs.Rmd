@@ -14,7 +14,7 @@ output:
       ratio: "16:9"
       highlightStyle: github
       highlightLines: true
-      countIncrementalSlides: true
+      countIncrementalSlides: false
 ---
 
 ```{r setup, include = FALSE}
@@ -28,6 +28,8 @@ library(modelsummary)
 library(huxtable)
 library(ggplot2)
 library(fontawesome)
+library(hrbrthemes)
+library(flair)
 here::i_am("Presentations/4-outputs.Rmd")
 options(htmltools.dir.version = FALSE)
 opts_chunk$set(
@@ -158,19 +160,23 @@ knitr::include_graphics("img/session4/outputs-packages-logos.png")
 
 ## Exercise 1: Install and load packages for generating outputs
 
-1. Install `modelsummary` and `huxtable` with:
+- Install `modelsummary` and `huxtable` with:
 
-  + `install.packages("modelsummary")`
-  + `install.packages("huxtable")`
+```{r eval=FALSE}
+install.packages("modelsummary")
+install.packages("huxtable")
+```
 
-2. Load all the libraries we'll use with:
+- Load all the libraries we'll use with:
 
-  + `library(here)`
-  + `library(dplyr)`
-  + `library(janitor)`
-  + `library(modelsummary)`
-  + `library(huxtable)`
-  + `library(ggplot2)`
+```{r eval=FALSE}
+library(here)
+library(dplyr)
+library(janitor)
+library(modelsummary)
+library(huxtable)
+library(ggplot2)
+```
 
 ---
 
@@ -319,8 +325,6 @@ name: about-this-session
 - ...export the summary statistics to another software?
 
 - ...customize which statistics to display?
-
-- ...format the table?
 
 --
 
@@ -475,6 +479,7 @@ datasummary(
 2. Export this object to Excel with `quick_xlsx()`
 
 ```{r eval=FALSE}
+# Storing summary table into a huxtable object
 descriptives_income <-
   datasummary(
     inc_01 + inc_03 + inc_06 ~ N + Mean + SD + Median + Min + Max,
@@ -489,7 +494,7 @@ quick_xlsx(
 )
 ```
 
-```{r eval=FALSE}
+```{r echo=FALSE}
 # Storing summary table into a huxtable object
 desc_income <-
   datasummary(
@@ -509,76 +514,10 @@ quick_xlsx(
 
 # Descriptive tables
 
+The result in Excel will look like this:
+
 ```{r echo = FALSE, out.width="95%"}
 knitr::include_graphics("img/session4/desc-output-no-labels.png")
-```
-
----
-
-# Descriptive tables
-
-- Unfortunately, `datasummary()` doesn't have an option to export variable labels instead of variable names
-
-- However, that doesn't mean that it is impossible to do. It just requires more steps:
-
-  1. Select the columns you want to export in a new dataframe
-  
-  2. Extract their labels into a named vector
-  
-  3. Rename the variable names with the labels
-  
-  4. Produce the table with `datasummary()` and export the result
-
----
-
-# Descriptive tables
-
-## Exercise 8: Exporting an improved descriptive table to Excel
-
-- Create a new dataframe with the columns of interest
-
-```{r}
-df_hh_subset <- df_hh %>% select(inc_01, inc_03, inc_06)
-```
-
-- Create a named vector with the variable labels
-
-```{r}
-labels <- colnames(df_hh_subset)
-names(labels) <- attributes(df_hh_subset)$var.labels
-```
-
----
-
-# Descriptive tables
-
-## Exercise 8: Exporting an improved descriptive table to Excel (continued)
-
-- Rename the variable names with their labels (this will overwrite the dataframe)
-
-```{r}
-df_hh_subset <-
-  df_hh_subset %>%
-  rename(
-    labels
-  )
-```
-
-- Create the labelled summary table with the updated dataframe
-
-```{r}
-desc_income_labels <-
-  datasummary(
-    All(df_hh_subset) ~ N + Mean + SD + Median + Min + Max,
-    data = df_hh_subset,
-    output = "huxtable"
-  )
-```
-
-- Finally, export the result
-
-```{ r eval=FALSE}
-
 ```
 
 ---
@@ -594,25 +533,308 @@ name: about-this-session
 
 # Data visualization
 
-## Grammar of graphics
+## The beauty of `ggplot2`
+
+1. Consistency with the [**Grammar of Graphics**](https://www.springer.com/gp/book/9780387245447)
+
+  * This book is the foundation of several other data visualization applications: `ggplot2`, `polaris-tableau`, `vega-lite`
+
+2. Flexibility
+
+3. Layering and theme customization
+
+4. Community
+
+It is a powerful and easy to use tool (once you understand its logic) that produces complex and multifaceted plots.
 
 ---
 
 # Data visualization
 
-## Exploratory analysis with data visualization
+## Basic structure
+
+The basic ggplot structure is:
+
+```{r ggplot-template, eval=FALSE}
+ggplot(data = DATA) +
+  GEOM_FUNCTION(mapping = aes(AESTHETIC MAPPINGS))
+```
+
+Mapping data to aesthetics
+
+.box-7.medium[Mapping data to aesthetics: think about colors, sizes, x and y references]
+
+--
+
+We'll see how we connect our data to the components of a ggplot
 
 ---
 
 # Data visualization
 
-## Exercise 9: Produce a xxxx plot
+.pull-left[
+```
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(
+     mapping = aes(<MAPPINGS>),
+     stat = <STAT>,
+     position = <POSITION>
+  ) +z
+  <COORDINATE_FUNCTION> +
+  <FACET_FUNCTION> +
+  <SCALE_FUNTION> +
+  <THEME_FUNCTION>
+```
+]
+
+.pull-right[
+
+1. `Data`: The data that you want to visualize
+2. `Layers`: geom\_ and stat\_ → The geometric shapes and statistical summaries representing the data
+3. `Aesthetics`: aes() → Aesthetic mappings of the geometric and statistical objects
+4. `Scales`: scale_ → Maps between the data and the aesthetic dimensions
+5. `Coordinate system`: coord_ → Maps data into the plane of the data rectangle
+6. `Facets`: facet_ → The arrangement of the data into a grid of plots
+7. `Visual themes`: theme() and theme_ → The overall visual defaults of a plot
+]
 
 ---
 
 # Data visualization
 
-## Adjusting the plot elements
+## Exercise 9: Produce a basic scatterplot
+
+Create a scatterplot with the x-axis set to `inc_01` and the y-axis equal to `inc_02`.
+
+```{r eval=FALSE}
+ggplot(data = df_hh,
+       aes(x = inc_01,
+           y = inc_02)) +
+  geom_point()
+```
+
+---
+
+# Data visualization
+
+```{r out.width = "60%"}
+# With pipes:
+df_hh %>%
+  ggplot(aes(x = inc_01,
+             y = inc_02)) +
+  geom_point()
+```
+
+---
+
+# Data visualization
+
+The most common `geoms` are:
+
+* `geom_bar()`, `geom_col()`: bar charts.
+
+* `geom_boxplot()`: box and whiskers plots.
+
+* `geom_density()`: density estimates.
+
+* `geom_jitter()`: jittered points.
+
+* `geom_line()`: line plots.
+
+* `geom_point()`: scatter plots.
+
+If you want to know more about layers, you can refer to [this source](https://ggplot2.tidyverse.org/reference/).
+
+---
+
+# Data visualization
+
+In summary, our basic plots should have the following:
+
+.pull-left[
+
+```{r eval = FALSE}
+whr_panel %>% #<<
+  ggplot(
+    aes(
+      x = happiness_score,
+      y = economy_gdp_per_capita
+    )
+  ) +
+  geom_point()
+```
+
+]
+
+.pull-right[
+
+The data we want to plot.
+]
+
+---
+
+# Data visualization
+
+In summary, our basic plots should have the following:
+
+.pull-left[
+
+```{r eval = FALSE}
+whr_panel %>%
+  ggplot(
+    aes( #<<
+      x = happiness_score, #<<
+      y = economy_gdp_per_capita #<<
+    ) #<<
+  ) +
+  geom_point()
+```
+
+]
+
+.pull-right[
+
+Columns (variables) to use for `x` and `y`
+]
+
+---
+
+# Data visualization
+
+In summary, our basic plots should have the following:
+
+.pull-left[
+
+```{r eval = FALSE}
+whr_panel %>%
+  ggplot(
+    aes(
+      x = happiness_score,
+      y = economy_gdp_per_capita
+    )
+  ) +
+  geom_point() #<<
+```
+
+]
+
+.pull-right[
+
+How the plot is going to be drawn.
+]
+
+---
+
+# Data visualization
+
+We can also **map** colors.
+
+.pull-left[
+
+```{r eval = FALSE}
+df_hh %>%
+ggplot(
+  aes(
+    x = inc_01,       
+    y = inc_02,
+    color = id_09 # district #<<
+  )
+) + 
+  geom_point() 
+```
+
+]
+
+.pull-right[
+
+```{r, out.width = "100%", echo = FALSE}
+df_hh %>%
+ggplot(
+  aes(
+    x = inc_01,       
+    y = inc_02,
+    color = id_09
+  )
+) + 
+  geom_point() 
+```
+
+]
+
+---
+
+# Data visualization
+
+In `ggplot2`, these settings are called **aesthetics**.
+
+> "Aesthetics of the geometric and statistical objects".
+We can set up:
+
+* `position`:  x, y, xmin, xmax, ymin, ymax, etc.
+* `colors`: color and fill.
+* `transparency`: alpha.
+* `sizes`: size and width.
+* `shapes`: shape and linetype.
+
+
+Notice that it is important to know where we are setting our aesthetics. For example:
+
+* `geom_point(aes(color = region))` to color points based on the variable `region`
+* `geom_point(color = "red")` to color all points in the same color.
+
+---
+
+# Data visualization
+
+Let's modify our last plot. Let's add `color = "blue"` inside `geom_point()`.
+
+.pull-left[
+
+```{r, eval = FALSE}
+df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02
+    )
+  ) +
+  geom_point(color = "blue") #<<
+```
+
+]
+
+.pull-right[
+
+```{r, out.width = "100%", echo = FALSE}
+df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02
+    )
+  ) +
+  geom_point(color = "blue")
+```
+
+]
+
+---
+
+# Data visualization
+
+Now, let's try to modify our plots. In the following slides, we are going to:
+
+1. Change shapes.
+
+1. Include more geoms.
+
+1. Separate by regions.
+
+1. Pipe and mutate before plotting.
+
+1. Change scales.
+
+1. Modify our theme.
 
 ---
 
