@@ -1,0 +1,647 @@
+---
+title: "Session 4 - Descriptive satistics, figures, and tables"
+subtitle: "R labs - Manage Successful Field Research"
+author: "Rony Rodriguez Ramirez, Luis Eduardo San Martin"
+date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2023"
+output:
+  xaringan::moon_reader:
+    css: ["libs/remark-css/default.css",
+          "libs/remark-css/metropolis.css",
+          "libs/remark-css/metropolis-fonts.css",
+          "libs/remark-css/custom.css"]
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r setup, include = FALSE}
+# Load packages
+library(knitr)
+library(xaringanExtra)
+library(here)
+library(dplyr)
+library(janitor)
+library(modelsummary)
+library(huxtable)
+library(ggplot2)
+library(fontawesome)
+here::i_am("Presentations/4-outputs.Rmd")
+options(htmltools.dir.version = FALSE)
+opts_chunk$set(
+  fig.align = "center",
+  fig.height = 4,
+  dpi = 300,
+  cache = T
+  )
+xaringanExtra::use_panelset()
+xaringanExtra::use_webcam()
+xaringanExtra::use_clipboard()
+xaringanExtra::use_editable(expires = 1)
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+xaringanExtra::use_logo(
+  image_url = here("Presentations",
+                   "img",
+                   "lightbulb.png"),
+  exclude_class = c("inverse", 
+                    "hide_logo"),
+  width = "40px"
+)
+```
+
+```{css, echo = F, eval = T}
+@media print {
+  .has-continuation {
+    display: block !important;
+  }
+}
+```
+
+# Table of contents
+
+1. [About the session](#about-this-session)
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# About this session
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# About this session
+
+```{r echo = FALSE, out.width="45%"}
+knitr::include_graphics("img/session4/data-work-outputs.png")
+```
+
+---
+
+# About this session
+
+## What we will learn today
+
+1.
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Creating outputs
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Creating outputs
+
+- Until now, we've seen how to produce dataframes or data table file outputs (`.Rds` and `.csv` files)
+
+- Today we'll see how to produce file outputs with more finalized results, namely descriptive statistics table and data visualizations
+
+- The objective of this is that the concept of reproducibility can also be also be applied not only in your data work but in your reports as well <font size="3">(though that's something we're not covering in this course)</font>
+
+```{r echo = FALSE, out.width="90%"}
+knitr::include_graphics("img/session4/data-work-exporting.png")
+```
+
+---
+
+# Creating outputs
+
+## .red[Not reproducible]
+
+Anything that requires
+`r fa("paste", fill = "#ac142a")` Copy-pasting
+`r fa("paintbrush", fill = "#ac142a")` Manual formatting after exported
+
+--
+
+## .green[Reproducible]
+
+`r fa("r-project", fill = "#046307")` R Markdown: dynamic document containing code and text that is exported directly from R into PDF, HTML, Word, Power Point and other formats 
+`r fa("file-lines", fill= "#046307")` LaTeX: typesetting system used for scientific publications that automatically reloads tables and figures every time the document is rendered 
+
+---
+
+# Creating outputs
+
+## In R
+
+- As usual, there are several options for producing descriptive tables and data visualization in R. Today we'll use:
+
+- **modelsummary:** a package for creating descriptive statistics and regression tables
+
+- **huxtable:** a package for creating HTML, Latex, and Excel tables from R
+
+- **ggplot2:** the absolute benchmarkfor data visualization in R, based on a grammar of graphics syntax
+
+```{r echo = FALSE, out.width="60%"}
+knitr::include_graphics("img/session4/outputs-packages-logos.png")
+```
+
+---
+
+# Creating outputs
+
+## Exercise 1: Install and load packages for generating outputs
+
+1. Install `modelsummary` and `huxtable` with:
+
+  + `install.packages("modelsummary")`
+  + `install.packages("huxtable")`
+
+2. Load all the libraries we'll use with:
+
+  + `library(here)`
+  + `library(dplyr)`
+  + `library(janitor)`
+  + `library(modelsummary)`
+  + `library(huxtable)`
+  + `library(ggplot2)`
+
+---
+
+# Creating outputs
+
+## Exercise 2: Read the data
+
+- Use `here()` and `readRDS()` to read the file in `DataWork/data/intermediate/clean/LWH-households-clean.Rds`
+
+```{r eval=FALSE}
+path  <- here("DataWork", "data", "intermediate", "clean")
+df_hh <- readRDS(here(path, "LWH-households-clean.Rds"))
+```
+
+- Inspect the dataframe with `View()`
+
+```{r echo=FALSE}
+path  <- here("Data", "DataWork", "data", "intermediate", "clean")
+df_hh <- readRDS(here(path, "LWH-households-clean.Rds"))
+```
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Data exploration
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Data exploration
+
+## Knowing your data better
+
+- Before starting to produce outputs, it's useful to explore your data so you will know what to export
+
+- You already know `View()`, `nrow()`, and `colnames()`. Some other functions are:
+
+  + `glimpse()`: prints a dataframe in the console (from `dplyr`)
+  
+  + `head()`: prints the first six observations of a dataframe
+  
+  + `tail()`: prints the last six observations of a datafrma
+  
+  + `dim()`: returns a size-two vector with the number of rows and columns in a dataframe
+
+---
+
+# Data exploration
+
+## Exercise 3: Exploration with dataframe and column summaries
+
+1. Print the summary of `df_hh`
+
+2. Print the summary of the column `inc_01` of `df_hh` (use the `$` operator)
+
+---
+
+# Data exploration
+
+```{r}
+# Summary of a dataframe
+summary(df_hh)
+```
+
+---
+
+# Data exploration
+
+```{r}
+# Summary of a dataframe column
+summary(df_hh$inc_01)
+```
+
+---
+
+# Data exploration
+
+## Tabulations
+
+- `summary()` is useful to explore quantitative variables
+
+- However, it's not great for character or factor variables
+
+- We'll use `tabyl()` in these cases, from the package `janitor`
+
+- `tabyl()` generates frequency tables from dataframe columns
+
+---
+
+# Data exploration
+
+## Exercise 4: Exploration with tabulations
+
+- Tabulate the variable `id_09` (district) of `df_hh` with:
+
+```{r eval=FALSE}
+df_hh %>% tabyl(id_09)
+```
+
+- Tabulate the variables `id_08` (sector) and `id_09` (district) with:
+```{r eval=FALSE}
+df_hh %>% tabyl(id_08, id_09)
+```
+
+---
+
+# Data exploration
+
+```{r eval=FALSE}
+# Tabulating district
+df_hh %>% tabyl(id_09)
+```
+
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+# Tabulating district
+df_hh %>% tabyl(id_09) %>% knitr::kable()
+```
+
+---
+
+# Data exploration
+
+```{r}
+# Cross-tabulating sector and district
+df_hh %>% tabyl(id_08, id_09) %>% knitr::kable()
+```
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Descriptive tables
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Descriptive tables
+
+## What if you want to...
+
+- ...export the summary statistics to another software?
+
+- ...customize which statistics to display?
+
+- ...format the table?
+
+--
+
+## Well, then you will need a few more packages
+
+- There are many packages that can be used both for displaying and exporting summary statistics
+
+- Today we will show you a combination of two packages: `modelsummary` and `huxtable`
+
+- We chose this combination because together, they can perform all the tasks we are interested in
+
+- In fact, `modelsummary` can perform most of them by itself -- with the exception of exporting formatted tables to Excel
+
+---
+
+# Descriptive tables
+
+`modelsummary` contains a family of functions called *datasummary* which can be used to create different types of summary statistics tables. These include:
+
+- `datasummary_skim()`, to create descriptive statistics tables
+
+- `datasummary_balance()`, to create balance tables
+
+- `datasummary_correlation()`, to create a correlation table
+
+- `datasummary_crosstab()`, to create a twoway tabulation
+
+- `datasummary()`, to create customized descriptive statistics tables
+
+---
+
+# Descriptive tables
+
+- `datasummary_skim()` produces a quick summary table of numerical or categorical variables
+
+```{r, eval = F}
+datasummary_skim(
+  data,
+  type = "numeric",
+  output = "default",
+  ...
+)
+```
+
+- It uses the following arguments:
+
+  + `data`: the data set to be summarized, the only required argument
+  + `type =`: type of variables in the dataframe to be described
+  + `output =`: the type of output desired
+  + `...`: additional options allow for formatting customization, such as including notes and titles
+
+- Its most basic use is `datasummary_skim(df_name)` to describe numeric variables
+
+---
+
+# Descriptive tables
+
+## Exercise 5: Producing a basic descriptive table
+
+- Use `datasummary_skim()` to create a descriptive statistics table for `df_hh`
+
+---
+
+# Descriptive tables
+
+```{r eval=FALSE}
+df_hh %>% datasummary_skim()
+```
+
+```{r echo=FALSE}
+df_hh %>% datasummary_skim()
+```
+
+---
+
+# Descriptive tables
+
+- `datasummary_skim()` summarizes only numeric variables by default
+
+- To summarize categorical variables, use the argument `type`
+
+```{r warning=FALSE}
+# Selecting only one variables so table fits
+df_hh %>% select(id_09) %>% datasummary_skim(type = "categorical")
+```
+
+---
+
+# Descriptive tables
+
+- Other than `datasummary_skim()`, we can use `datasummary()` to customize the variables and statistics to include using a formula
+
+```{r eval = F}
+datasummary(
+  var1 + var2 + var3 ~ stat1 + stat2 + stat3 + stat4,
+  data = data
+)
+```
+
+- The arguments of `datasummary()` are:
+
+  + `formula`: a two-sided formula to describe the table: rows ~ columns
+  
+  + `data=`: the data set to be summarized
+  
+  + *...:* additional options allow for formatting customization
+
+---
+
+# Descriptive tables
+
+## Exercise 6: Producing a table with more information
+
+- Create a table showing the number of observations, mean, standard deviation, minimum, maximum, and median value for the variables `inc_01`-`inc_04` in `df_hh` with the code below
+
+```{r eval=FALSE}
+datasummary(
+  inc_01 + inc_03 + inc_06 ~ N + Mean + SD + Median + Min + Max,
+  data = df_hh
+)
+```
+
+---
+
+# Descriptive tables
+
+```{r warning=FALSE}
+datasummary(
+  inc_01 + inc_03 + inc_06 ~ N + Mean + SD + Median + Min + Max,
+  data = df_hh
+)
+```
+
+---
+
+# Descriptive tables
+
+- The package `modelsummary` doesn't offer an option to export tables to Excel
+
+- To do that, we will first store the result of `datasummary()` into an object of type "huxtable"
+
+- This will allow us to use the function `quick_xlsx()` from the package `huxtable` to export the table
+
+---
+
+# Descriptive tables
+
+## Exercise 7: Exporting descriptive tables to Excel
+
+1. Save the last table you created to and object called `descriptives_income` and add the argument `output = "huxtable"`
+
+2. Export this object to Excel with `quick_xlsx()`
+
+```{r eval=FALSE}
+descriptives_income <-
+  datasummary(
+    inc_01 + inc_03 + inc_06 ~ N + Mean + SD + Median + Min + Max,
+    data = df_hh,
+    output = "huxtable"
+  )
+
+# Exporting
+quick_xlsx(
+  descriptives_income,
+  file = here("DataWork", "outputs", "tables", "descriptives_income.xlsx")
+)
+```
+
+```{r eval=FALSE}
+# Storing summary table into a huxtable object
+desc_income <-
+  datasummary(
+    inc_01 + inc_03 + inc_06 ~ N + Mean + SD + Median + Min + Max,
+    data = df_hh,
+    output = "huxtable"
+  )
+
+# Exporting
+quick_xlsx(
+  desc_income,
+  file = here("Data", "DataWork", "outputs", "tables", "descriptives_income.xlsx")
+)
+```
+
+---
+
+# Descriptive tables
+
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session4/desc-output-no-labels.png")
+```
+
+---
+
+# Descriptive tables
+
+- Unfortunately, `datasummary()` doesn't have an option to export variable labels instead of variable names
+
+- However, that doesn't mean that it is impossible to do. It just requires more steps:
+
+  1. Select the columns you want to export in a new dataframe
+  
+  2. Extract their labels into a named vector
+  
+  3. Rename the variable names with the labels
+  
+  4. Produce the table with `datasummary()` and export the result
+
+---
+
+# Descriptive tables
+
+## Exercise 8: Exporting an improved descriptive table to Excel
+
+- Create a new dataframe with the columns of interest
+
+```{r}
+df_hh_subset <- df_hh %>% select(inc_01, inc_03, inc_06)
+```
+
+- Create a named vector with the variable labels
+
+```{r}
+labels <- colnames(df_hh_subset)
+names(labels) <- attributes(df_hh_subset)$var.labels
+```
+
+---
+
+# Descriptive tables
+
+## Exercise 8: Exporting an improved descriptive table to Excel (continued)
+
+- Rename the variable names with their labels (this will overwrite the dataframe)
+
+```{r}
+df_hh_subset <-
+  df_hh_subset %>%
+  rename(
+    labels
+  )
+```
+
+- Create the labelled summary table with the updated dataframe
+
+```{r}
+desc_income_labels <-
+  datasummary(
+    All(df_hh_subset) ~ N + Mean + SD + Median + Min + Max,
+    data = df_hh_subset,
+    output = "huxtable"
+  )
+```
+
+- Finally, export the result
+
+```{ r eval=FALSE}
+
+```
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Data visualization
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Data visualization
+
+## Grammar of graphics
+
+---
+
+# Data visualization
+
+## Exploratory analysis with data visualization
+
+---
+
+# Data visualization
+
+## Exercise 9: Produce a xxxx plot
+
+---
+
+# Data visualization
+
+## Adjusting the plot elements
+
+---
+
+# Data visualization
+
+## Exercise 10: Improve your plot
+
+---
+
+# Data visualization
+
+---
+
+# Data visualization
+
+## Exercise 11: Exporting plots
+
+---
+
+class: inverse, center, middle
+
+# Thanks! // ¡Gracias!
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+exclude: true
+
+```{R, include = FALSE, eval = FALSE}
+pagedown::chrome_print("4-outputs.html", output = "4-outputs.pdf")
+```
