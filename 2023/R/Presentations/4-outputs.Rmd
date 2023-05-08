@@ -822,6 +822,8 @@ df_hh %>%
 
 # Data visualization
 
+## Settings
+
 Now, let's try to modify our plots. In the following slides, we are going to:
 
 1. Change shapes.
@@ -840,17 +842,332 @@ Now, let's try to modify our plots. In the following slides, we are going to:
 
 # Data visualization
 
-## Exercise 10: Improve your plot
+## Shapes
+
+```{r out.width = "52%"}
+df_hh %>%
+  ggplot(aes(x = inc_01,
+             y = inc_02)) +
+  geom_point(shape = 5) #<<
+```
 
 ---
 
 # Data visualization
 
+## Shapes
+
+```{r echo = FALSE, eval = TRUE, out.width = "75%", message = FALSE, warning = FALSE}
+library(ggpubr)
+show_point_shapes()+
+ theme_minimal()
+```
+
 ---
 
 # Data visualization
 
-## Exercise 11: Exporting plots
+## Including more geometries
+
+```{r out.width = "52%", message=FALSE, warning=FALSE}
+df_hh %>%
+  ggplot(aes(x = inc_01,
+             y = inc_02)) +
+  geom_point() +
+  geom_smooth() #<<
+```
+
+---
+
+# Data visualization
+
+## Facets
+
+```{r out.width = "52%", message=FALSE, warning=FALSE}
+df_hh %>%
+  ggplot(aes(x = inc_01,
+             y = inc_02)) +
+  geom_point() +
+  facet_wrap(~ id_09) #<<
+```
+
+---
+
+# Data visualization
+
+## Exercise 10: Produce a plot with a color by facet
+
+Use your last plot and add a color aesthetic per district (`id_09`). Remember that this needs to be specified in the aesthetics arguments.
+
+---
+
+# Data visualization
+
+```{r out.width = "52%", message=FALSE, warning=FALSE}
+df_hh %>%
+  ggplot(aes(x = inc_01,
+             y = inc_02,
+             color = id_09)) + #<<
+  geom_point() +
+  facet_wrap(~ id_09) #<<
+```
+
+---
+
+# Data visualization
+
+We can also specify the size of a geom, either by a variable or just a number.
+
+```{r out.width = "52%", message=FALSE, warning=FALSE}
+df_hh %>%
+  ggplot(aes(x = inc_01,
+             y = inc_02)) +
+  geom_point(aes(size = inc_01)) #<<
+```
+
+---
+
+# Data visualization
+
+## Customizing a plot
+
+We are going to do the following to this plot:
+
+1. Add correct labels.
+
+1. Change our theme.
+
+1. Modify our legends.
+
+---
+
+# Data visualization
+
+## Labels
+
+.pull-left[
+
+```{r, eval = FALSE}
+df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02,
+      color = id_09
+    )
+  ) +
+  geom_point() +
+  labs(                                     #<<
+    x = "On-farm enterprise income (RWF)",  #<<
+    y = "Non-farm enterprise income (RWF)", #<<
+    title = "Farm vs Non-Farm Income"       #<<
+  )                                         #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02,
+      color = id_09
+    )
+  ) +
+  geom_point() +
+  labs(
+    x = "On-farm enterprise income (RWF)",
+    y = "Non-farm enterprise income (RWF)",
+    title = "Farm vs Non-Farm Income",
+  )
+```
+
+]
+
+---
+
+# Data visualization
+
+## Legends
+
+.pull-left[
+
+```{r, eval = FALSE}
+df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02,
+      color = id_09
+    )
+  ) +
+  geom_point() +
+  labs(
+    x = "On-farm enterprise income (RWF)",
+    y = "Non-farm enterprise income (RWF)",
+    title = "Farm vs Non-Farm Income",
+    color = "District"                      #<<
+  )
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02,
+      color = id_09
+    )
+  ) +
+  geom_point() +
+  labs(
+    x = "On-farm enterprise income (RWF)",
+    y = "Non-farm enterprise income (RWF)",
+    title = "Farm vs Non-Farm Income",
+    color = "District"
+  )
+```
+
+]
+
+---
+
+# Data visualization
+
+## Themes
+
+.pull-left[
+
+```{r, eval = FALSE}
+df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02,
+      color = id_09
+    )
+  ) +
+  geom_point() +
+  labs(
+    x = "On-farm enterprise income (RWF)",
+    y = "Non-farm enterprise income (RWF)",
+    title = "Farm vs Non-Farm Income",
+    color = "District"
+  ) +
+  theme_minimal() #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE}
+df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02,
+      color = id_09
+    )
+  ) +
+  geom_point() +
+  labs(
+    x = "On-farm enterprise income (RWF)",
+    y = "Non-farm enterprise income (RWF)",
+    title = "Farm vs Non-Farm Income",
+    color = "District"
+  ) +
+  theme_minimal()
+```
+
+]
+
+---
+
+# Data visualization
+
+## Themes
+
+The `theme()` function allows you to modify each aspect of your plot. Some arguments are:
+
+```{r eval = FALSE}
+theme(
+    # Title and text labels
+    plot.title = element_text(color, size, face),
+    # Title font color size and face
+    legend.title = element_text(color, size, face),
+    # Title alignment. Number from 0 (left) to 1 (right)
+    legend.title.align = NULL,
+    # Text label font color size and face
+    legend.text = element_text(color, size, face),
+    # Text label alignment. Number from 0 (left) to 1 (right)
+    legend.text.align = NULL,
+)
+```
+
+More about these modification can be found [here](https://ggplot2.tidyverse.org/reference/theme.html)
+
+---
+
+# Data visualization
+
+## Saving your plot
+
+Remember that in R we can always assign our functions to an object. In this case, we can assign our `ggplot2` code to an object called fig as follows.
+
+.smaller-r-code[
+```{r eval=FALSE}
+fig <- df_hh %>%
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02,
+      color = id_09
+    )
+  ) +
+  geom_point() +
+  labs(
+    x = "On-farm enterprise income (RWF)",
+    y = "Non-farm enterprise income (RWF)",
+    title = "Farm vs Non-Farm Income",
+    color = "District"
+  ) +
+  theme_minimal()
+```
+]
+
+Therefore, if you want to plot it again, you can just type `fig` in the console.
+
+---
+
+# Data visualization
+
+## Exercise 11: Export your plot
+
+- Save your plot in `DataWork/outputs/plots/income-plot-*YOUR INITIALS*.png`
+
+- Use the `ggsave()` function. You can either include the function after your plot or save the ggplot first as an object and then save the plot.
+
+- The syntax of `ggsave()` is `ggsave(PLOT_OBJECT, filename = FILEPATH, height = ..., width = ..., dpi = ...)`
+
+- Solution:
+
+```{r eval=FALSE}
+ggsave(
+  fig,
+  filename = here("DataWork", "outputs", "plots", "income-plot-*YOUR INITIALS*.png"),
+  dpi = 750,
+  scale = 0.8,
+  width = 12
+)
+```
 
 ---
 
