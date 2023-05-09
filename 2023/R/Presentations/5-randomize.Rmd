@@ -1,0 +1,335 @@
+---
+title: "5 - Sampling and randomization"
+subtitle: "R labs - Manage Successful Field Research"
+author: "Robert Marty, Luis Eduardo San Martin"
+date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2023"
+output:
+  xaringan::moon_reader:
+    css: ["libs/remark-css/default.css", "libs/remark-css/metropolis.css", "libs/remark-css/metropolis-fonts.css", "libs/remark-css/custom.css"]
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include = FALSE}
+# Load packages
+library(knitr)
+library(xaringanExtra)
+library(here)
+library(dplyr)
+here::i_am("Presentations/1-intro.Rmd")
+options(htmltools.dir.version = FALSE)
+opts_chunk$set(
+  fig.align = "center",
+  fig.height = 4,
+  dpi = 300,
+  cache = T
+  )
+xaringanExtra::use_panelset()
+xaringanExtra::use_webcam()
+xaringanExtra::use_clipboard()
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+xaringanExtra::use_logo(
+  image_url = here("Presentations",
+                   "img",
+                   "lightbulb.png"),
+  exclude_class = c("inverse", 
+                    "hide_logo"),
+  width = "40px"
+)
+```
+
+```{css, echo = F, eval = T}
+@media print {
+  .has-continuation {
+    display: block !important;
+  }
+}
+```
+
+# Table of contents
+
+1. [About the session](#about-this-session)
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# About this session
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# About this session
+
+---
+
+# About this session
+
+## Questions we will answer today
+
+1. What is randomness and how it's implemented in statistical programming?
+
+1. How to sample reproducibly
+
+1. How to randomize treatment and control groups reproducibly
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Randomness and pseudorandomness
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Randomness and pseudorandomness
+
+## What is randomness?
+
+**<font size="6">Randomness is the quality or state of <i>something</i> for lacking a predefined pattern</font>**
+
+- In statistical programming, this is usually implemented through the generation of **random numbers**
+
+  + Random numbers in statistical programming range *usually* between 0 and 1 and have a long decimal trail, as in: `r runif(1)`
+  
+  + From all the possible numbers with that amount of decimal digits between 0 and 1, each of them has **the same possibility of being drawn** (uniform probability distribution)
+
+---
+
+# Randomness and pseudorandomness
+
+## What is randomness?
+
+- In R, you can generate a vector with random numbers with `runif(n)`, where `n` is the amount of numbers you want to generate
+
+```{r}
+runif(3)
+```
+
+---
+
+# Randomness and pseudorandomness
+
+## Randomness vs reproducibility
+
+.pull-left2[
+- We usually use of randomness in development field research to select random samples or assign treatment and control groups randomly
+
+- And we already know that development research should be reproducible to avoid problems such as -->
+]
+.pull-right2[
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session1/retracted-study.png")
+```
+]
+
+---
+
+# Randomness and pseudorandomness
+
+## Randomness vs reproducibility
+
+.pull-left2[
+- True randomness, however, lacks patterns completely
+
+- This implies that it's also impossible to reproduce: if *something* can be predicted, then it loses completely its quality of being random
+
+- This poses a problem for conducting reproducible field research
+]
+.pull-right2[
+```{r echo = FALSE, out.width="95%"}
+knitr::include_graphics("img/session1/retracted-study.png")
+```
+]
+
+---
+
+# Randomness and pseudorandomness
+
+## Pseudorandomness
+
+- The solution to this philosophical problem is **pseudorandomness**
+
+- Pseudorandomness consists of *imitating* randomness in a way that is completely reproducible
+
+- In development and policy research, the concept of randomness **usually actually means pseudorandomness**
+
+---
+
+# Randomness and pseudorandomness
+
+## Our scenario
+
+For the rest of this session, we'll simulate to be in the evaluation of a program through an RCT
+
+- **Intervention:** A conditional cash transfer
+
+- **Population of interest:** XX villages from selected regions of Rwanda
+
+- **Sample:** The evaluation has budget limitations that prevent to select all XX villages as part of the study, so we need to randomly only select XX of them
+
+- **Treatment groups:** XX villages will be assigned to full treatment, XX will be assigned to a group where half of the households receive a treatment and half doesn't, and XX villages will be a full control group
+
+---
+
+# Randomness and pseudorandomness
+
+## Exercise 1: Load the libraries and data
+
+- No library installation is needed
+
+- We'll start by loading the library and data we'll use today:
+
+```{r eval=FALSE}
+# Library
+library(here)
+
+# Data
+data_path <- here("DataWork", "data", "intermediate", "clean")
+villages  <- readRDS(here(data_path, "LWH-villages-clean.Rds"))
+hh        <- readRDS(here(data_path, "LWH-households-clean.Rds"))
+```
+
+```{r echo=FALSE}
+data_path <- here("data", "DataWork", "data", "intermediate", "clean")
+villages  <- readRDS(here(data_path, "LWH-villages-clean.Rds"))
+hh        <- readRDS(here(data_path, "LWH-households-clean.Rds"))
+```
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Sampling
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Sampling
+
+- Sampling consists of selecting a subset of elements from a set of total elements
+
+- Random samples are subsets generated randomly
+
+---
+
+# Sampling
+
+## In R
+
+This is implemented in statistical programming in three steps:
+
+1. Generate a vector of n random numbers with `runif(n)`, where n is the number of elements from your total set
+
+1. Sort the observations by the vector of random numbers using `arrange()` from `dplyr`
+
+1. Assign the first n to your sample using `case_when()` and `mutate()`
+
+---
+
+# Sampling
+
+## Exercise 2: Select a sample of villages
+
+- Create a vector of random numbers in `hh`
+
+```{r}
+villages_sample <-
+  villages %>%
+  mutate(random = runif(nrow(villages)))
+```
+
+- Sort by the variable `random`
+
+```{r}
+villages_sample <-
+  villages_sample %>%
+  arrange(random)
+```
+
+- 
+
+---
+
+# Sampling
+
+## Exercise 3: Check if your sample is reproducible
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Random seeds
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Random seeds
+
+## Exercise 4: Select a **reproducible** sample of villages
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Randomization
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Randomization
+
+## Exercise 5: Assign treatment and control groups
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# Stratified randomization
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Stratified randomization
+
+## Exercise 6: Assign treatment and control groups with village stratum
+
+---
+
+---
+
+class: inverse, center, middle
+
+# Thanks! // ¡Gracias!
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+exclude: true
+
+```{R, include = FALSE, eval = FALSE}
+pagedown::chrome_print("Presentations/2-tidy.html", output = "Presentations/2-tidy.pdf")
+```
