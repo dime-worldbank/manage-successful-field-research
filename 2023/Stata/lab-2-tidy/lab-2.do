@@ -17,6 +17,12 @@ use "${msfr}/lab-1/lab-1-output.dta" , clear
     (??? ??? ...) ///
     (??? ??? ...)
 
+    // If there are duplicates, at this stage,
+      // remove them arbitrarily.
+      // We'll cover more next session --
+      // don't do this in real work!
+      duplicates drop ???
+
   // Merge with administrative dataset
   merge [?:?] [varlist] ///
     using `village' ///
