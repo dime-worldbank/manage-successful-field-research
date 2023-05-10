@@ -397,7 +397,7 @@ name: data-in-r
 ## Exercise 4: Loading data into R
 
 .pull-left[
-1. Go to this page: https://osf.io/xxxxxxx and download the file *admin_data.csv*
+1. Go to this page: https://osf.io/7rw5v/files/ and download the file in `Data` >> `admin_data.csv`
 
 2. In RStudio, go to `File` > `Import Dataset` > `From Text (base)` and select the file `admin_data.csv`
   + If you don't know where the file is, check in the `Downloads` folder
@@ -814,7 +814,7 @@ Save your current script by clicking in the floppy disk icon **before starting t
 
 1. Create a folder named `msfr-r-labs` in your preferred location in your computer
 
-1. Go to https://osf.io/XXXXX and download the file in: `DataWork.zip`
+1. Go to https://osf.io/7rw5v/files/ and download the file: `Data` >> `DataWork.zip`
 
 1. Unzip `DataWork.zip` in the folder `msfr-r-labs`
 
