@@ -18,6 +18,9 @@ use "${msfr}/raw/..." , clear
 
   // Explore labels
   labelbook ???
+  
+  // Convert string variables with numbers to numeric variables
+  destring _all, replace
 
   // Revise labels
   recode ??? (-66 = ???)(-88 = ???)(???) ///
