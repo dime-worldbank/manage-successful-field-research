@@ -14,7 +14,7 @@ The questionnaire and codebooks for the 2 survey rounds are also provided.
 
 
 ## Setup
-Download the content from the repository on your local machine. You can download the material from here.
+Download the content from the repository on your local machine. You can download the material from [here](https://osf.io/4wues/).
 
 1. Locate the `main.do` file and `README.md` for the course in the top-level directory.
 2. Change the file path to match the file path on your local machine
