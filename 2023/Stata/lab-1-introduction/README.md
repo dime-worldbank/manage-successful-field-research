@@ -35,6 +35,7 @@ You will find that the `lab-1.do` file is mainly empty. Using good structure, sy
 Next, open the questionnaire Excel file that describes the data set. Familiarize yourself with the documentation to determine some characteristics it should have.
 
 1. Are there variables that, for example, have out-of-bounds values that indicate things like non-response ("-88", "-66")? Investigate these variables with `codebook`, `labelbook`, and `browse`.
-2. Use `recode` to replace each of these types of survey codes with extended missing values such as `.a`. Use the `label` command to indicate what those values mean.
-3. Now, the data in memory should not have any variables with survey codes such as "-66" or "-88". Write a `foreach` loop using `assert` that will check for this. You may need to use a command like `ds` and investigate what information it puts in `return` to identify all the relevant variables.
-4. When you are finished checking that all extended missing values have been correctly coded, `save` the data in this folder.
+2. Use `destring` to convert strings to numerics
+3. Use `recode` to replace each of these types of survey codes with extended missing values such as `.a`. Use the `label` command to indicate what those values mean.
+4. Now, the data in memory should not have any variables with survey codes such as "-66" or "-88". Write a `foreach` loop using `assert` that will check for this. You may need to use a command like `ds` and investigate what information it puts in `return` to identify all the relevant variables.
+5. When you are finished checking that all extended missing values have been correctly coded, `save` the data in this folder.
