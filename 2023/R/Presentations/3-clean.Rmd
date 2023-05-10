@@ -41,11 +41,15 @@ htmltools::tagList(
   rmarkdown::html_dependency_font_awesome()
 )
 xaringanExtra::use_logo(
-  image_url = here("Presentations",
-                   "img",
-                   "lightbulb.png"),
-  exclude_class = c("inverse", 
-                    "hide_logo"),
+  image_url = here(
+    "Presentations",
+    "img",
+    "lightbulb.png"
+  ),
+  exclude_class = c(
+    "inverse", 
+    "hide_logo"
+  ),
   width = "40px"
 )
 ```
@@ -175,16 +179,16 @@ knitr::include_graphics("img/session3/cleaning-packages-logos.png")
 - Use the following code to load the data
 
 ```{r, eval=FALSE}
-df_village <- readRDS(here("DataWork", "data", "intermediate", "tidy-village.Rds")) %>% clean_names()
-df_hh      <- readRDS(here("DataWork", "data", "intermediate", "tidy-HH.Rds")) %>% clean_names()
-df_food    <- readRDS(here("DataWork", "data", "intermediate", "tidy-food-consumption.Rds")) %>% clean_names()
+df_village <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-village.Rds")) %>% clean_names()
+df_hh      <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-HH.Rds")) %>% clean_names()
+df_food    <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-food-consumption.Rds")) %>% clean_names()
 ```
 
 ```{r, echo=FALSE}
-path <- here("Data", "DataWork", "data", "intermediate")
+path       <- here("Data", "DataWork", "data", "intermediate", "tidy")
 df_village <- readRDS(here(path, "tidy-village.Rds")) %>% clean_names()
-df_hh <- readRDS(here(path, "tidy-HH.Rds")) %>% clean_names()
-df_food <- readRDS(here(path, "tidy-food-consumption.Rds")) %>% clean_names()
+df_hh      <- readRDS(here(path, "tidy-HH.Rds")) %>% clean_names()
+df_food    <- readRDS(here(path, "tidy-food-consumption.Rds")) %>% clean_names()
 ```
 
 ---
