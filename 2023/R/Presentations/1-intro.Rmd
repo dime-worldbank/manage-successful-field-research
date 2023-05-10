@@ -1,5 +1,5 @@
 ---
-title: "Session 1 - Introduction to statistical programming and reproducibility"
+title: "1 - Introduction to statistical programming in R"
 subtitle: "R labs - Manage Successful Field Research"
 author: "Galileu Kim, Luis Eduardo San Martin"
 date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2023"
@@ -59,6 +59,13 @@ xaringanExtra::use_logo(
 # Table of contents
 
 1. [About the training](#about-this-training)
+1. [Statistical programming](#statistical-programming)
+1. [Writing R code](#writing-r-code)
+1. [Data in R](#data-in-r)
+1. [Functions in R](#functions-in-r)
+1. [R libraries](#r-libraries)
+1. [File paths](#file-paths)
+1. [Piping](#piping)
 
 ---
 
@@ -81,62 +88,18 @@ name: about-this-training
 
 # About the R lab sessions of MSFR
 
-## Development research
-
-```{r echo = FALSE, out.width="40%"}
-knitr::include_graphics("img/session1/data-work-dev-research.png")
-```
-
----
-
-# About the R lab sessions of MSFR
-
-## These labs
-
 ```{r echo = FALSE, out.width="65%"}
 knitr::include_graphics("img/session1/data-work-labs.png")
 ```
 
 ---
 
-# About the R lab sessions of MSFR
-
-## Learning objectives
-
-By the end of the lab sessions, you will know:
-
-- What is statistical programming and reproducibility
-
-- How to apply data work operations commonly used in field research using R code
-
----
-
-# About the R lab sessions of MSFR
-
-## Prerequisites
-
-- The labs do not require a background in any statistical software or programming language
-
-- The labs require a computer with R, Rstudio, and the library `tidyverse` installed
-
----
-
 class: inverse, center, middle
-name: about-this-training
+name: statistical-programming
 
 # Statistical programming
 
 <html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
-
----
-
-# Statistical programming
-
-## Data work in development research
-
-```{r echo = FALSE, out.width="80%"}
-knitr::include_graphics("img/session1/data-cleaning-data-work.png")
-```
 
 ---
 
@@ -163,6 +126,7 @@ knitr::include_graphics("img/session1/data-work.png")
 - Programming consists of producing instructions for a computer to do something
 - In the context of data work, that "something" is statistical analysis, mathematical operations, or data transformations
 - Hence, statistical programming consists of producing instructions so our computers will conduct statistical analysis on data
+- From now on, we're going to refer to these instructions for data processes as **code**
 
 ```{r echo = FALSE, out.width="55%"}
 knitr::include_graphics("img/session1/data-work-with-instructions.png")
@@ -172,44 +136,7 @@ knitr::include_graphics("img/session1/data-work-with-instructions.png")
 
 # Statistical programming
 
-- You can think of statistical programming as writing a recipe
-
-```{r echo = FALSE, out.width="68%"}
-knitr::include_graphics("img/session1/data-work-and-cooking.png")
-```
-
-- From now on, we're going to refer to these instructions for data processes as **code**
-
----
-
-class: inverse, center, middle
-name: about-this-training
-
-# Reproducibility
-
-<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
-
----
-
-# Reproducibility
-
-What if this happens?
-
-```{r echo = FALSE, out.width="75%"}
-knitr::include_graphics("img/session1/data-work-reproducibility.png")
-```
-
----
-
-# Reproducibility
-
-```{r echo = FALSE, out.width="70%"}
-knitr::include_graphics("img/session1/retracted-study.png")
-```
-
----
-
-# Reproducibility
+## Reproducibility
 
 In science, the formal definition of reproducibility was provided by [Bollen et al. (2015)](https://www.nsf.gov/sbe/AC_Materials/SBE_Robust_and_Reliable_Research_Report.pdf):
 
@@ -223,36 +150,8 @@ This is also usually referred to as *computational reproducibility*.
 
 ---
 
-# Reproducibility
-
-This may seem like a low bar, but:
-
-```{r echo = FALSE, out.width="40%"}
-knitr::include_graphics("img/session1/reproducibility-numbers.png")
-```
-
-[from Gertler, Galiani, Romero (2014)](https://www.nature.com/articles/d41586-018-02108-9)
-
----
-
-# Reproducibility
-
-Reproducibility can fail because of many reasons:
-
-- Lack of inputs or code
-
-- Lack of clarity on how to execute (run) code
-
-- Code mistakes that inherently lead to unstable results (like the sorting example)
-
-- Differences in versions of software, programming languages, or functions
-
-But fear not! one of the learning objectives of these labs is to learn how to write reproducible R code.
-
----
-
 class: inverse, center, middle
-name: about-this-training
+name: writing-r-code
 
 # Writing R code
 
@@ -338,15 +237,16 @@ knitr::include_graphics("img/session1/exercise1.png")
 ## Exercise 2: writing a short script
 
 .pull-left[
-1. Open a new script with `File` >> `New File` >> `R Script`
+- Open a new script with `File` >> `New File` >> `R Script`
 
-1. Write or copy the following text into the script
+- Write or copy the following text into the script
 
-  + `print("hello")`
-  + `print("bonjour")`
-  + `print("hola")`
-  + `print("bom dia")`
-  
+```{r eval=FALSE}
+print("hello")
+print("bonjour")
+print("hola")
+print("bom dia")
+```
   
 1. Select the text you introduced with your mouse
 
@@ -456,6 +356,13 @@ knitr::include_graphics("img/session1/environment.png")
 
 4. Print `x3`. It should show the value 65
 
+```{r eval=FALSE}
+x1 <- 50
+x2 <- 15
+x3 <- x1 + x2
+print(x3)
+```
+
 ---
 
 # Writing R code
@@ -477,7 +384,7 @@ knitr::include_graphics("img/session1/exercise3.png")
 ---
 
 class: inverse, center, middle
-name: about-this-training
+name: data-in-r
 
 # Data in R
 
@@ -541,14 +448,6 @@ knitr::include_graphics("img/session1/environment2.png")
 ```{r echo = FALSE, out.width="70%"}
 knitr::include_graphics("img/session1/environment2.png")
 ```
-
----
-
-# Data in R
-
-- Since dataframes are also objects, we can refer to them with their names (exm: `admin_data`)
-
-- We'll see an example of that in the next exercise
 
 ---
 
@@ -652,7 +551,7 @@ knitr::include_graphics("img/session1/environment3.png")
 ---
 
 class: inverse, center, middle
-name: about-this-training
+name: functions-in-r
 
 # Functions in R
 
@@ -703,28 +602,8 @@ knitr::include_graphics("img/session1/function-stored.png")
 
 ---
 
-# Functions in R
-
-## Exercise 7: Using the function `summary()`
-
-1. Compute the summary statistics of the variables of `admin_data` and save the result with `admin_summary <- summary(admin_data)`
-
-2. Print the stored result with `print(admin_sumary)`
-
----
-
-# Functions in R
-
-Note that this code is both creating a new object with `admin_summary <- summary(admin_data)` and printing the result in the console with `print(admin_summary)`.
-
-```{r echo = FALSE, out.width="75%"}
-knitr::include_graphics("img/session1/exercise7-annotated.png")
-```
-
----
-
 class: inverse, center, middle
-name: about-this-training
+name: r-libraries
 
 # R libraries
 
@@ -758,11 +637,10 @@ knitr::include_graphics("img/session1/r-libraries.png")
 
 We'll install two libraries that we'll use extensively in the labs: `haven` and `here`
 
-## Exercise 8: Installing libraries
+## Exercise 7: Installing libraries
 
-1. Install the libraries by using `install.packages()`
+1. Install the library `here` by using `install.packages()`
 
- + `install.packages("haven")`
  + `install.packages("here")`
  + Note the quotes (`" "`) in the package names
  + **Introduce this code in the console**, not the script panel
@@ -781,15 +659,13 @@ knitr::include_graphics("img/session1/install-haven.png")
 knitr::include_graphics("img/session1/installing-haven.png")
 ```
 
-Remember to do this for the installation of `here` as well.
-
 ---
 
 # R libraries
 
-Now that `haven` and `here` are installed, we only need to load them to start using the functions they have.
+Now `here` is installed, we only need to load them to start using the functions they have.
 
-## Exercise 9: Loading libraries
+## Exercise 8: Loading libraries
 
 .pull-left[
 1. Load `haven` with: `library(haven)`
@@ -830,7 +706,7 @@ knitr::include_graphics("img/session1/loading.png")
 ---
 
 class: inverse, center, middle
-name: about-this-training
+name: file-paths
 
 # File paths
 
@@ -934,7 +810,7 @@ setwd("C:/path/that/only/exists/in/my/computer")
 
 Save your current script by clicking in the floppy disk icon **before starting this exercise**.
 
-## Exercise 10
+## Exercise 9
 
 1. Create a folder named `msfr-r-labs` in your preferred location in your computer
 
@@ -1006,7 +882,7 @@ df <- read.csv(path)
 
 # File paths
 
-## Exercise 11
+## Exercise 10
 
 1. Start a new script with `File` > `New File` > `R Script` 
 
@@ -1014,13 +890,10 @@ df <- read.csv(path)
 
 1. Use `read_stata()` to load the file and assign it to an object with `<-`. The argument of `read_stata()` should be the object `path`.
 
-Some notes:
-
-+ `read_stata()` is a function from the library `haven`. You can only use it after loading `haven` with `library(haven)` (we did this already in exercise 9)
-  
-+ The same happens with `here()`, which is a function from the library `here`. You can only use `here()` after having run `library(here)` (exercise 9)
-
-+ Remember to assign the dataframe you're reading to an object. You can call it `admin_data` as we did before
+```{r eval=FALSE}
+path <- here("DataWork", "data", "raw", "admin_data.dta")
+admin_data <- read_stata(path)
+```
 
 ---
 
@@ -1031,11 +904,13 @@ path <- here("DataWork", "data", "raw", "admin_data.dta")
 admin_data <- read_stata(path)
 ```
 
-or you could have used:
+Some notes:
 
-```{r, eval=FALSE}
-admin_data <- read_stata(here("DataWork", "data", "raw", "admin_data.dta"))
-```
++ `read_stata()` is a function from the library `haven`. You can only use it after loading `haven` with `library(haven)` (we did this already in exercise 9)
+  
++ The same happens with `here()`, which is a function from the library `here`. You can only use `here()` after having run `library(here)` (exercise 9)
+
++ Remember to assign the dataframe you're reading to an object. You can call it `admin_data` as we did before
 
 ---
 
@@ -1050,7 +925,7 @@ knitr::include_graphics("img/session1/exercise11.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: piping
 
 # Piping
 
@@ -1069,8 +944,6 @@ summary(log(admin_data))
 ```
 
 - In this case, R is taking the *output* (result) of `log(admin_data)` as the *input* of `summary()`
-
-- The name of this programming technique is **function inception** or **metaprogramming**
 
 ---
 
@@ -1135,7 +1008,7 @@ Pipes are part of the libraries included in the tidyverse. When you loaded `dply
 
 # Piping
 
-## Exercise 12: Load data with pipes
+## Exercise 11: Load data with pipes
 
 - Use the functions `here()` and `read.csv()` with pipes between them (`%>%`) to read the file `DataWork/data/raw/admin_data_long.csv`. Name the dataframe `admin_data_long`. Some hints:
 

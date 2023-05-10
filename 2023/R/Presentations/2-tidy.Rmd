@@ -1,5 +1,5 @@
 ---
-title: "Session 2 - Tidy data management"
+title: "2 - Tidy data management"
 subtitle: "R labs - Manage Successful Field Research"
 author: "Galileu Kim, Luis Eduardo San Martin"
 date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2023"
@@ -59,6 +59,12 @@ xaringanExtra::use_logo(
 # Table of contents
 
 1. [About the session](#about-this-session)
+1. [Tidy data](#tidy-data)
+1. [Tidying a long dataset](#tidy-long)
+1. [Tidying datasets with multiple units](#tidy-multiple)
+1. [Collapsing](#collapsing)
+1. [Merging](#merging)
+1. [Saving the results](#saving)
 
 ---
 
@@ -90,7 +96,7 @@ knitr::include_graphics("img/session2/intro2.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: tidy-data
 
 # Tidy data
 
@@ -234,7 +240,7 @@ knitr::include_graphics("img/session2/admin-data-long-unit-highlight.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: tidy-long
 
 # Tidying a long dataset
 
@@ -279,21 +285,6 @@ knitr::include_graphics("img/session2/tidying-admin-data.png")
 - `tidyr` is part of the suite of packages included in the tidyverse. You don't have to install it if you installed the tidyverse
 
 - `tidyr` allows us to use functions to reshape R dataframes
-]
-.pull-right[
-```{r echo = FALSE, out.width="60%"}
-knitr::include_graphics("img/session2/tidyr.png")
-```
-]
-
----
-
-# Tidying a long dataset
-
-## `tidyr`
-
-.pull-left[
-- `tidyr` has multiple functions to make dataframes tidy
 
 - When dataframes have data stacked by rows (long data), we use the function `pivot_wider()` to make it tidy
 ]
@@ -379,7 +370,7 @@ knitr::include_graphics("img/session2/admin-data-tidy.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: tidy-multiple
 
 # Tidying datasets with multiple units
 
@@ -494,7 +485,9 @@ When there are multiple units of observation in the same dataset, the process
 requires additional steps:
 
 - Identify all the variables that were measured at the same level of observation
+
 - Create separate tables for each level of observation
+
 - Reshape the data
 
 ---
@@ -753,7 +746,7 @@ knitr::include_graphics("img/session2/hh-tidy-explained.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: collapsing
 
 # Collapsing
 
@@ -871,7 +864,7 @@ knitr::include_graphics("img/session2/village-tidy.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: merging
 
 # Merging
 
@@ -927,7 +920,7 @@ knitr::include_graphics("img/session2/lwh_hh2.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: saving
 
 # Saving the results
 
@@ -939,6 +932,7 @@ name: about-this-session
 
 ## Exercise 9: Save the tidy data tables
 
+- Save your script in `DataWork/code` by clicking in the floppy disk icon
 - Use the function `saveRDS()` to save all your tidy dataframes into `.Rds` files in the folder `DataWork/data/intermediate`
 
 ```{r eval=FALSE}
@@ -947,13 +941,13 @@ output_folder <- here("DataWork", "data", "intermediate")
 
 # Saving
 saveRDS(admin_data_tidy,
-        here(output_folder, "admin-data.Rds"))
+        here(output_folder, "admin-data-ADD_YOUR_INITIALS.Rds"))
 saveRDS(lwh_hh,
-        here(output_folder, "LWH-households.Rds"))
+        here(output_folder, "LWH-households-ADD_YOUR_INITIALS.Rds"))
 saveRDS(lwh_food,
-        here(output_folder, "LWH-food-source.Rds"))
+        here(output_folder, "LWH-food-source-ADD_YOUR_INITIALS.Rds"))
 saveRDS(lwh_village,
-        here(output_folder, "LWH-villages.Rds"))
+        here(output_folder, "LWH-villages-ADD_YOUR_INITIALS.Rds"))
 ```
 
 - `.Rds` is the native file extension of R for dataframes, similar to Excel's `.xlsx`
