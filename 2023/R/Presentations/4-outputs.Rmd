@@ -1,5 +1,5 @@
 ---
-title: "Session 4 - Descriptive satistics, figures, and tables"
+title: "4 - Descriptive satistics, figures, and tables"
 subtitle: "R labs - Manage Successful Field Research"
 author: "Rony Rodriguez Ramirez, Luis Eduardo San Martin"
 date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2023"
@@ -71,6 +71,14 @@ xaringanExtra::use_logo(
 
 1. [About the session](#about-this-session)
 
+1. [Creating outputs](#creating-outputs)
+
+1. [Data explortation](#data-exploration)
+
+1. [Descriptive tables](#descriptive-tables)
+
+1. [Data visualization](#data-visualization)
+
 ---
 
 class: inverse, center, middle
@@ -91,7 +99,7 @@ knitr::include_graphics("img/session4/data-work-outputs.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: creating-outputs
 
 # Creating outputs
 
@@ -179,7 +187,7 @@ library(ggplot2)
 - Use `here()` and `readRDS()` to read the file in `DataWork/data/intermediate/clean/LWH-households-clean.Rds`
 
 ```{r eval=FALSE}
-path  <- here("Data", "DataWork", "data", "intermediate", "clean")
+path  <- here("DataWork", "data", "intermediate", "clean")
 df_hh <- readRDS(here(path, "LWH-households-clean.Rds"))
 ```
 
@@ -193,7 +201,7 @@ df_hh <- readRDS(here(path, "LWH-households-clean.Rds"))
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: #data-exploration
 
 # Data exploration
 
@@ -280,29 +288,34 @@ df_hh %>% tabyl(id_08, id_09)
 
 # Data exploration
 
+.pull-left[
 ```{r eval=FALSE}
 # Tabulating district
 df_hh %>% tabyl(id_09)
 ```
 
-```{r warning=FALSE, message=FALSE, echo=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 # Tabulating district
 df_hh %>% tabyl(id_09) %>% knitr::kable()
 ```
 
----
+]
+.pull-right[
+```{r eval=FALSE}
+# Cross-tabulating sector and district
+df_hh %>% tabyl(id_08, id_09)
+```
 
-# Data exploration
-
-```{r}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 # Cross-tabulating sector and district
 df_hh %>% tabyl(id_08, id_09) %>% knitr::kable()
 ```
+]
 
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: descriptive-tables
 
 # Descriptive tables
 
@@ -515,7 +528,7 @@ knitr::include_graphics("img/session4/desc-output-no-labels.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: data-visualization
 
 # Data visualization
 
