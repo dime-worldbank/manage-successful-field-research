@@ -90,14 +90,6 @@ knitr::include_graphics("img/session4/data-work-outputs.png")
 
 ---
 
-# About this session
-
-## What we will learn today
-
-1.
-
----
-
 class: inverse, center, middle
 name: about-this-session
 
@@ -187,7 +179,7 @@ library(ggplot2)
 - Use `here()` and `readRDS()` to read the file in `DataWork/data/intermediate/clean/LWH-households-clean.Rds`
 
 ```{r eval=FALSE}
-path  <- here("DataWork", "data", "intermediate", "clean")
+path  <- here("Data", "DataWork", "data", "intermediate", "clean")
 df_hh <- readRDS(here(path, "LWH-households-clean.Rds"))
 ```
 
@@ -607,9 +599,13 @@ ggplot(data = <DATA>) +
 Create a scatterplot with the x-axis set to `inc_01` and the y-axis equal to `inc_02`.
 
 ```{r eval=FALSE}
-ggplot(data = df_hh,
-       aes(x = inc_01,
-           y = inc_02)) +
+ggplot(
+  data = df_hh,
+  aes(
+    x = inc_01,
+    y = inc_02
+  )
+) +
   geom_point()
 ```
 
@@ -617,13 +613,33 @@ ggplot(data = df_hh,
 
 # Data visualization
 
-```{r out.width = "60%"}
+
+.pull-left[
+```{r eval = FALSE}
 # With pipes:
 df_hh %>%
-  ggplot(aes(x = inc_01,
-             y = inc_02)) +
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02)
+  ) +
   geom_point()
 ```
+]
+
+
+.pull-rigth[
+```{r out.width = "50%", echo = FALSE}
+# With pipes:
+df_hh %>% #<<
+  ggplot(
+    aes(
+      x = inc_01,
+      y = inc_02)
+  ) +
+  geom_point()
+```
+]
 
 ---
 
@@ -1173,7 +1189,7 @@ ggsave(
 
 class: inverse, center, middle
 
-# Thanks! // ¡Gracias!
+# Thanks! // ¡Gracias! // 고맙습니다
 
 <html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
 

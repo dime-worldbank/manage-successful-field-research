@@ -83,13 +83,6 @@ name: about-this-session
 knitr::include_graphics("img/session3/data-work-cleaning.png")
 ```
 
----
-
-# About this session
-
-## What we will learn today
-
-1. 
 
 ---
 
@@ -179,9 +172,12 @@ knitr::include_graphics("img/session3/cleaning-packages-logos.png")
 - Use the following code to load the data
 
 ```{r, eval=FALSE}
-df_village <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-village.Rds")) %>% clean_names()
-df_hh      <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-HH.Rds")) %>% clean_names()
-df_food    <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-food-consumption.Rds")) %>% clean_names()
+df_village <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-village.Rds")) %>% 
+  clean_names()
+df_hh      <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-HH.Rds")) %>% 
+  clean_names()
+df_food    <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-food-consumption.Rds")) %>% 
+  clean_names()
 ```
 
 ```{r, echo=FALSE}
@@ -277,8 +273,10 @@ Imagine that your government counterpart, from whom you received the administrat
 ```{r eval=FALSE}
 # Note that district names in df_village are uppercase
 df_village %>%
-  filter((district == "KAYONZA" & village == "Rukore") |
-         (district == "RWAMAGANA" & village == "Karuyenzi")) %>%
+  filter(
+    (district == "KAYONZA" & village == "Rukore") |
+    (district == "RWAMAGANA" & village == "Karuyenzi")
+  ) %>%
   nrow()
 ```
 
@@ -291,10 +289,11 @@ df_village %>%
 # Correcting information from the field
 
 ```{r}
-df_village_subset <-
-  df_village %>%
-  filter(!(district == "KAYONZA" & village == "Rukore") &
-         !(district == "RWAMAGANA" & village == "Karuyenzi"))
+df_village_subset <- df_village %>%
+  filter(
+    !(district == "KAYONZA" & village == "Rukore") &
+    !(district == "RWAMAGANA" & village == "Karuyenzi")
+  )
 ```
 
 ```{r echo = FALSE, out.width="60%"}
@@ -340,10 +339,14 @@ knitr::include_graphics("img/session3/env-filter.png")
 - Use the following code to replace the data point correctly:
 
 ```{r}
-df_food_corrected <-
-  df_food %>%
-  mutate(exp25 = case_when(id_05 == 3233 & food == "Flour" ~ 3,
-                           TRUE ~ exp25))
+df_food_corrected <- df_food %>%
+  mutate(
+    exp25 = case_when(
+      id_05 == 3233 & food == "Flour" ~ 3,
+      TRUE ~ exp25
+    )
+  )
+
 ```
 
 ---
@@ -351,10 +354,13 @@ df_food_corrected <-
 # Correcting information from the field
 
 ```{r eval=FALSE}
-df_food_corrected <-
-  df_food %>%
-  mutate(exp25 = case_when(id_05 == 3233 & food == "Flour" ~ 3,
-                           TRUE ~ exp25))
+df_food_corrected <- df_food %>%
+  mutate(
+    exp25 = case_when(
+      id_05 == 3233 & food == "Flour" ~ 3,
+      TRUE ~ exp25
+    )
+  )
 ```
 
 Notice the following in this code:
@@ -370,10 +376,13 @@ Notice the following in this code:
 # Correcting information from the field
 
 ```{r eval=FALSE}
-df_food_corrected <-
-  df_food %>%
-  mutate(exp25 = case_when(id_05 == 3233 & food == "Flour" ~ 3,
-                           TRUE ~ exp25))
+df_food_corrected <- df_food %>%
+  mutate(
+    exp25 = case_when(
+      id_05 == 3233 & food == "Flour" ~ 3,
+      TRUE ~ exp25
+    )
+  )
 ```
 
 Notice the following in this code:
@@ -454,12 +463,15 @@ Not all the information in your data will be meaningful for development research
 2. Drop these unnecessary columns with the following code:
 
 ```{r}
-df_hh_less_cols <-
-  df_hh %>%
-  select(-c(device_id,
-            sim_number,
-            id_10_confirm,
-            id_10_corrected))
+df_hh_less_cols <- df_hh %>%
+  select(
+    -c(
+      device_id,
+      sim_number,
+      id_10_confirm,
+      id_10_corrected
+    )
+  )
 ```
 
 ---
@@ -468,11 +480,13 @@ df_hh_less_cols <-
 
 ```{r eval=FALSE}
 # Another option using a function for easier selection
-df_hh_less_cols <-
-  df_hh %>%
-  select(-c(device_id,
-            sim_number,
-            starts_with("id_10_"))
+df_hh_less_cols <- df_hh %>%
+  select(
+    -c(
+      device_id,
+      sim_number,
+      starts_with("id_10_")
+    )
 # note that the starts_with() here selects id_10_confirm and id_10_corrected
 ```
 
@@ -498,11 +512,12 @@ knitr::include_graphics("img/session3/env-negative-select.png")
 
 ```{r eval=FALSE}
 # General example:
-new_df <-
-  old_df %>%
-  mutate(new_col1 = value1,
-         new_col2 = value2,
-         ....)
+new_df <- old_df %>%
+  mutate(
+    new_col1 = value1,
+    new_col2 = value2,
+    ...
+  )
 ```
 
 ---
@@ -523,11 +538,12 @@ new_df <-
 
 ```{r eval=FALSE}
 # General example:
-new_df <-
-  old_df %>%
-  mutate(new_col1 = value1,
-         new_col2 = value2,
-         ....)
+new_df <- old_df %>%
+  mutate(
+    new_col1 = value1,
+    new_col2 = value2,
+    ...
+  )
 ```
 
 ---
@@ -535,10 +551,11 @@ new_df <-
 # Getting data ready for analysis and construction
 
 ```{r}
-df_hh_new_cols <-
-  df_hh_less_cols %>%
-  mutate(year             = 2017,
-         collection_stage = "baseline")
+df_hh_new_cols <- df_hh_less_cols %>%
+  mutate(
+    year = 2017,
+    collection_stage = "baseline"
+  )
 ```
 
 ```{r echo = FALSE, out.width="50%"}
@@ -600,8 +617,7 @@ knitr::include_graphics("img/session3/view-labels.png")
   + The result is a new dataframe with the variable labels
   
 ```{r eval=FALSE}
-new_df <-
-  old_df %>%
+new_df <- old_df %>%
   set_variable_labels(
     var1 = "label for var 1",
     var2 = "label for var 2",
@@ -623,8 +639,7 @@ new_df <-
 
 ```{r eval=FALSE}
 # Remember the general use of set_variable_labels()
-new_df <-
-  old_df %>%
+new_df <- old_df %>%
   set_variable_labels(
     var1 = "label for var 1",
     var2 = "label for var 2",
@@ -638,8 +653,7 @@ new_df <-
 
 ```{r, echo = FALSE}
 # Village dataframe
-df_village_labelled <-
-  df_village_subset %>%
+df_village_labelled <- df_village_subset %>%
   set_variable_labels(
     province = "Province",
     district = "District",
@@ -653,8 +667,7 @@ df_village_labelled <-
 .pull-left3[
 ```{r, eval = FALSE}
 # Village dataframe
-df_village_labelled <-
-  df_village_subset %>%
+df_village_labelled  <- df_village_subset %>%
   set_variable_labels(
     province = "Province",
     district = "District",
@@ -663,6 +676,7 @@ df_village_labelled <-
     village  = "Village",
     hh_count = "Number of households"
   )
+
 View(df_village_labelled)
 ```
 ]
@@ -677,15 +691,13 @@ knitr::include_graphics("img/session3/village-labelled.png")
 
 ```{r}
 # Village dataframe
-df_food_labelled <-
-  df_food_corrected %>%
+df_food_labelled <- df_food_corrected %>%
   set_variable_labels(
     exp25 = "How many days in the last 1 week has your household consumed?"
   )
 
 # Household dataframe
-df_hh_labelled <-
-  df_hh_new_cols %>%
+df_hh_labelled <- df_hh_new_cols %>%
   set_variable_labels(
     year = "Year",
     collection_stage = "Stage of data collection"
@@ -758,8 +770,7 @@ class(df_village_labelled$hh_count)
 
 ```{r eval=FALSE}
 # General use of mutate with column type functions
-new_df <-
-  old_df %>%
+new_df <- old_df %>%
   mutate(
     col1 = as.numeric(col1),    # double type
     col2 = as.character(col2),  # character type
@@ -871,8 +882,7 @@ labels_exp26 <- c(
   "aid, international NGO, or GoR"
 )
 
-df_food_factors <-
-  df_food_labelled %>%
+df_food_factors <- df_food_labelled %>%
   mutate(
     food = factor(food),
     exp26 = factor(
@@ -918,8 +928,7 @@ name: about-this-session
 ```{r eval=FALSE}
 # Example for mutate. Note that the input
 # and the stored dataframes are the same
-old_df <-
-  old_df %>%
+old_df <- old_df %>%
   mutate(
     col1 = ...,
     col2 = ...,
@@ -944,7 +953,6 @@ old_df <-
 ## Exercise 9: Save your work
 
 1. Save your script in `DataWork/code` by clicking in the floppy disk icon of the script panel
-
 1. Save your clean dataframes with `saveRDS()` in `DataWork/data/intermediate/clean`
 
 ```{r eval=FALSE}
@@ -952,19 +960,25 @@ old_df <-
 output_folder <- here("DataWork", "data", "intermediate", "clean")
 
 # Saving
-saveRDS(df_village_labelled,
-        here(output_folder, "LWH-villages-clean.Rds"))
-saveRDS(df_food_factors,
-        here(output_folder, "LWH-food-clean.Rds"))
-saveRDS(df_hh_labelled,
-        here(output_folder, "LWH-households-clean.Rds"))
+saveRDS(
+  df_village_labelled,
+  here(output_folder, "LWH-villages-clean.Rds")
+)
+saveRDS(
+  df_food_factors,
+  here(output_folder, "LWH-food-clean.Rds")
+)
+saveRDS(
+  df_hh_labelled,
+  here(output_folder, "LWH-households-clean.Rds")
+)
 ```
 
 ---
 
 class: inverse, center, middle
 
-# Thanks! // ¡Gracias!
+# Thanks! // ¡Gracias! //  감사합니다
 
 <html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
 
