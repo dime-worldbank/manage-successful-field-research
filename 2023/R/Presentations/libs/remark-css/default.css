@@ -57,6 +57,14 @@ a, a > code {
   float: right;
   width: 59%;
 }
+.pull-left4 {
+  float: left;
+  width: 40%;
+}
+.pull-right4 {
+  float: right;
+  width: 55%;
+}
 .pull-right + * {
   clear: both;
 }

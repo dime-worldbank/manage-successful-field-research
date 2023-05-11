@@ -1,5 +1,5 @@
 ---
-title: "Session 3 - Data cleaning"
+title: "3 - Data cleaning"
 subtitle: "R labs - Manage Successful Field Research"
 author: "Rony Rodriguez Ramirez, Luis Eduardo San Martin"
 date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2023"
@@ -66,6 +66,12 @@ xaringanExtra::use_logo(
 
 1. [About the session](#about-this-session)
 
+1. [Data cleaning](#data-cleaning)
+
+1. [Correcting information from the field](#correcting-from-field)
+
+1. [Getting data ready for analysis and construction](#getting-data-ready)
+
 ---
 
 class: inverse, center, middle
@@ -87,7 +93,7 @@ knitr::include_graphics("img/session3/data-work-cleaning.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: data-cleaning
 
 # Data cleaning
 
@@ -172,11 +178,11 @@ knitr::include_graphics("img/session3/cleaning-packages-logos.png")
 - Use the following code to load the data
 
 ```{r, eval=FALSE}
-df_village <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-village.Rds")) %>% 
+df_village <- readRDS(here("DataWork", "data", "intermediate", "tidy", "tidy-village.Rds")) %>% 
   clean_names()
-df_hh      <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-HH.Rds")) %>% 
+df_hh      <- readRDS(here("DataWork", "data", "intermediate", "tidy", "tidy-HH.Rds")) %>% 
   clean_names()
-df_food    <- readRDS(here("Data", "DataWork", "data", "intermediate", "tidy", "tidy-food-consumption.Rds")) %>% 
+df_food    <- readRDS(here("DataWork", "data", "intermediate", "tidy", "tidy-food-consumption.Rds")) %>% 
   clean_names()
 ```
 
@@ -206,7 +212,7 @@ colnames(df_village)
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: #correcting-from-field
 
 # Correcting information from the field
 
@@ -268,25 +274,7 @@ Imagine that your government counterpart, from whom you received the administrat
 
 *(...) These are the villages Rukore in district Kayonza and Karuyenzi in district Rwamagana.*
 
-- Use this code to subset the rows of interest and make sure that they are indeed two
-
-```{r eval=FALSE}
-# Note that district names in df_village are uppercase
-df_village %>%
-  filter(
-    (district == "KAYONZA" & village == "Rukore") |
-    (district == "RWAMAGANA" & village == "Karuyenzi")
-  ) %>%
-  nrow()
-```
-
-- If the result was 2, then proceed to save the result of filtering into a new dataframe named `df_village_subset`
-
-- You will have to add a negation operator (`!`) in front of each of the two conditions and separate them by an "and" (`&`) operator instead of "or" (`|`)
-
----
-
-# Correcting information from the field
+- Use this code to filter the dataframe and exclude these rows
 
 ```{r}
 df_village_subset <- df_village %>%
@@ -295,6 +283,12 @@ df_village_subset <- df_village %>%
     !(district == "RWAMAGANA" & village == "Karuyenzi")
   )
 ```
+
+- Note that we're using a negation operator (`!`) and an "and" (`&`) operator
+
+---
+
+# Correcting information from the field
 
 ```{r echo = FALSE, out.width="60%"}
 knitr::include_graphics("img/session3/env-filter.png")
@@ -406,7 +400,7 @@ knitr::include_graphics("img/session3/data-point-corrected.png")
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: getting-data-ready
 
 # Getting data ready for analysis and construction
 
@@ -465,7 +459,7 @@ Not all the information in your data will be meaningful for development research
 ```{r}
 df_hh_less_cols <- df_hh %>%
   select(
-    -c(
+    -c(                
       device_id,
       sim_number,
       id_10_confirm,
@@ -664,7 +658,7 @@ df_village_labelled <- df_village_subset %>%
   )
 ```
 
-.pull-left3[
+.pull-left4[
 ```{r, eval = FALSE}
 # Village dataframe
 df_village_labelled  <- df_village_subset %>%
@@ -680,7 +674,7 @@ df_village_labelled  <- df_village_subset %>%
 View(df_village_labelled)
 ```
 ]
-.pull-right3[
+.pull-right4[
 ```{r echo = FALSE, out.width="99%"}
 knitr::include_graphics("img/session3/village-labelled.png")
 ```
@@ -962,15 +956,15 @@ output_folder <- here("DataWork", "data", "intermediate", "clean")
 # Saving
 saveRDS(
   df_village_labelled,
-  here(output_folder, "LWH-villages-clean.Rds")
+  here(output_folder, "LWH-villages-clean-YOUR_INITIALS.Rds")
 )
 saveRDS(
   df_food_factors,
-  here(output_folder, "LWH-food-clean.Rds")
+  here(output_folder, "LWH-food-clean-YOUR_INITIALS.Rds")
 )
 saveRDS(
   df_hh_labelled,
-  here(output_folder, "LWH-households-clean.Rds")
+  here(output_folder, "LWH-households-clean-YOUR_INITIALS.Rds")
 )
 ```
 
