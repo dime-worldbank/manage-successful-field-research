@@ -21,6 +21,7 @@
   library(dplyr) # from tidyverse
   library(tidyr) # from tidyverse
   library(purrr) # from tidyverse
+  library(tidyselect) # from tidyverse
   library(janitor)
   library(openxlsx)
 
@@ -55,14 +56,12 @@
   
   duplicate_check <- survey_data %>%
       group_by(hhid) %>% # If the dataset was uniquely identified, each ID would only appear once
-      filter(n() > 1) %>%
+      filter(n() > 1) %>% # n() counts observations relative to a grouped-by column
       ungroup() %>%
       select(hhid, enumerator, province:village, inc_01, a_crop_c1_p1, crp09qa_c1_p1)
 
-# There are three sets of duplicate IDs that we need to deal with. For now, we still want to include any other
+# There are three sets of duplicate ID s that we need to deal with. For now, we still want to include any other
 # issues we find with these duplicates. So we're going to modify their IDs to keep going
-  
-  duplicate_ids <- duplicate_check %>% select(hhid) %>% distinct() %>% pull()
   
   survey_data <- survey_data %>%
       group_by(hhid) %>%
@@ -81,14 +80,15 @@
 # Step 1 — Identify variables to check
   
   outlier_variables <- c(
-      "inc_01", "crp10a_c1_p1",
+      "inc_01",
+      "crp10a_c1_p1",
       "crp10a_c1_p2"
   )
   
 # Note — This can also be done by running:
 #   outlier_variables <- survey_data %>%
 #       select(
-#           matches("^inc_"), matches("crp10a_c1_")
+#           starts_with("inc_"), starts_with("crp10a_c1_")
 #       ) %>%
 #       names()
   
@@ -134,7 +134,11 @@
   # median
   
   desc_stats_variables <- c(
-      "inc_01", "exp_25_1", "exp_25_2", "crp10a_c1_p1", "crp10a_c1_p2"
+      "inc_01",
+      "exp_25_1",
+      "exp_25_2",
+      "crp10a_c1_p1",
+      "crp10a_c1_p2"
   )
   
   desc_stats_labels <- c(
@@ -201,7 +205,7 @@
           )
       ) %>%
       select(
-          enumerator, sort(tidyselect::peek_vars()) # So that the days are ordered chronologically
+          enumerator, sort(peek_vars()) # So that the days are ordered chronologically
       )
   
   enumerator_check <- survey_data %>%
@@ -245,7 +249,7 @@
           )
       ) %>%
       select(
-          village, sort(tidyselect::peek_vars()) # So that the days are ordered chronologically
+          village, sort(peek_vars()) # So that the days are ordered chronologically
       )
   
   village_check <- survey_data %>%
