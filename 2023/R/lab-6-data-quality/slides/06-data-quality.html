@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Session 6: Ensuring Data Quality Monitoring</title>
+    <title>6 - Ensuring Data Quality Monitoring</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Marc-Andrea Fiorina" />
+    <meta name="author" content="Marc-Andrea Fiorina, Luis Eduardo San Martin" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
@@ -14,8 +14,8 @@
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
-    <link href="libs/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="libs/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/default.css" type="text/css" />
     <link rel="stylesheet" href="css/metropolis.css" type="text/css" />
     <link rel="stylesheet" href="css/metropolis-fonts.css" type="text/css" />
@@ -104,13 +104,25 @@ Note — This is a set of checks that could reasonably be expected to be conduct
 
 ---
 
-# Setting the Stage
+# Setting the Stage - 1
 
-Open the `06-data-quality-script.R` companion script in the folder `lab-6-data-quality/code/`. We will be reading through this script today, and you will follow along.
+1. Go to https://osf.io/7rw5v/files and download the following files:
+  + From the folder `Data`: `LWH_FUP2_raw_data.csv` and `village_data.csv`
+  + From the folder `Code`: `06-data-quality-script.R`
 
-Run `1. Setup`. If you do not have one of the packages installed, uncomment `install.packages("&lt;PACKAGE&gt;")` and run the section again.
+1. Copy `LWH_FUP2_raw_data.csv` and `village_data.csv` to `DataWork/data/raw`
 
-Run `2. Data Import` and `3. Basic Cleaning`. Notice that when running data quality checks, we often have to do a little data cleaning (in this case, converting missing values to `NA`) to make sure that the checks run correctly.
+1. Copy `06-data-quality-script.R` to `DataWork/code`
+
+1. Open RStudio by double-cliking your file `msfr-r-labs.Rproj` and open the script `06-data-quality-script.R`
+
+---
+
+# Setting the Stage - 2
+
+1. Select and run the section `1. Setup`. If you do not have one of the packages installed, uncomment `install.packages("&lt;PACKAGE&gt;")` and run the section again.
+
+1.  Select and run the sections `2. Data Import` and `3. Basic Cleaning`. Notice that when running data quality checks, we often have to do a little data cleaning (in this case, converting missing values to `NA`) to make sure that the checks run correctly.
 
 ---
 

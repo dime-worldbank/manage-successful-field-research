@@ -11,29 +11,27 @@
 
 # Run the install.packages() lines if you haven't installed there packages yet
 
-# install.packages("here")
 # install.packages("tidyverse")
-# install.packages("tidyselect")
 # install.packages("janitor")
 # install.packages("openxlsx")
+# install.packages("here")
 
   library(here)
-  library(tidyverse)
-  library(tidyselect)
+  library(readr) # from tidyverse
+  library(dplyr) # from tidyverse
+  library(tidyr) # from tidyverse
+  library(purrr) # from tidyverse
   library(janitor)
   library(openxlsx)
 
   ## 2. Data Import ----
   
-# Currently set up using a personal .Rproj file in the folder: /Github/manage-successful-field-research/2023/R/.
-# Will need to be standardized/have users create their own or provide the R project in the .zip folder.
-  
   survey_raw <- read_csv(
-      here("data", "LWH_FUP2_raw_data.csv"), na = ""
+      here("DataWork", "data", "raw", "LWH_FUP2_raw_data.csv"), na = ""
   )
   
   admin_raw <- read_csv(
-      here("data", "Admin_data.csv"), na = ""
+      here("DataWork", "data", "raw", "village_data.csv"), na = ""
   )
   
   ## 3. Basic Cleaning ----
@@ -308,9 +306,7 @@
   
 # Multiple options! Today we'll show how to export to Excel
   
-  hfc_excel <- openxlsx::loadWorkbook(
-      here("lab-6-data-quality", "output", "hfc_output.xlsx")
-  )
+  hfc_excel <- createWorkbook()
   
   hfc_sheets <- list(
       "duplicate_data"          = duplicate_check,
@@ -321,26 +317,35 @@
       "survey_programming_data" = survey_programming_check
   )
   
-  hfc_sheets %>%
-      map2(
-          names(hfc_sheets),
-          ~ openxlsx::writeData(
-              hfc_excel, sheet = .y, x = .x
-          )
-      )
+  map(
+      names(hfc_sheets),
+      .f = function(x){
+          addWorksheet(hfc_excel, x)
+      }
+  )
   
-  seq(1, 6) %>% # First six sheets
-      map(
-          .f = function(x) {
-              setRowHeights(hfc_excel, sheet = x, rows = 1:1000, heights = 40)
-              setColWidths(hfc_excel,  sheet = x, cols = 1:1000, widths  = 20)
-          }
+
+  map2(
+      hfc_sheets,
+      names(hfc_sheets),
+      ~ writeData(
+          hfc_excel, sheet = .y, x = .x
       )
+  )
+
+  map(
+      1:5, # First six sheets
+      .f = function(x) {
+          setRowHeights(hfc_excel, sheet = x, rows = 1:1000, heights = 40)
+          setColWidths(hfc_excel,  sheet = x, cols = 1:1000, widths  = 20)
+      }
+  )
   
 # One exception
   setColWidths(hfc_excel, sheet = 6, cols = 4, widths = 75)
   
-  openxlsx::saveWorkbook(
-      hfc_excel, here("lab-6-data-quality", "output", "hfc_output.xlsx"), overwrite = TRUE
+  saveWorkbook(
+      hfc_excel,
+      here("DataWork", "outputs", "hfc_output.xlsx"), overwrite = TRUE
   )
   

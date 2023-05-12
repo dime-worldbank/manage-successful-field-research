@@ -1,7 +1,7 @@
 ---
-title: "Session 6: Ensuring Data Quality Monitoring"
+title: "6 - Ensuring Data Quality Monitoring"
 subtitle: "Manage Successful Field Research"
-author: "Marc-Andrea Fiorina"
+author: "Marc-Andrea Fiorina, Luis Eduardo San Martin"
 date: "The World Bank -- DIME | [WB Github](https://github.com/worldbank) <br> May 2023"
 output:
   xaringan::moon_reader:
@@ -143,13 +143,25 @@ Note — This is a set of checks that could reasonably be expected to be conduct
 
 ---
 
-# Setting the Stage
+# Setting the Stage - 1
 
-Open the `06-data-quality-script.R` companion script in the folder `lab-6-data-quality/code/`. We will be reading through this script today, and you will follow along.
+1. Go to https://osf.io/7rw5v/files and download the following files:
+  + From the folder `Data`: `LWH_FUP2_raw_data.csv` and `village_data.csv`
+  + From the folder `Code`: `06-data-quality-script.R`
 
-Run `1. Setup`. If you do not have one of the packages installed, uncomment `install.packages("<PACKAGE>")` and run the section again.
+1. Copy `LWH_FUP2_raw_data.csv` and `village_data.csv` to `DataWork/data/raw`
 
-Run `2. Data Import` and `3. Basic Cleaning`. Notice that when running data quality checks, we often have to do a little data cleaning (in this case, converting missing values to `NA`) to make sure that the checks run correctly.
+1. Copy `06-data-quality-script.R` to `DataWork/code`
+
+1. Open RStudio by double-cliking your file `msfr-r-labs.Rproj` and open the script `06-data-quality-script.R`
+
+---
+
+# Setting the Stage - 2
+
+1. Select and run the section `1. Setup`. If you do not have one of the packages installed, uncomment `install.packages("<PACKAGE>")` and run the section again.
+
+1.  Select and run the sections `2. Data Import` and `3. Basic Cleaning`. Notice that when running data quality checks, we often have to do a little data cleaning (in this case, converting missing values to `NA`) to make sure that the checks run correctly.
 
 ---
 
