@@ -33,7 +33,7 @@ library(here)
 library(xaringanExtra)
 library(countdown)
 
-here::i_am("lab-6-data-quality/slides/06-data-quality.Rmd")
+here::i_am("Presentations/6-data-quality.Rmd")
 
 options(htmltools.dir.version = FALSE)
 opts_chunk$set(
