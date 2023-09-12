@@ -119,3 +119,9 @@ token.*
 tokens.*
 token/
 tokens/
+
+#######################
+# Files for R markdown presentations
+!2023/R/**/*.png
+!2023/R/Data/**
+2023/R/Data/DataWork.zip

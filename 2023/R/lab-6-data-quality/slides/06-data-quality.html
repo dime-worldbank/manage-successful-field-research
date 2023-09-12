@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Session 6: Ensuring Data Quality Monitoring</title>
+    <title>6 - Ensuring Data Quality Monitoring</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Marc-Andrea Fiorina" />
+    <meta name="author" content="Marc-Andrea Fiorina, Luis Eduardo San Martin" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
@@ -14,8 +14,8 @@
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
-    <link href="libs/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="libs/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/default.css" type="text/css" />
     <link rel="stylesheet" href="css/metropolis.css" type="text/css" />
     <link rel="stylesheet" href="css/metropolis-fonts.css" type="text/css" />
@@ -71,18 +71,32 @@ name: intro
 ### Purpose of this session
 
 - To show you how to create a basic, comprehensive set of data quality check outputs
+
 - To introduce a simple data process to run data quality checks efficiently
+
+---
+
+# Introduction
 
 ### What we will do today
 
 - Define a basic set of data quality checks to conduct
-- For each type of check, we will produce one or two outputs, in the form of a table or graph
+
+- For each type of check, we will produce one output in the form of a table
+
 - We will discuss options for importing, wrangling, exporting, and sharing data quality checks
+
+---
+
+# Introduction
 
 ### What we will not do today
 
 - Discuss back checks
+
 - Discuss non-data based forms of data quality checks, such as audio audits
+
+- Use R shiny
 
 ---
 
@@ -104,13 +118,25 @@ Note — This is a set of checks that could reasonably be expected to be conduct
 
 ---
 
-# Setting the Stage
+# Setting the Stage - 1
 
-Open the `06-data-quality-script.R` companion script in the folder `lab-6-data-quality/code/`. We will be reading through this script today, and you will follow along.
+1. Go to https://osf.io/7rw5v/files and download the following files:
+  + From the folder `Data`: `LWH_FUP2_raw_data.csv` and `village_data.csv`
+  + From the folder `Code`: `06-data-quality-script.R`
 
-Run `1. Setup`. If you do not have one of the packages installed, uncomment `install.packages("&lt;PACKAGE&gt;")` and run the section again.
+1. Copy `LWH_FUP2_raw_data.csv` and `village_data.csv` to `DataWork/data/raw`
 
-Run `2. Data Import` and `3. Basic Cleaning`. Notice that when running data quality checks, we often have to do a little data cleaning (in this case, converting missing values to `NA`) to make sure that the checks run correctly.
+1. Copy `06-data-quality-script.R` to `DataWork/code`
+
+1. Open RStudio by double-cliking your file `msfr-r-labs.Rproj` and open the script `06-data-quality-script.R`
+
+---
+
+# Setting the Stage - 2
+
+1. Select and run the section `1. Setup`. If you do not have one of the packages installed, uncomment `install.packages("&lt;PACKAGE&gt;")` and run the section again.
+
+1.  Select and run the sections `2. Data Import` and `3. Basic Cleaning`. Notice that when running data quality checks, we often have to do a little data cleaning (in this case, converting missing values to `NA`) to make sure that the checks run correctly.
 
 ---
 
@@ -137,7 +163,7 @@ name: duplicates
     - Drop them until they are resolved
     - Keep them. A possible way to do this is to modify the ID field for duplicate observations so that the dataframe is once more uniquely identified. e.g. if there are two observations with ID `101`, modify them to be `101_1` and `101_2`. The companion script shows how to do this.
 - Check with the data collectors to determine why the duplicate observations occurred.
-- Either dropping one of the duplicate observations or correct their ID in the data &lt;b&gt;&lt;i&gt;prior&lt;/i&gt;&lt;/b&gt; to running your data quality checks. This means creating a &lt;b&gt;&lt;i&gt;"corrections"&lt;/i&gt;&lt;/b&gt; script that is run prior to creating these quality check outputs.
+- If you find duplicates, fix them as part of your data tidying process.
 
 ]
 
@@ -150,7 +176,7 @@ In the companion script, the code:
 - Outputs duplicate observations to `duplicate check`, including:
     - Household enumerator, and location identifiers
     - Some outcome indicators. These can give an indication of whether the same household was surveyed twice or not.
-    
+
 - Modifies the `hhid` field in `survey_data` so that the dataframe is once again uniquely identified. e.g. there are two observations with `hhid == 3004`, so we change them to become `3004_1` and `3004_2`.
 
 ]
@@ -181,7 +207,7 @@ name: outliers
     - This range can be absolutely defined (e.g. if someone says they work more than 20 hours a day, we should confirm that).
     - This range can be defined relative to the variable's distribution in the sample. For instance, we could identify values that are more than 3 standard deviations away from the variable's mean.
 - Check the outlier values with the data collectors.
-- If there was a mistake, use a corrections script to fix the value. Once more, this should happen &lt;b&gt;&lt;i&gt;prior&lt;/i&gt;&lt;/b&gt; to the data quality checks process, so that only the "correct" outliers remain in the data.
+- If there was a mistake, fix the value in data cleaning.
 
 ]
 
@@ -282,7 +308,7 @@ In the companion script, the code:
 - Uses `group_by(enumerator, submissiondate)` to summarize the number of surveys collected per enumerator per day, creating `enumerator_check_by_day`. `pivot_wider()` reshapes the dataframe to be at the enumerator level.
 
 .notes[
-Note — SurveyCTO exports a `submissiondate` variable, but it has both the date and time of submission. A useful tool to convert this to date is the `lubridate::date()` function.
+Note — SurveyCTO exports a `submissiondate` variable, but it has both the date and time of submission. A useful tool to convert this to date is the `date()` function from the package `lubridate`.
 ]
 
 - Creates `enumerator_check` using `summarize()` to obtain number of surveys and descriptive statistics per enumerator.
@@ -375,7 +401,7 @@ In the companion script, the code:
     - Survey form definition — whether a survey submission used an old version of the survey.
     - Crop production vs. sale unit — whether a household provided the same unit for production and sale of a crop. This is an example of a condition that we may not want to hard-code into the survey, but that we may want to monitor or even discourage.
     - Wrong site — whether a household said that we had the wrong worksite on record for them.
-    
+
 - For each issue, uses `filter()` to create `&lt;ISSUE&gt;_check` and creates a new `issue` variable that describes the problem.
 
 - Uses `bind_rows()` and `left_join()` to create `survey_programming_check`, which includes:

@@ -11,33 +11,32 @@
 
 # Run the install.packages() lines if you haven't installed there packages yet
 
-# install.packages("here")
 # install.packages("tidyverse")
-# install.packages("tidyselect")
 # install.packages("janitor")
 # install.packages("openxlsx")
+# install.packages("here")
 
   library(here)
-  library(tidyverse)
-  library(tidyselect)
+  library(readr) # from tidyverse
+  library(dplyr) # from tidyverse
+  library(tidyr) # from tidyverse
+  library(purrr) # from tidyverse
+  library(tidyselect) # from tidyverse
   library(janitor)
   library(openxlsx)
 
   ## 2. Data Import ----
-  
-# Currently set up using a personal .Rproj file in the folder: /Github/manage-successful-field-research/2023/R/.
-# Will need to be standardized/have users create their own or provide the R project in the .zip folder.
-  
+
   survey_raw <- read_csv(
-      here("data", "LWH_FUP2_raw_data.csv"), na = ""
+      here("DataWork", "data", "raw", "LWH_FUP2_raw_data.csv"), na = ""
   )
-  
+
   admin_raw <- read_csv(
-      here("data", "Admin_data.csv"), na = ""
+      here("DataWork", "data", "raw", "village_data.csv"), na = ""
   )
-  
+
   ## 3. Basic Cleaning ----
-  
+
   survey_data <- survey_raw %>%
       mutate(
           across(
@@ -50,22 +49,20 @@
       )
 
   ## 4. Data Quality Check Dataframes Creation ----
-  
+
     ### Duplicate IDs ----
-  
+
 # Produce a dataset that has the households with duplicate IDs, with variables that will help solve them
-  
+
   duplicate_check <- survey_data %>%
       group_by(hhid) %>% # If the dataset was uniquely identified, each ID would only appear once
-      filter(n() > 1) %>%
+      filter(n() > 1) %>% # n() counts observations relative to a grouped-by column
       ungroup() %>%
       select(hhid, enumerator, province:village, inc_01, a_crop_c1_p1, crp09qa_c1_p1)
 
-# There are three sets of duplicate IDs that we need to deal with. For now, we still want to include any other
+# There are three sets of duplicate ID s that we need to deal with. For now, we still want to include any other
 # issues we find with these duplicates. So we're going to modify their IDs to keep going
-  
-  duplicate_ids <- duplicate_check %>% select(hhid) %>% distinct() %>% pull()
-  
+
   survey_data <- survey_data %>%
       group_by(hhid) %>%
       mutate(
@@ -75,27 +72,28 @@
           )
       ) %>%
       ungroup()
-  
+
     ### Outliers ----
-  
+
 # In our case, want to identify values that are more than 3 standard deviations away from the variable's mean
-  
+
 # Step 1 — Identify variables to check
-  
+
   outlier_variables <- c(
-      "inc_01", "crp10a_c1_p1",
+      "inc_01",
+      "crp10a_c1_p1",
       "crp10a_c1_p2"
   )
-  
+
 # Note — This can also be done by running:
 #   outlier_variables <- survey_data %>%
 #       select(
-#           matches("^inc_"), matches("crp10a_c1_")
+#           starts_with("inc_"), starts_with("crp10a_c1_")
 #       ) %>%
 #       names()
-  
+
 # Step 2 — Check for variables outside of expected range
-  
+
   outlier_check <- outlier_variables %>%
       map_dfr(
           ~ survey_data %>%
@@ -122,23 +120,27 @@
                   hhid, enumerator, issue_var, value = matches(.x), mean, sd, low_limit, high_limit
               )
       )
-  
+
 # Note — Ideally, we would want one mean and one standard deviation for income across all household
 # members. Try thinking about how we could implement that into the above.
 
     ### Descriptive Statistics ----
-  
+
 # For each variable of interest, we want to output its:
   # mean
   # standard deviation
   # mininum
   # maximum
   # median
-  
+
   desc_stats_variables <- c(
-      "inc_01", "exp_25_1", "exp_25_2", "crp10a_c1_p1", "crp10a_c1_p2"
+      "inc_01",
+      "exp_25_1",
+      "exp_25_2",
+      "crp10a_c1_p1",
+      "crp10a_c1_p2"
   )
-  
+
   desc_stats_labels <- c(
       "inc_01"       = "First household member income",
       "exp_25_1"     = "Days household has consumed flour in past week",
@@ -177,12 +179,12 @@
       )
 
     ### Enumerator-Level Checks ----
-  
+
 # For each enumerator, we want to check:
   # Number of submissions
   # Number of submissions per day
   # Average value of income and revenue
-  
+
   enumerator_check_by_day <- survey_data %>%
       group_by(enumerator, submissiondate) %>%
       summarize(
@@ -203,9 +205,9 @@
           )
       ) %>%
       select(
-          enumerator, sort(tidyselect::peek_vars()) # So that the days are ordered chronologically
+          enumerator, sort(peek_vars()) # So that the days are ordered chronologically
       )
-  
+
   enumerator_check <- survey_data %>%
       group_by(enumerator) %>%
       summarize(
@@ -221,12 +223,12 @@
       )
 
     ### Geographic/Administrative Unit-Level Checks ----
-  
+
 # For each geographic/administrative unit (in this case, village), we want to check:
   # Number of submissions
   # Number of submissions per day
   # Progress (%age of expected surveys completed)
-  
+
   village_check_by_day <- survey_data %>%
       group_by(village, submissiondate) %>%
       summarize(
@@ -247,9 +249,9 @@
           )
       ) %>%
       select(
-          village, sort(tidyselect::peek_vars()) # So that the days are ordered chronologically
+          village, sort(peek_vars()) # So that the days are ordered chronologically
       )
-  
+
   village_check <- survey_data %>%
       group_by(province, district, sector, cell, village) %>% # Can't just use "village" in case there are
                                                              # multiple villages with same name
@@ -263,24 +265,24 @@
           progress = paste0(round(num_surveys / num_to_survey, 3) * 100, "%")
       ) %>%
       left_join(village_check_by_day)
-  
+
     ### Survey Programming Checks ----
-  
+
 # Purpose — Monitor survey programming issues/peculiarities that either (1) can't be programmed into the
 # survey instrument or (2) don't have to be hard conditions, but we still want to avoid where possible.
-  
+
 # In this case:
   # Situations where the enumerator used an old survey version
   # Situations where the units used for produced crops and for sold crops are not the same
   # Situations where the household's site is not the correct one (just to monitor)
-  
+
 # Process: create a small dataframe with the same structure for each check, and then bind them
-  
+
   formdef_check <- survey_data %>%
       filter(formdef_version != "2305021814") %>%
       mutate(issue = "Enumerator used old survey version") %>%
       select(hhid, enumerator, issue)
-  
+
   unit_check <- survey_data %>%
       filter(crp08ua_c1_p1 != crp09ua_c1_p1 | crp08ua_c1_p2 != crp09ua_c1_p2) %>%
       mutate(issue = "Enumerator used different unit of measure for crops produced and crops sold") %>%
@@ -305,13 +307,11 @@
       )
 
   ## 5. Data Quality Checks Export ----
-  
+
 # Multiple options! Today we'll show how to export to Excel
-  
-  hfc_excel <- openxlsx::loadWorkbook(
-      here("lab-6-data-quality", "output", "hfc_output.xlsx")
-  )
-  
+
+  hfc_excel <- createWorkbook()
+
   hfc_sheets <- list(
       "duplicate_data"          = duplicate_check,
       "outlier_data"            = outlier_check,
@@ -320,27 +320,35 @@
       "village_data"            = village_check,
       "survey_programming_data" = survey_programming_check
   )
-  
-  hfc_sheets %>%
-      map2(
-          names(hfc_sheets),
-          ~ openxlsx::writeData(
-              hfc_excel, sheet = .y, x = .x
-          )
+
+  map(
+      names(hfc_sheets),
+      .f = function(x){
+          addWorksheet(hfc_excel, x)
+      }
+  )
+
+
+  map2(
+      hfc_sheets,
+      names(hfc_sheets),
+      ~ writeData(
+          hfc_excel, sheet = .y, x = .x
       )
-  
-  seq(1, 6) %>% # First six sheets
-      map(
-          .f = function(x) {
-              setRowHeights(hfc_excel, sheet = x, rows = 1:1000, heights = 40)
-              setColWidths(hfc_excel,  sheet = x, cols = 1:1000, widths  = 20)
-          }
-      )
-  
+  )
+
+  map(
+      1:5, # First six sheets
+      .f = function(x) {
+          setRowHeights(hfc_excel, sheet = x, rows = 1:1000, heights = 40)
+          setColWidths(hfc_excel,  sheet = x, cols = 1:1000, widths  = 20)
+      }
+  )
+
 # One exception
   setColWidths(hfc_excel, sheet = 6, cols = 4, widths = 75)
-  
-  openxlsx::saveWorkbook(
-      hfc_excel, here("lab-6-data-quality", "output", "hfc_output.xlsx"), overwrite = TRUE
+
+  saveWorkbook(
+      hfc_excel,
+      here("DataWork", "outputs", "hfc_output.xlsx"), overwrite = TRUE
   )
-  
