@@ -20,6 +20,7 @@
 # These files include GitHub settings
 !.gitignore
 !.gitattributes
+!reproot.yaml
 
 # Git placeholder file (to commit empty folders)
 !/**/*.gitkeep
@@ -126,3 +127,7 @@ tokens/
 !2023/R/**/*.png
 !2023/R/Data/**
 2023/R/Data/DataWork.zip
+
+#######################
+# Files for preparing datasets
+!2024/Data/**
