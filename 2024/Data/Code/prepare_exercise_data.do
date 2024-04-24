@@ -188,6 +188,11 @@
 	keep HHID crop_other QuestionNumber
 	reshape wide crop_other, i(HHID) j( QuestionNumber) s
 	
+	gen crop_other = crop_other_1
+	replace crop_other = crop_other_2 if mi(crop_other)
+
+	keep HHID crop_other
+	
 	tempfile crop_other
 	save 	`crop_other'
 	
@@ -316,13 +321,12 @@
 			gender_1 - days_impact_2 ///
 			food_cons nonfood_cons ///
 			farm ar_farm ar_farm_unit  ///
-			crop_1 crop_other_1 crop_2 crop_other_2 crop_prp_1 crop_prp_2 ///
+			crop_1 crop_2 crop_other crop_prp_1 crop_prp_2 ///
 			livestock_now livestock_before ///
 			drought_flood crop_damage ///
 			trust_mem trust_lead ///
 			assoc health ///
 			duration key
-			
 					
 	save "${data}/Final/TZA_CCT_baseline.dta", replace
 	
