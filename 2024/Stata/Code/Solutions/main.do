@@ -2,7 +2,7 @@
 
 	* install packages
 	ssc install ietoolkit, replace
-	ssc intsall iefieldkit, replace 
+	ssc install iefieldkit, replace 
 	ssc install sumstats, replace 
 	
 	
