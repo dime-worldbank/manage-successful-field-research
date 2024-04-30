@@ -59,7 +59,7 @@ class: center, middle, inverse, title-slide
 1. [Merging](#merging)
 1. [Data cleaning](#data-cleaning)
 1. [Getting data ready for analysis and construction](#getting-data-ready)
-1. [Saving the results](#saving)
+1. [Saving the results](#saving-results)
 ---
 
 class: inverse, center, middle
@@ -168,7 +168,7 @@ In some statistical software, columns are usually called *variables* and rows ar
 ## In R
 R has different packages for reading in different types of data. Today we'll work with the following:
 
-1. `haven` : a package from tidyverse for reading and writing different data fromats from other statistical programming softwares. Eg. __.dta__ data from stata
+1. `haven` : a package from tidyverse for reading and writing different data fromats from other statistical programming softwares. Eg. __.dta__ data files from stata
 
 2. `readxl` : a package for reading in excel files into R
 
@@ -193,7 +193,7 @@ R has multiple packages and tools for data tidying and cleaning. Today we'll wor
 
 # Tidy data
 
-## Exercise : Install and load packages for data tidying and cleaning
+## Exercise 1: Install and load packages for data tidying and cleaning
 .pull-left[
 1. Install all the packages we'll use:
   + `install.packages("tidyr")`
@@ -202,6 +202,7 @@ R has multiple packages and tools for data tidying and cleaning. Today we'll wor
   + `install.packages("dplyr")`
   + `install.packages("readxl")`
   + `install.packages("haven)`
+  + `install.packages("stringr)`
 ]
 
 .pull-right[
@@ -213,15 +214,16 @@ R has multiple packages and tools for data tidying and cleaning. Today we'll wor
   + `library(readxl)`
   + `library(haven)`
   + `library(here)`
+  + `library(stringr)`
   
 
 ]  
 ---
 # Tidy data
 
-## Exercise : Read the datasets we will use for the session
+## Exercise 2: Read the datasets we will use for the session
 
-- We'll load two tidy dataframes for the rest of the exercises:
+- We'll load two dataframes for the rest of the exercises:
 
   1. Data at the household level about an impact evaluation of a community-based conditional cash transfer program in Tanzania
   
@@ -264,7 +266,7 @@ name: duplicates
 
 ---
 # Identifying duplicates
-## Exercise : Check for duplicates on the loaded HH wide dataset
+## Exercise 3: Check for duplicates on the loaded HH wide dataset
 
 1. Count the number of rows in the dataframe with `nrow(df_hh)`. Remember this number
 
@@ -300,7 +302,7 @@ The next step before tidying is to check if the ID variables uniquely identify t
 
 ---
 # Identifying duplicates
-## Exercise : Check the identifying variables
+## Exercise 4: Check the identifying variables
 
 1. Inspect the deduplicated dataframe with `View(df_hh)` and take note of the identifying variables.
 
@@ -322,8 +324,10 @@ Also, note the following in this code:
 ---
 
 # Fixing duplicates
-## Exercise : Remove duplicates
+## Exercise 5: Remove duplicates
 - The conclusion of the previous exercise is that there are 2 duplicates based on the identifying variables
+
+- Use the following code to remove duplicates from the data
 
 ```r
 df_hh_dedup &lt;- df_hh %&gt;% distinct(vid, hhid, .keep_all = TRUE)
@@ -331,7 +335,7 @@ df_hh_dedup &lt;- df_hh %&gt;% distinct(vid, hhid, .keep_all = TRUE)
 
 ---
 # Fixing duplicates
-## Exercise : Remove duplicates
+## Exercise 6: Remove duplicates
 - By the way, checking for the duplicates could have also been checked with the following code. Let's verify that we have removed the duplicates using the code.
 
 
@@ -381,7 +385,7 @@ name: merging
 
 # Merging
 
-## Exercise : Merge two dataframes
+## Exercise 7: Merge two dataframes
 
 1. Inspect `df_hh_dedup` and `df_village` with `View(df_hh_dedup)` and `View(df_village)` and identify the column they have in common
 
@@ -464,7 +468,7 @@ This will require **collapsing**.
 
 # Collapsing
 
-## Exercise : Collapse `df_hh` to the village level
+## Exercise 8: Collapse `df_hh` to the village level
 
 .pull-left2[
 - Use the functions `group_by()` and `summarize()` to collapse as in the code below.
@@ -555,11 +559,13 @@ Other than fixing information collected or received, data cleaning also gets dat
 
 - Change column data types so that they can be handled more easily
 
-- Recoding data
+- Recoding data which is essential for re-categorizing variables
 
-- Add columns that don't require indicator construction
+- Add columns that will be useful for analysis
 
 - Add or correct variables labels and value labels
+
+- Identifying erroneous data points
 
 ---
 
@@ -646,7 +652,7 @@ new_df &lt;- old_df %&gt;%
 
 # Getting data ready for analysis and construction
 
-## Exercise : Use as.numeric to convert from string to numeric
+## Exercise 9: Convert a numeric variable saved as string variable to numeric
 
 - Convert the variable `duration` to numeric with the following code:
 
@@ -667,7 +673,7 @@ class(df_hh_dedup$duration)
 ---
 
 # Getting data ready for analysis and construction
-## Exercise : You can also convert a string to numeric
+## Convert a text variable saved as string to numeric
 
 - Convert the variable `ar_farm_unit` to numeric. 
 
@@ -682,7 +688,7 @@ class(df_hh_dedup$duration)
 &lt;img src="img/session2/2024-ar-farm-unit.png" width="65%" style="display: block; margin: auto;" /&gt;
 ---
 # Getting data ready for analysis and construction
-## Exercise: You can also convert a string to numeric
+## Exercise 10: Convert ar_farm_unit column to numeric
 
 - `case_when()` is an auxiliary function that is normally used inside `mutate()` to replace column values based on conditions
 
@@ -708,6 +714,11 @@ class(df_hh_dedup$duration)
 # Getting data ready for analysis and construction
 ## Recoding variables
 
+- Sometimes we may want to replace given values of a column
+
+- This is useful for survey data when non-response categories such as "don't know" are usually assigned specific values such as `-88`, `-99`
+
+- In this case, these are not actual observations and including them in the analysis may bias the results hence we need to change them to missing
 &lt;img src="img/session2/2024-recode.png" width="65%" style="display: block; margin: auto;" /&gt;
 
 ---
@@ -757,11 +768,42 @@ df_hh_dedup &lt;- df_hh_dedup %&gt;%
 
 ---
 # Getting data ready for analysis and construction
-## Clean "other" string variables (crop_other_1 and crop_other _2)
+## Working with strings in R
+
+- Text data is part of the data collected on surveys for open ended text responses hence understanding how to manipulate strings is important
+
+- Open ended text responses are usually "dirty" and responses that may be the same may be noted down differently. For eg. __"Coconut"__ vs __"Coconut."__
+
+- While the responses above mean the same, R interprets them as different texts due to the full stop(.) in the second text
+
+- `stringr` package offers useful functions for text manipulation in R
+
+---
+# Getting data ready for analysis and construction
+## Working with strings in R
+&lt;img src="img/session2/2024-coconut.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+# Getting data ready for analysis and construction
+## Exercise 11: Clean "crop_other" string variable
+
+- Use `str_replace_all` function
+
+- We will manually define the text to be replaced in the function
+
 
 ```r
-# To be determined once I reload the updated data
+df_hh_dedup &lt;- df_hh_dedup %&gt;%
+  mutate(crop_other_clean = 
+           str_replace_all(crop_other, 
+                           c("Coconut trees" ="Coconut",                            "Coconut trees." = "Coconut",                            "Coconut." = "Coconut", 
+                            "Coconuts"="Coconut",
+                            "sesame"="Sesame", 
+                             "Sesame."="Sesame")))
 ```
+
+- As observed above, defining all the instances manually can be inefficient. There are more advanced ways of achieving the same results using `regular expressions` which do require explicit definition rather we can use special characters to denote the same thing
+
 
 ---
 # Getting data ready for analysis and construction
@@ -792,7 +834,7 @@ new_df &lt;- old_df %&gt;%
 
 # Getting data ready for analysis and construction
 
-## Exercise : Create new columns
+## Exercise 12: Create new columns
 
 - Use `mutate()` to generate two new columns in `df_hh_dedup`
 
@@ -839,7 +881,7 @@ new_df &lt;- old_df %&gt;%
 
 ---
 # Getting data ready for analysis and construction
-## Exercise: Create a variable on area of farm in hectares
+## Exercise 13: Create a variable on area of farm in hectares
 
 - We'll use the functions `mutate()` and `case_when()` for this, both from `dplyr`
 
@@ -856,11 +898,11 @@ df_hh_dedup &lt;- df_hh_dedup %&gt;%
 
 ---
 # Getting data ready for analysis and construction
-## Exercise: Create a variable that identifies whether any member can read and write
+## Create a variable that identifies whether any member can read and write
 &lt;img src="img/session2/2024-read-write.png" width="90%" style="display: block; margin: auto;" /&gt;
 ---
 # Getting data ready for analysis and construction
-## Creating variables based on conditions
+## Exercise 14: Creating variables based on conditions
 - We'll use the functions `mutate()` and `case_when()` for this, both from `dplyr`
 
 - Note we use `|` which represents the OR operator in R
@@ -883,7 +925,7 @@ Exercise: Create a variable that identifies if any member was sick
 
 ---
 # Getting data ready for analysis and construction
-## Exercise: Create a variable that identifies if any member was sick
+## Exercise 15: Create a variable that identifies if any member was sick
 
 - We'll use the functions `mutate()` and `case_when()` for this, both from `dplyr`
 
@@ -908,7 +950,7 @@ df_hh_dedup &lt;- df_hh_dedup %&gt;%
 ---
 
 # Getting data ready for analysis and construction
-## Exercise : Create a variable calculating the total cost of treatment across two members 
+## Exercise 16: Create a variable calculating the total cost of treatment across two members 
 
 - We will use the `+` operator to sum `treat_cost_1` and `treat_cost_2`. 
 
@@ -922,7 +964,7 @@ df_hh_dedup &lt;- df_hh_dedup %&gt;%
 
 ---
 # Getting data ready for analysis and construction
-## Exercise : Create a variable calculating the total cost of treatment across two members
+## Exercise 17: Create a variable calculating the total cost of treatment across two members
 
 - We will use the `sum` function to calculate the sum
 
@@ -966,7 +1008,7 @@ df_hh_dedup &lt;- df_hh_dedup %&gt;%
 
 ---
 # Getting data ready for analysis and construction
-## Exercise : Add value labels to categorical data
+## Exercise 18: Add value labels to categorical data
 
 - Convert `read_or_write` and `any_member_sick` to factors with the following code:
 
@@ -1043,7 +1085,7 @@ new_df &lt;- old_df %&gt;%
 ---
 
 # Getting data ready for analysis and construction
-## Exercise : Assign variable labels
+## Exercise 19: Assign variable labels
 
 1. Use `View()` to inspect `df_hh_dedup` and take note of the missing labels for the newly constructed variables
 
@@ -1066,8 +1108,8 @@ new_df &lt;- old_df %&gt;%
 
 ---
 
-# Getting data ready for analysis
-
+# Getting data ready for analysis and construction
+## Variable labels
 
 
 .pull-left4[
@@ -1088,10 +1130,123 @@ View(df_village_labelled)
 .pull-right4[
 &lt;img src="img/session2/2024-new-labels.png" width="99%" style="display: block; margin: auto;" /&gt;
 ]
+
+---
+# Getting data ready for analysis and construction
+## Outlier detection and correction
+
+- An outlier is a data point that significantly deviates from other observations which as a result may evoke suspicion
+
+- Outliers may be as a result of:
+
+  + __Data entry errors :__ Wrong entry during data collection
+
+  + __Data processing errors:__ Errors may be introduced while processing the data
+
+  + __"Novel" data point :__ Data point is not an error and is the correct observation
+
+
+---
+# Getting data ready for analysis and construction
+## How to detect outliers?
+.pull-left4[
+- __Visual inspection:__ is a fast way to get a sense of the data. This can be done by generating distribution plots such as histograms, boxplots and scatterplots 
+
+]
+
+.pull-right4[
+&lt;img src="img/session2/2024-visual-inspection.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Getting data ready for analysis and construction
+## How to detect outliers?
+
+.pull-left4[
+- __Statistical methods:__ These techniques measure how far a observation deviates from the mean/median
+
+- Usually, you have to define a threshold for determining whether a data point is an outlier
+
+- One way could be to use the z-score method
+
+- A common threshold used is when an observation is __2.5 to 3.5__ times far from from the mean of the distribution
+]
+
+.pull-right4[
+
+&lt;img src="img/session2/2024-outliers-z-score.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Getting data ready for analysis and construction
+## Exercise: Identify outliers for the variable area_farm_hect
+
+- First generate z scores for the variable measuring the area of farm in hectares(area_farm_hect) and filter observations that are greater than 2.5 standard deviations from the mean
+
+
+```r
+df_hh_dedup &lt;- df_hh_dedup %&gt;%
+  mutate(mean_area_farm_hect = mean(area_farm_hect, na.rm = T),
+         sd_area_farm_hect = sd(area_farm_hect, na.rm=T)) %&gt;%
+  # Calculate the z score
+  mutate(z_score = (abs(area_farm_hect-mean_area_farm_hect)/sd_area_farm_hect)) 
+
+df_outliers &lt;- df_hh_dedup %&gt;%
+  # Filter all observations with z-scores&gt; 2.5
+  filter(z_score&gt;2.5) %&gt;%
+  select(hhid, area_farm_hect, mean_area_farm_hect, z_score)
+```
+
+---
+# Getting data ready for analysis and construction
+## How do we deal with outliers?
+
+- There are multiple approached to dealing with outliers but the ultimate decision belongs to the research team
+
+- Some of the possible approaches could be:
+  + Trimming the points from the dataset
+  
+  + Modification of outliers
+  
+  + Maintiaining the observations
+
+---
+# Getting data ready for analysis and construction
+## How do we deal with outliers?
+
+- __Trimming the points from the dataset:__ This could involve completely excluding the data points from your data analysis. 
+
+- Note that this will reduce your sample, depending on the number outliers that may be present in your data. You may decide on another course of action
+
+- You may decide to only keep observations within a given threshold
+
+
+
+```r
+df_hh_dedup_trim &lt;- df_hh_dedup %&gt;%
+  mutate(trim_area_farm_hect = case_when(z_score&gt;2.5 ~ NA,
+                                    .default = area_farm_hect)) %&gt;%
+  select(hhid,area_farm_hect,trim_area_farm_hect, z_score)
+```
+
+---
+
+# Getting data ready for analysis and construction
+## How do we deal with outliers?
+- __Modification of the outliers:__ This process involves assigning outliers new values eg. Imputing or winsorizing data
+
+---
+# Getting data ready for analysis and construction
+## How do we deal with outliers?
+
+- __Maintaining the observations:__ Once you have ascertained that it's not a data entry error and if you do not want to lose any data point, another alternative is to leave them and use more robust methods during analysis that may be less sensitive to outliers.
+
+- For example, you could use __median__ instead of the __mean__; which can be more sensitive to outliers
+
 ---
 
 class: inverse, center, middle
-name: about-this-session
+name: saving-results
 
 # Saving the results
 
@@ -1126,10 +1281,12 @@ old_df &lt;- old_df %&gt;%
 - You now save the resulting clean dataframe:
 
   + Household level: `df_hh_dedup`
+  + Village level: `df_village`
 
 ---
 
 # Saving the results
+
 
 ## Exercise : Save your work
 
@@ -1141,11 +1298,16 @@ old_df &lt;- old_df %&gt;%
 # Output folder
 output_folder &lt;- here("DataWork", "data", "intermediate", "clean")
 
-# Saving
-
+# Saving hh level data
 saveRDS(
   df_hh_dedup,
   here(output_folder, "TZA_CCT_baseline-YOUR_INITIALS.Rds")
+)
+
+# Saving village level data
+saveRDS(
+  df_village,
+  here(output_folder, "TZA_CCT_Village-YOUR_INITIALS.Rds")
 )
 ```
 
