@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>3 - Descriptive statistics and tables</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Rony Rodriguez Ramirez, Luis Eduardo San Martin" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"c637f62e378f4760b56406886ba876ed","expires":1}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="libs/remark-css/default.css" type="text/css" />
+    <link rel="stylesheet" href="libs/remark-css/metropolis.css" type="text/css" />
+    <link rel="stylesheet" href="libs/remark-css/metropolis-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="libs/remark-css/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# 3 - Descriptive statistics and tables
+]
+.subtitle[
+## R labs - Manage Successful Field Research
+]
+.author[
+### Rony Rodriguez Ramirez, Luis Eduardo San Martin
+]
+.date[
+### The World Bank | <a href="https://github.com/worldbank">WB Github</a> <br> May 2024
+]
+
+---
+
+
+
+
+&lt;style type="text/css"&gt;
+@media print {
+  .has-continuation {
+    display: block !important;
+  }
+}
+&lt;/style&gt;
+
+# Table of contents
+
+1. [About the session](#about-this-session)
+
+1. [Creating outputs](#creating-outputs)
+
+1. [Data exploration](#data-exploration)
+
+1. [Descriptive tables](#descriptive-tables)
+
+1. [Balance tables](#balance-tables)
+
+1. [Regression tables](#regression-tables)
+
+---
+
+class: inverse, center, middle
+name: about-this-session
+
+# About this session
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# About this session
+
+&lt;img src="img/3-descriptive-tables/data-work-outputs.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+name: creating-outputs
+
+# Creating outputs
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Creating outputs
+
+- Until now, we've seen how to produce dataframes or data table file outputs (`.Rds` and `.csv` files)
+
+- Today we'll see how to produce file outputs with more finalized results, namely descriptive statistics, balance, and regression tables
+
+- The objective of this is that the concept of reproducibility can also be also be applied not only in your data work but in your reports as well &lt;font size="3"&gt;(though reports is something we're not covering in this course)&lt;/font&gt;
+
+&lt;img src="img/3-descriptive-tables/data-work-exporting.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Creating outputs
+
+## .red[Not reproducible]
+
+Anything that requires
+<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ac142a;overflow:visible;position:relative;"><path d="M80 96v16c0 17.7 14.3 32 32 32h60.8c16.6-28.7 47.6-48 83.2-48h62c-7.1-27.6-32.2-48-62-48H215.4C211.6 20.9 188.2 0 160 0s-51.6 20.9-55.4 48H64C28.7 48 0 76.7 0 112V384c0 35.3 28.7 64 64 64h96V400H64c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H80zm64-40a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM256 464c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H384v48c0 17.7 14.3 32 32 32h48V448c0 8.8-7.2 16-16 16H256zm192 48c35.3 0 64-28.7 64-64V227.9c0-12.7-5.1-24.9-14.1-33.9l-51.9-51.9c-9-9-21.2-14.1-33.9-14.1H256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H448z"/></svg> Copy-pasting
+<svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ac142a;overflow:visible;position:relative;"><path d="M339.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L568.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S517.7-4.4 499.1 9.6L262.4 187.2c-24 18-38.2 46.1-38.4 76.1L339.3 367.1zm-19.6 25.4l-116-104.4C143.9 290.3 96 339.6 96 400c0 3.9 .2 7.8 .6 11.6C98.4 429.1 86.4 448 68.8 448H64c-17.7 0-32 14.3-32 32s14.3 32 32 32H208c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg> Manual formatting after exported
+
+--
+
+## .green[Reproducible]
+
+<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#046307;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> R Markdown: dynamic document containing code and text that is exported directly from R into PDF, HTML, Word, Power Point and other formats 
+<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#046307;overflow:visible;position:relative;"><path d="M64 464c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16H224v80c0 17.7 14.3 32 32 32h80V448c0 8.8-7.2 16-16 16H64zM64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0H64zm56 256c-13.3 0-24 10.7-24 24s10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H120z"/></svg> LaTeX: typesetting system used for scientific publications that automatically reloads tables and figures every time the document is rendered 
+
+---
+
+# Creating outputs
+
+As usual, there are several options for exporting tables in R. Today we'll use:
+
+- **modelsummary:** a package for creating descriptive statistics and regression tables
+
+- **huxtable:** a package for creating HTML, Latex, and Excel tables from R
+
+&lt;img src="img/3-descriptive-tables/outputs-packages-logos.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Creating outputs
+
+## Exercise 1: Install and load packages for generating outputs
+
+- Install `modelsummary` and `huxtable` with:
+
+
+```r
+install.packages("modelsummary")
+install.packages("huxtable")
+install.packages("openxlsx") # this is a dependency for huxtable to export results to Excel
+```
+
+- Load all the libraries we'll use with:
+
+
+```r
+library(here)
+library(haven)
+library(dplyr)
+library(janitor)
+library(modelsummary)
+library(huxtable)
+```
+
+---
+
+# Creating outputs
+
+## Exercise 2: Read the data
+
+1\. Use `here()` and `read_stata()` to read the file in `DataWork/data/intermediate/clean/LWH-households-clean.Rds`. Apply `as_factor()` on the result to transform labeled values into factors.
+
+
+```r
+path  &lt;- here("DataWork", "Data")
+df_hh &lt;- read_stata(here(path, "TZA_CCT_baseline.dta")) %&gt;% as_factor()
+```
+
+2\. Inspect the dataframe with `View()`
+
+
+
+---
+
+class: inverse, center, middle
+name: #data-exploration
+
+# Data exploration
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Data exploration
+
+## Knowing your data better
+
+- Before starting to produce outputs, it's useful to explore your data so you will know what to export
+
+- You already know `View()`, `nrow()`, and `colnames()`. Some other functions are:
+
+  + `glimpse()`: prints a dataframe in the console (from `dplyr`)
+  
+  + `head()`: prints the first six observations of a dataframe
+  
+  + `tail()`: prints the last six observations of a datafrma
+  
+  + `dim()`: returns a size-two vector with the number of rows and columns in a dataframe
+
+---
+
+# Data exploration
+
+## Exercise 3: Exploration with dataframe and column summaries
+
+- Print the summary of `df_hh`
+
+
+```r
+summary(df_hh)
+```
+
+- Print the summary of the column `hh_size` of `df_hh` (use the `$` operator)
+
+
+```r
+summary(df_hh$hh_size)
+```
+
+---
+
+# Data exploration
+
+
+```r
+# Summary of a dataframe
+summary(df_hh)
+```
+
+```
+##       vid             hhid           enid                   floor     
+##  Min.   : 1.00   Min.   :1001   Min.   :420.0   Mud/earth      :1655  
+##  1st Qu.:20.00   1st Qu.:2934   1st Qu.:619.0   Wood/plank     :   0  
+##  Median :41.00   Median :5026   Median :805.0   Tiles          :   0  
+##  Mean   :41.39   Mean   :5167   Mean   :716.6   Concrete/Cement: 105  
+##  3rd Qu.:62.00   3rd Qu.:7122   3rd Qu.:818.0   Grass          :   0  
+##  Max.   :82.00   Max.   :9922   Max.   :828.0   Other (specify):   0  
+##                                                                       
+##               roof                 walls     
+##  Thatch         :811   Mud/Mud brick  :1526  
+##  Iron sheets    :616   Wood/Bamboo    : 153  
+##  Mud            :333   Concrete/Cement:  81  
+##  Wood           :  0   Stone          :   0  
+##  Concrete/Cement:  0   Burnt bricks   :   0  
+##  Roofing tiles  :  0   Iron sheets    :   0  
+##  (Other)        :  0   (Other)        :   0  
+##                           water                   energy    
+##  Uncovered Well              :446   Kerosine/paraffin:1320  
+##  River, lake, pond           :421   Firewood         : 393  
+##  Pipe bourne water treated   :336   Battery          :  30  
+##  Piped bourne water untreated:208   Main electricity :  11  
+##  Bore hole/hand pump         :123   Other (specify)  :   3  
+##  Unprotected spring          : 98   Gas              :   2  
+##  (Other)                     :128   (Other)          :   1  
+##             rel_head            female_head      hh_size         n_child_5     
+##  Muslim         :1067   No            :1072   Min.   : 1.000   Min.   :0.0000  
+##  Protestant     : 299   Yes           : 688   1st Qu.: 2.000   1st Qu.:0.0000  
+##  Catholic       : 235   Don't Know    :   0   Median : 3.000   Median :0.0000  
+##  Other Christian:  92   Not Applicable:   0   Mean   : 3.976   Mean   :0.4676  
+##  Traditionalist :  57   Refused       :   0   3rd Qu.: 5.000   3rd Qu.:1.0000  
+##  No Religion    :  10                         Max.   :17.000   Max.   :5.0000  
+##  (Other)        :   0                                                          
+##    n_child_17        n_adult         n_elder        gender_1       age_1       
+##  Min.   : 0.000   Min.   :0.000   Min.   :0.000   Male  :767   Min.   :  0.00  
+##  1st Qu.: 0.000   1st Qu.:0.000   1st Qu.:1.000   Female:993   1st Qu.: 14.00  
+##  Median : 1.000   Median :1.000   Median :1.000                Median : 57.00  
+##  Mean   : 1.185   Mean   :1.061   Mean   :1.262                Mean   : 45.88  
+##  3rd Qu.: 2.000   3rd Qu.:2.000   3rd Qu.:2.000                3rd Qu.: 70.00  
+##  Max.   :10.000   Max.   :8.000   Max.   :4.000                Max.   :105.00  
+##                                                                                
+##             read_1     clinic_visit_1               sick_1      days_sick_1   
+##  No            :1081   Min.   :  0.000   No            :1212   Min.   : 1.00  
+##  Yes           : 622   1st Qu.:  0.000   Yes           : 548   1st Qu.: 4.00  
+##  Don't Know    :   0   Median :  1.000   Don't Know    :   0   Median : 7.00  
+##  Not Applicable:   0   Mean   :  2.484   Not Applicable:   0   Mean   :10.93  
+##  Refused       :   0   3rd Qu.:  3.000   Refused       :   0   3rd Qu.:14.00  
+##  NA's          :  57   Max.   :106.000                         Max.   :28.00  
+##                                                                NA's   :1212   
+##            treat_fin_1    treat_cost_1            ill_impact_1 
+##  Own cash        : 290   Min.   :   -88   No            : 632  
+##  Free treatment  : 106   1st Qu.:   175   Yes           :1128  
+##  Got assistance  :  75   Median :  1000   Don't Know    :   0  
+##  Health insurance:  12   Mean   :  2817   Not Applicable:   0  
+##  Other (specify) :   5   3rd Qu.:  2000   Refused       :   0  
+##  (Other)         :   4   Max.   :300000                        
+##  NA's            :1268   NA's   :1321                          
+##  days_impact_1      gender_2       age_2                  read_2   
+##  Min.   :  0.00   Male  :680   Min.   : 0.00   No            :843  
+##  1st Qu.:  7.00   Female:785   1st Qu.:12.00   Yes           :562  
+##  Median : 14.00   NA's  :295   Median :35.00   Don't Know    :  0  
+##  Mean   : 29.28                Mean   :39.21   Not Applicable:  0  
+##  3rd Qu.: 30.00                3rd Qu.:66.00   Refused       :  0  
+##  Max.   :365.00                Max.   :99.00   NA's          :355  
+##  NA's   :632                   NA's   :295                         
+##  clinic_visit_2              sick_2      days_sick_2              treat_fin_2  
+##  Min.   : 0.000   No            :1062   Min.   : 1.00   Own cash        : 214  
+##  1st Qu.: 0.000   Yes           : 403   1st Qu.: 4.00   Free treatment  :  94  
+##  Median : 1.000   Don't Know    :   0   Median : 7.00   Got assistance  :  34  
+##  Mean   : 2.711   Not Applicable:   0   Mean   :10.14   Other (specify) :   7  
+##  3rd Qu.: 3.000   Refused       :   0   3rd Qu.:14.00   Health insurance:   6  
+##  Max.   :73.000   NA's          : 295   Max.   :28.00   (Other)         :   3  
+##  NA's   :295                            NA's   :1357    NA's            :1402  
+##   treat_cost_2            ill_impact_2 days_impact_2     food_cons      
+##  Min.   :   -88   No            :570   Min.   :  0.0   Min.   :   5096  
+##  1st Qu.:   100   Yes           :895   1st Qu.:  6.0   1st Qu.: 261217  
+##  Median :  1000   Don't Know    :  0   Median : 13.0   Median : 517400  
+##  Mean   :  3690   Not Applicable:  0   Mean   : 29.1   Mean   : 638718  
+##  3rd Qu.:  2500   Refused       :  0   3rd Qu.: 30.0   3rd Qu.: 858000  
+##  Max.   :200000   NA's          :295   Max.   :365.0   Max.   :4903600  
+##  NA's   :1452                          NA's   :865                      
+##   nonfood_cons                 farm         ar_farm       ar_farm_unit      
+##  Min.   :      0   No            : 138   Min.   : 0.125   Length:1760       
+##  1st Qu.:  23452   Yes           :1622   1st Qu.: 1.000   Class :character  
+##  Median :  69933   Don't Know    :   0   Median : 1.214   Mode  :character  
+##  Mean   : 146789   Not Applicable:   0   Mean   : 1.321                     
+##  3rd Qu.: 166525   Refused       :   0   3rd Qu.: 2.000                     
+##  Max.   :4108400                         Max.   :32.376                     
+##                                          NA's   :138                        
+##         crop_1             crop_2     crop_other       
+##  Maize     :759   Maize       :327   Length:1760       
+##  Cassava   :393   Sorghum     :240   Class :character  
+##  Sorghum   :178   Cassava     :183   Mode  :character  
+##  Paddy     :129   Paddy       :168                     
+##  Cashew nut: 49   Other pulses:161                     
+##  (Other)   :114   (Other)     :543                     
+##  NA's      :138   NA's        :138                     
+##                        crop_prp_1                        crop_prp_2 
+##  Only for Food              :808   Only for Food              :623  
+##  Mainly for food            :653   Mainly for food            :553  
+##  Food and sale (about 50/50): 77   Food and sale (about 50/50): 88  
+##  Only for sale              : 22   Only for sale              :125  
+##  Mainly for sale            : 62   Mainly for sale            :122  
+##  other specify              :  0   other specify              :  0  
+##  NA's                       :138   NA's                       :249  
+##  livestock_now     livestock_before         drought_flood          crop_damage 
+##  Min.   :  0.000   Min.   :  0.000   No            : 721   No            :847  
+##  1st Qu.:  0.000   1st Qu.:  0.000   Yes           :1039   Yes           :913  
+##  Median :  0.000   Median :  3.000   Don't Know    :   0   Don't Know    :  0  
+##  Mean   :  2.989   Mean   :  6.632   Not Applicable:   0   Not Applicable:  0  
+##  3rd Qu.:  4.000   3rd Qu.: 10.000   Refused       :   0   Refused       :  0  
+##  Max.   :160.000   Max.   :150.000                                             
+##                                                                                
+##           trust_mem            trust_lead  
+##  No            :777   No            : 342  
+##  Yes           :973   Yes           :1410  
+##  88            : 10   88            :   8  
+##  Don't Know    :  0   Don't Know    :   0  
+##  Not Applicable:  0   Not Applicable:   0  
+##  Refused       :  0   Refused       :   0  
+##                                            
+##                                assoc                 health    
+##  -88                              : 172   No            : 667  
+##  Yes                              : 197   Yes           :1005  
+##  No                               :1271   88            :  88  
+##  DK - Don't have a schooling child: 120   Don't Know    :   0  
+##  DK                               :   0   Not Applicable:   0  
+##                                           Refused       :   0  
+##                                                                
+##    duration             key           
+##  Length:1760        Length:1760       
+##  Class :character   Class :character  
+##  Mode  :character   Mode  :character  
+##                                       
+##                                       
+##                                       
+## 
+```
+
+---
+
+# Data exploration
+
+
+```r
+# Summary of a dataframe column
+summary(df_hh$hh_size)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   2.000   3.000   3.976   5.000  17.000
+```
+
+---
+
+# Data exploration
+
+## Tabulations
+
+- `summary()` is useful to explore quantitative variables
+
+- However, it's not great for character or factor variables
+
+- We'll use `tabyl()` in these cases, from the package `janitor`
+
+- `tabyl()` generates frequency tables from dataframe columns
+
+---
+
+# Data exploration
+
+## Exercise 4: Exploration with tabulations
+
+- Tabulate the variable `energy` (main source of energy for lightning) of `df_hh` with:
+
+
+```r
+df_hh %&gt;% tabyl(energy)
+```
+
+- Cross-tabulate the variables `energy` and `floor` with:
+
+
+```r
+df_hh %&gt;% tabyl(energy, floor)
+```
+
+---
+
+# Data exploration
+
+
+```r
+# Tabulating district
+df_hh %&gt;% tabyl(energy)
+```
+
+
+|energy                         |    n|   percent|
+|:------------------------------|----:|---------:|
+|Kerosine/paraffin              | 1320| 0.7500000|
+|Gas                            |    2| 0.0011364|
+|Main electricity               |   11| 0.0062500|
+|Solar panels/private generator |    1| 0.0005682|
+|Battery                        |   30| 0.0170455|
+|Candles                        |    0| 0.0000000|
+|Firewood                       |  393| 0.2232955|
+|Other (specify)                |    3| 0.0017045|
+
+---
+
+# Data exploration
+
+
+```r
+# Cross-tabulating sector and district
+df_hh %&gt;% tabyl(energy, water)
+```
+
+.small[
+
+|energy                         | Pipe bourne water treated| Piped bourne water untreated| Bore hole/hand pump| Covered Well| Uncovered Well| Protected spring| Unprotected spring| Rain water| River, lake, pond| Truck, vendor| Other (specify)|
+|:------------------------------|-------------------------:|----------------------------:|-------------------:|------------:|--------------:|----------------:|------------------:|----------:|-----------------:|-------------:|---------------:|
+|Kerosine/paraffin              |                       264|                          120|                 101|           76|            331|                5|                 70|          1|               325|            27|               0|
+|Gas                            |                         1|                            0|                   0|            0|              1|                0|                  0|          0|                 0|             0|               0|
+|Main electricity               |                         8|                            1|                   1|            1|              0|                0|                  0|          0|                 0|             0|               0|
+|Solar panels/private generator |                         1|                            0|                   0|            0|              0|                0|                  0|          0|                 0|             0|               0|
+|Battery                        |                         7|                            7|                   0|            1|              8|                0|                  2|          0|                 4|             0|               1|
+|Candles                        |                         0|                            0|                   0|            0|              0|                0|                  0|          0|                 0|             0|               0|
+|Firewood                       |                        55|                           79|                  21|            8|            105|                0|                 26|          0|                91|             6|               2|
+|Other (specify)                |                         0|                            1|                   0|            0|              1|                0|                  0|          0|                 1|             0|               0|
+]
+
+---
+
+class: inverse, center, middle
+name: descriptive-tables
+
+# Descriptive tables
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Descriptive tables
+
+## What if you want to...
+
+- ...export the summary statistics to another software?
+
+- ...customize which statistics to display?
+
+--
+
+## Well, then you will need a few more packages
+
+- There are many packages that can be used both for displaying and exporting summary statistics
+
+- Today we will show you a combination of two packages: `modelsummary` and `huxtable`
+
+- We chose this combination because together, they can perform all the tasks we are interested in
+
+- In fact, `modelsummary` can perform most of them by itself -- with the exception of exporting formatted tables to Excel
+
+---
+
+# Descriptive tables
+
+`modelsummary` contains a family of functions called *datasummary* which can be used to create different types of summary statistics tables. These include:
+
+- `datasummary_skim()`, to create descriptive statistics tables
+
+- `datasummary_balance()`, to create balance tables
+
+- `datasummary_correlation()`, to create a correlation table
+
+- `datasummary_crosstab()`, to create a twoway tabulation
+
+- `datasummary()`, to create customized descriptive statistics tables
+
+---
+
+# Descriptive tables
+
+- `datasummary_skim()` produces a quick summary table of numerical or categorical variables
+
+
+```r
+datasummary_skim(
+  data,
+  type = "numeric",
+  output = "default",
+  ...
+)
+```
+
+- It uses the following arguments:
+
+  + `data`: the data set to be summarized, the only required argument
+  + `type =`: type of variables in the dataframe to be described
+  + `output =`: the type of output desired
+  + `...`: additional options allow for formatting customization, such as including notes and titles
+
+- Its most basic use is `datasummary_skim(df_name)` to describe numeric variables
+
+---
+
+# Descriptive tables
+
+## Exercise 5: Producing a basic descriptive table
+
+- Use `datasummary_skim()` to create a descriptive statistics table for `df_hh`
+
+---
+
+# Descriptive tables
+
+
+```r
+df_hh %&gt;% datasummary_skim()
+```
+
+SHOW TABLE AFTER SOLVING RENDERING ISSUE
+
+---
+
+# Descriptive tables
+
+- `datasummary_skim()` summarizes only numeric variables by default
+
+- To summarize categorical variables, use the argument `type`
+
+
+```r
+# Selecting only one variables so table fits
+df_hh %&gt;% select(energy) %&gt;% datasummary_skim(type = "categorical")
+```
+
+SHOW TABLE AFTER SOLVING RENDERING ISSUE
+
+---
+
+# Descriptive tables
+
+- Other than `datasummary_skim()`, we can use `datasummary()` to customize the variables and statistics to include using a formula
+
+
+```r
+datasummary(
+  var1 + var2 + var3 ~ stat1 + stat2 + stat3 + stat4,
+  data = data,
+  ...
+)
+```
+
+- The arguments of `datasummary()` are:
+
+  + `formula`: a two-sided formula to describe the table: rows ~ columns
+  
+  + `data=`: the data set to be summarized
+  
+  + `...`: additional options allow for formatting customization
+
+---
+
+# Descriptive tables
+
+## Exercise 6: Producing a table with more information
+
+- Create a table showing the number of observations, mean, standard deviation, minimum, maximum, and median value for the variables `hh_size`, `n_child_5`, and `n_elder` in `df_hh` with the code below
+
+
+```r
+datasummary(
+  hh_size + n_child_5 + n_elder ~ N + Mean + SD + Median + Min + Max,
+  data = df_hh
+)
+```
+
+---
+
+# Descriptive tables
+
+
+```r
+datasummary(
+  hh_size + n_child_5 + n_elder ~ N + Mean + SD + Median + Min + Max,
+  data = df_hh
+)
+```
+
+SHOW TABLE AFTER SOLVING RENDERING ISSUE
+
+---
+
+# Descriptive tables
+
+- The package `modelsummary` doesn't offer an option to export tables to Excel
+
+- To do that, we will first store the result of `datasummary()` into an object of type "huxtable"
+
+- This will allow us to use the function `quick_xlsx()` from the package `huxtable` to export the table
+
+---
+
+# Descriptive tables
+
+## Exercise 7: Exporting descriptive tables to Excel
+
+1. Save the last table you created to and object called `descriptives_income` and add the argument `output = "huxtable"`
+
+2. Export this object to Excel with `quick_xlsx()`
+
+
+```r
+# Storing summary table into a huxtable object
+descriptives_income &lt;-
+  datasummary(
+    hh_size + n_child_5 + n_elder ~ N + Mean + SD + Median + Min + Max,
+    data = df_hh,
+    output = "huxtable"
+  )
+
+# Exporting
+quick_xlsx(
+  descriptives_income,
+  file = here("DataWork", "outputs", "descriptives_income.xlsx")
+)
+```
+
+
+
+---
+
+# Descriptive tables
+
+The result in Excel will look like this:
+
+&lt;img src="img/3-descriptive-tables/descriptive-table-excel.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+--
+
+This might be okay. But if we want to add further customizations to make it truly look like a finalized output, at least two things are missing:
+
+1. Variable labels
+2. Some table formatting
+
+We'll add these in the next exercise
+
+---
+
+# Descriptive tables
+
+## Exercise 8: Exporting a formatted table to Excel
+
+1\. Create a new dataframe changing the variable names of `hh_size`, `n_child_5`, and `n_elder` with the following code:
+
+
+```r
+df_table &lt;- df_hh %&gt;%
+  select(
+    `Household size`                    = hh_size,
+    `Number of members aged 5 or below` = n_child_5,
+    `Number of elderly (&gt;60 years)`     = n_elder
+  )
+```
+
+---
+
+# Descriptive tables
+
+## Exercise 8: Exporting a formatted table to Excel
+
+2\. Use this new dataframe to produce a datasummary and add `theme_basic()` on top of it
+
+
+```r
+desc_income &lt;-
+  datasummary(
+    All(df_table) ~ N + Mean + SD + Median + Min + Max,
+    data = df_table,
+    output = "huxtable"
+  ) %&gt;%
+  theme_basic()
+```
+
+3\. Export the result with `quick_xlsx()`
+
+
+```r
+quick_xlsx(
+  desc_income,
+  file = here("DataWork", "outputs", "descriptives_income_formatted.xlsx")
+)
+```
+
+
+
+---
+
+# Descriptive tables
+
+Now the result will look like this:
+
+&lt;img src="img/3-descriptive-tables/descriptive-table-excel-formatted.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+--
+
+`datasummary()` allows to apply multiple customization and themes to the results. You can explore them [here](https://modelsummary.com/). You can also manually apply changes directly to the Excel output.
+
+---
+
+class: inverse, center, middle
+name: balance-tables
+
+# Balance tables
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Balance tables
+
+- The library `modelsummary` has a function for easily exporting balance tables: `datasummary_balance()`
+
+
+```r
+datasummary_balance(
+  ~ balance_variable,
+  data  = data
+  stars = FALSE,
+  title = "Table title",
+  note  = "Table footnote",
+  ...
+)
+```
+
+- The basic arguments of `datasummary()` are:
+
+  + `balance_variable`: name of the variable defining groups (i.e.: treatment variable)
+  
+  + `data=`: the data set to be summarized
+
+---
+
+# Balance tables
+
+
+```r
+datasummary_balance(
+  ~ balance_variable,
+  data  = data
+  stars = FALSE,
+  title = "Table title",
+  note  = "Table footnote",
+  ...
+)
+```
+
+- Additional options:
+
+  + `stars=` Logical value (`TRUE`, `FALSE`) for the inclusion of statistical significance stars
+  
+  + `title=` String with table title
+  
+  + `note=` String with table footnote
+  
+  + `...`: additional options allow for formatting customization
+
+---
+
+# Balance tables
+
+## Exercise 9: Export a formatted balance table to Excel
+
+1\. Create a new dataframe keeping only HHs with "Yes" or "No" for `female_head` and changing the variable names of `hh_size`, `n_child_5`, and `n_elder` with the following code:
+
+
+```r
+df_balance &lt;- df_hh %&gt;%
+  mutate(female_head = droplevels(female_head)) %&gt;% # removes unused levels of factor variable
+  select(
+    female_head,
+    `Household size`                    = hh_size,
+    `Number of members aged 5 or below` = n_child_5,
+    `Number of elderly (&gt;60 years)`     = n_elder
+  )
+```
+
+---
+
+# Balance tables
+
+## Exercise 9: Export a formatted balance table to Excel
+
+2\. Generate a formatted balance table with `datasummary_balance()`:
+
+
+```r
+balance_table &lt;-
+  datasummary_balance(
+    ~ female_head,
+    data   = df_balance,
+    stars  = TRUE,
+    title  = "Balance by sex of HH head",
+    note   = "Includes HHs with observations for baseline and endline",
+    output = "huxtable"
+  ) %&gt;%
+  theme_basic()
+```
+
+---
+
+# Balance tables
+
+## Exercise 9: Export a formatted balance table to Excel
+
+3\. Export the result with `quick_xlsx()`:
+
+
+```r
+quick_xlsx(
+  balance_table,
+  file = here("DataWork", "Outputs", "balance_table.xlsx")
+)
+```
+
+
+
+---
+
+# Balance tables
+
+&lt;img src="img/3-descriptive-tables/balance-table-excel.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+name: regression-tables
+
+# Regression tables
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Regression tables
+
+- `modelsummary` has a function called `modelsummary()` for exporting regression tables
+
+- However, we'll use `huxreg()` from `huxtable` as it involves using only one package and it's a complete solution
+
+- That said, there are several other R packages that export regression tables. We recommend checking `stargarzer`, though it should be noted that it only exports tables in text, HTML, and LaTeX formats (no Excel)
+
+---
+
+# Regression tables
+
+Exporting regression tables also involves a two-step process, similar to how we first (1) generated a balance table with `datasummary_balance()` and (2) exported it with `quick_xlsx()`.
+
+1\. First, estimate your regressions. You can use R's base command `lm()` (short for *linear model*) or functions from regression estimation libraries.
+
+
+```r
+model1 &lt;- lm(y ~ x1,           data = df)
+model2 &lt;- lm(y ~ x1 + x2,      data = df)
+model3 &lt;- lm(y ~ x1 + x2 + x3, data = df)
+```
+
+2\. Then, export the regression results into a table with `huxreg()`
+
+
+```r
+huxreg(model1, model2, model3) %&gt;%
+  quick_xlsx(file = "my-regresion.xlsx")
+```
+
+---
+
+# Regression tables
+
+Regressions using `lm()` follow this syntax
+
+
+```r
+lm(
+  formula,
+  data,
+  ...
+)
+```
+
+- `formula` specifies the regressed variable and covariates. It follow the structure: `y ~ x1 + x2`
+
+  + `y`: regressed variable
+  
+  + `x1`, `x2`: covariates (separated by a `+`)
+  
+  + if one of the covariates is a factor, then R interprets it's a fixed effects variable
+
+- `data`: dataframe to use
+
+- `...`: additional options such as weights, how to treat NAs, and others
+
+---
+
+# Regression tables
+
+## Exercise 10: Estimate regression models
+
+1\. Estimate three regressions of `livestock_now` on (1) `hh_size` only; (2) `hh_size` and `livestock_before`; (3) `hh_size`, `livestock_before`, and `energy` (note that this last variable is a facotr). Let's not focus on the correctness of proposing these models for now.
+
+
+```r
+m1 &lt;- lm(livestock_now ~ hh_size,                             data = df_hh)
+m2 &lt;- lm(livestock_now ~ hh_size + livestock_before,          data = df_hh)
+m3 &lt;- lm(livestock_now ~ hh_size + livestock_before + energy, data = df_hh)
+```
+
+2\. Check the results of `m3` using `summary()`.
+
+
+```r
+summary(m3)
+```
+
+---
+
+# Regression tables
+
+.small[
+
+```r
+summary(m3)
+```
+
+```
+## 
+## Call:
+## lm(formula = livestock_now ~ hh_size + livestock_before + energy, 
+##     data = df_hh)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -51.007  -1.199  -0.370   0.484 127.815 
+## 
+## Coefficients:
+##                                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                          -0.04414    0.26460  -0.167   0.8675    
+## hh_size                               0.20723    0.05207   3.980 7.18e-05 ***
+## livestock_before                      0.32929    0.01320  24.945  &lt; 2e-16 ***
+## energyGas                             7.09280    3.80675   1.863   0.0626 .  
+## energyMain electricity               11.64309    1.62722   7.155 1.22e-12 ***
+## energySolar panels/private generator -1.73625    5.36515  -0.324   0.7463    
+## energyBattery                         0.10973    0.99184   0.111   0.9119    
+## energyFirewood                       -0.25835    0.31754  -0.814   0.4160    
+## energyOther (specify)                 0.53998    3.10417   0.174   0.8619    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.363 on 1751 degrees of freedom
+## Multiple R-squared:  0.3317,	Adjusted R-squared:  0.3287 
+## F-statistic: 108.6 on 8 and 1751 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+---
+
+# Regression tables
+
+- Now the last step is to export the results with `huxreg()` and `quick_xlsx()`
+
+- `huxreg()` takes the models as the first arguments and then uses named arguments for regression table customization
+
+- Some of its most useful named arguments are:
+
+  + `coefs`: labels for covariates
+  
+  + `omit_coefs`: covariates to omit
+  
+  + `stars`: levels for significance stars
+  
+  + `statistics`: which statistics to show at the bottom of the table
+  
+  + `add_rows`: adds rows with additional information
+
+---
+
+# Regression tables
+
+## Exercise 11: Export a formatted regression table to Excel
+
+Use the following code to export `m1`, `m2`, and `m3` to a regression table in Excel.
+
+.small[
+
+```r
+models &lt;- list("Model A" = m1, "Model B" = m2, "Model C" = m3)
+
+huxreg(
+  models,
+  omit_coefs = c("Intercept", "energy"),
+  coefs = c(
+    "Household size" = "hh_size",
+    "Livestock owned 12 months ago" = "livestock_before"
+  ),
+  statistics = c(
+    "N"  = "nobs",
+    "R2" = "r.squared"),
+  stars = c(`***` = 0.01, `**` = 0.05, `*` = 0.1),
+  note = "Includes HHs with observations in baseline and endline"
+) %&gt;%
+  add_rows(
+    c("Energy FE", "No", "No", "Yes"),
+    after = 5
+) %&gt;%
+  theme_basic() %&gt;%
+  quick_xlsx(
+    file = here("Datawork", "outputs", "regression_table.xlsx")
+)
+```
+]
+
+
+
+---
+
+# Regression tables
+
+&lt;img src="img/3-descriptive-tables/regression-table-excel.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: inverse, center, middle
+
+# Thanks! Gracias! Asante!
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+exclude: true
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
