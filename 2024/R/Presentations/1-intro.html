@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>1 - Introduction to statistical programming in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Galileu Kim, Luis Eduardo San Martin" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="libs/remark-css/default.css" type="text/css" />
+    <link rel="stylesheet" href="libs/remark-css/metropolis.css" type="text/css" />
+    <link rel="stylesheet" href="libs/remark-css/metropolis-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# 1 - Introduction to statistical programming in R
+]
+.subtitle[
+## R labs - Manage Successful Field Research
+]
+.author[
+### Galileu Kim, Luis Eduardo San Martin
+]
+.date[
+### The World Bank | <a href="https://github.com/worldbank">WB Github</a> <br> May 2024
+]
+
+---
+
+
+
+
+&lt;style type="text/css"&gt;
+@media print {
+  .has-continuation {
+    display: block !important;
+  }
+}
+&lt;/style&gt;
+
+# Before we begin
+
+&lt;font size="7"&gt;Go to &lt;a href="http://bit.ly/msfr24_materials"&gt;http://bit.ly/msfr24_materials&lt;/a&gt; and download &lt;b&gt;1-intro-R.pdf&lt;/b&gt;&lt;/font&gt;
+
+---
+
+# Table of contents
+
+1. [About the training](#about-this-training)
+1. [Statistical programming](#statistical-programming)
+1. [Writing R code](#writing-r-code)
+1. [Data in R](#data-in-r)
+1. [Functions in R](#functions-in-r)
+1. [R libraries](#r-libraries)
+1. [File paths](#file-paths)
+1. [Piping](#piping)
+
+---
+
+class: inverse, center, middle
+name: about-this-training
+
+# About the R lab sessions of MSFR
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# About the R lab sessions of MSFR
+
+- This is an **introduction** to statistical programming and reproducible research in R
+
+- Content is focused on usual tasks for field research
+
+---
+
+# About the R lab sessions of MSFR
+
+&lt;img src="img/1-intro/data-work-labs.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+name: statistical-programming
+
+# Statistical programming
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Statistical programming
+
+## Data work in development research
+
+More generally, for any of the processes in development research, we'll call data work everything that:
+
+1. Starts with a data input
+1. Runs some process with the data
+1. Produces an output with the result
+
+&lt;img src="img/1-intro/data-work.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Statistical programming
+
+## So what do we mean by statistical programming?
+
+- Programming consists of producing instructions for a computer to do something
+- In the context of data work, that "something" is statistical analysis, mathematical operations, or data transformations
+- Hence, statistical programming consists of producing instructions so our computers will conduct statistical analysis on data
+- From now on, we're going to refer to these instructions for data processes as **code**
+
+&lt;img src="img/1-intro/data-work-with-instructions.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Statistical programming
+
+## Reproducibility
+
+In science, the formal definition of reproducibility was provided by [Bollen et al. (2015)](https://www.nsf.gov/sbe/AC_Materials/SBE_Robust_and_Reliable_Research_Report.pdf):
+
+*the ability […] to duplicate the results of a prior study using the same materials and procedures as were used by the original investigator*
+
+this translates to data work as:
+
+ **&lt;font size="7"&gt;The ability to reproduce outputs using the same code and data inputs.&lt;/font&gt;**
+
+This is also usually referred to as *computational reproducibility*.
+
+---
+
+class: inverse, center, middle
+name: writing-r-code
+
+# Writing R code
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Writing R code
+
+## How to write R code?
+
+The rest of this session focuses on the basics of writing R code...
+
+&lt;img src="img/1-intro/data-work-basis.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+## How to write R code?
+
+- We'll use RStudio to write R code in this training
+
+- Now open RStudio in your computer
+
+- Please make sure you're opening RStudio and not R
+
+&lt;img src="img/1-intro/r-rstudio.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+## RStudio interface
+
+&lt;img src="img/1-intro/rstudio.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+## RStudio interface
+
+&lt;img src="img/1-intro/rstudio-panels.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+## Exercise 1: writing code in the console
+
+1. Write the following code in the console of RStudio
+
+  + `print("hello world")`
+  + Make sure to include the quotes: `" "`
+
+1. Press Enter to run the code
+
+&lt;img src="img/1-intro/console.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+&lt;img src="img/1-intro/exercise1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+## Exercise 2: writing a short script
+
+.pull-left5[
+- Open a new script with `File` &gt;&gt; `New File` &gt;&gt; `R Script`
+
+- Write or copy the following text into the script
+
+
+```r
+print("hello")
+print("bonjour")
+print("hola")
+print("bom dia")
+```
+  
+1. Select the text you introduced with your mouse
+
+1. Press "Run"
+]
+.pull-right5[
+&lt;img src="img/1-intro/script.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Writing R code
+
+## R scripts
+
+.pull-left[
+- Writing and running code from the console will execute it immediately
+
+- Writing code in the script panel allow us to write multiple lines of code and execute them later
+
+  + Each line is executed in order
+  
+  + The line and the results will show in the console
+  
+- **Important:** for the rest of the training, remember to always introduce your code in the script (and not in the console) so you can keep record of what you did
+]
+
+.pull-right[
+&lt;img src="img/1-intro/exercise2.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Writing R code
+
+## R scripts
+
+- In other words: scripts contain the instructions you give to your computer when doing data work
+
+&lt;img src="img/1-intro/data-work-script.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+## Creating objects in R
+
+- Remember we also mentioned the environment panel? that's where R keeps track of objects
+
+- Objects are representations of data that currently exist in R's memory
+
+  + A single number can be an object
+  + A word can be an object
+  + Even an entire data file can be an object
+
+- We create objects in R with the arrow operator (`&lt;-`)
+
+- Example: creating an object called `x`
+
+
+```r
+x &lt;- 10
+```
+
+---
+
+# Writing R code
+
+## Creating objects in R
+
+- After an object is created, we can refer to it using its name
+
+
+```r
+x &lt;- 10
+print(x)
+```
+
+```
+## [1] 10
+```
+
+```r
+print(x + 5)
+```
+
+```
+## [1] 15
+```
+
+---
+
+# Writing R code
+
+## Creating objects in R
+
+- After an object is created, it will show in the environment panel
+
+&lt;img src="img/1-intro/environment.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+## Exercise 3: operations with objects
+
+1. Create an object called `x1` in your script and assign to it the value of 50
+
+2. Create an object called `x2` and make it equal to 15
+
+3. Create an object called `x3` and make it the sum of x1 and x2
+
+4. Print `x3`. It should show the value 65
+
+
+```r
+x1 &lt;- 50
+x2 &lt;- 15
+x3 &lt;- x1 + x2
+print(x3)
+```
+
+---
+
+# Writing R code
+
+&lt;img src="img/1-intro/exercise3.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Writing R code
+
+- These are the very basics of writing R code. You'll become more familiarized with it in this and the next sessions
+
+- Now we know how to use RStudio to write R code and produce scripts
+
+- However, we haven't still introduced the data to our data work. That comes next
+
+---
+
+class: inverse, center, middle
+name: data-in-r
+
+# Data in R
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Data in R
+
+## Exercise 4: Loading data into R
+
+.pull-left[
+1. Click on this link: http://bit.ly/msfr24_materials and download the file `treat_status.csv`
+
+2. In RStudio, go to `File` &gt; `Import Dataset` &gt; `From Text (base)` and select the file `treat_status.csv`
+  + If you don't know where the file is, check in your `Downloads` folder
+  
+3. Make sure to select `Heading` &gt; `Yes` in the next window
+
+4. Select `Import`
+]
+
+.pull-right[
+&lt;img src="img/1-intro/import-data.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Data in R
+
+- If you did this correctly, you will note that a viewer of the data now appears in RStudio
+- You can click on the `x` next to `treat_status` to return to the script
+- To open the viewer again, use the code: `View(treat_status)` (notice the uppercase "V")
+
+&lt;img src="img/1-intro/data-viewer.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data in R
+
+- Additionally, you will now see an object named `treat_status` in your environment
+
+&lt;img src="img/1-intro/environment2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data in R
+
+- Remember we mentioned objects before? For R, `treat_status` is an object just like `x1`, `x2`, or `x3`
+
+- The difference is that `treat_status` is not a single number like `x1`, but a collection of numeric values similar to an Excel spreadsheet. In R, this type of objects are called **dataframes**
+
+- From now, we will refer to data loaded into R as **dataframes**
+
+&lt;img src="img/1-intro/environment2-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data in R
+
+## A note about this dataframe
+
+Knowing the data you use is extremely important. For the lab sessions, `treat_status` is a dataframe with data about villages, their treatment status in the project, and the districts they are located.
+
+- Variable (column) `vid` is the village identifier
+- `Treatment` is a dummy with information about the village treatment status
+- `district` is the name of the village district
+
+&lt;img src="img/1-intro/data-viewer.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data in R
+
+## Exercise 5: Understanding data in R
+
+1. Use the following code to subset (filter) `treat_status` and leave only the villages in the treatment group: `subset(treat_status, Treatment == 1)`
+
+  + Note that the `T` in `Treatment` needs to be **uppercase** because that's how the variable is named in the dataframe
+  + Note that there are **two equal signs** in the condition, not one
+  
+1. Use `View(treat_status)` to visualize the dataframe again and see how it changed (note the uppercase "V")
+
+---
+
+# Data in R
+
+Does anything look out of place?
+
+&lt;img src="img/1-intro/exercise5.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data in R
+
+- Indeed, the dataframe `treat_status` didn't change
+
+- That is because we didn't use the arrow operator (`&lt;-`) to store the result in an object
+
+- Instead, R only printed the result in the console for us (and nothing else)
+
+&lt;img src="img/1-intro/exercise5-annotated.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data in R
+
+## Exercise 6: Operating with data and storing the result
+
+- Subset the dataframe again and save the result into a new dataframe called `treated_villages`. You can use this code for that:
+
+  
+  ```r
+  treated_villages &lt;- subset(treat_status, Treatment == 1)
+  ```
+
+- Use `View(treated_villages)` to visualize the result (notice the uppercase "V")
+
+---
+
+# Data in R
+
+Now the resulting dataframe looks correct!
+
+&lt;img src="img/1-intro/exercise6.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data in R
+
+Note that this time R didn't print the resulting dataframe in the console, it only showed the code we were running. Also, now the new dataframe appears in the environment.
+
+&lt;img src="img/1-intro/exercise6-annotated.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data in R
+
+- R can store multiple dataframes in the environment. This is analogous to having different spreadsheets in the same Excel window
+
+- Remember that dataframes are just objects in R. R differentiates which dataframe the code refers to with the dataframe name
+
+&lt;img src="img/1-intro/environment3.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+name: functions-in-r
+
+# Functions in R
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Functions in R
+
+- Functions are how we apply operations to objects in R
+
+- We have used a few functions in the previous exercises. For example, `subset()` and `View()` are functions
+
+- Everything that has a name plus parentheses is a function in R
+
+&lt;img src="img/1-intro/function.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Functions in R
+
+Functions have the following elements:
+
+&lt;img src="img/1-intro/function-elements.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+- **Function name:** the name we use to call a function. It goes before the parentheses
+
+- **Arguments:** inputs and specifications for the function to be applied.
+
+  + Arguments go inside the parentheses and are separated by commas
+  + The first argument is the object you apply the function on
+
+---
+
+# Functions in R
+
+- The results of a function can always be stored in an object with the arrow operator (`&lt;-`)
+
+&lt;img src="img/1-intro/function-stored.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+- As we saw in exercise 5, the results of a function will only be printed in the console if you don't store them
+
+---
+
+class: inverse, center, middle
+name: r-libraries
+
+# R libraries
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# R libraries
+
+- Installing R in your computer gives you access to its basic functions
+
+- Additionally, you can also install libraries. Libraries are packages of additional R functions that allow you to do:
+
+  + Operations that basic R functions don't do (example: geospatial data analysis)
+  
+  + Operations that basic R functions do, but easier (example: data cleaning)
+
+- Libraries are also called **packages**. Both terms refer to the same in R work
+
+---
+
+# R libraries
+
+In a nutshell:
+
+&lt;img src="img/1-intro/r-libraries.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# R libraries
+
+We'll install two libraries that we'll use extensively in the labs: `haven` and `here`
+
+## Exercise 7: Installing libraries
+
+1. Install the libraries with `install.packages()`:
+
+ + Run in the console: `install.packages("here")`
+ + Run in the console: `install.packages("haven")`
+ + Note the quotes (`" "`) in the package names
+ + **Introduce this code in the console**, not the script panel
+
+&lt;img src="img/1-intro/install-haven.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# R libraries
+
+## Installing libraries
+
+&lt;img src="img/1-intro/installing-haven.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# R libraries
+
+Now that the libraries are installed, we only need to load them to start using the functions they have.
+
+## Exercise 8: Loading libraries
+
+.pull-left[
+1. Load `haven` with: `library(haven)`
+
+1. Load `here` with `library(here)`
+
+1. Load `dplyr` with `library(dplyr)`
+
+  + Run this code **from the script panel** this time, not the console
+  + Notice that we don't use quotes in the library names this time
+  + If loading `dplyr` fails, install it with `install.packages("dplyr")`
+]
+.pull-right[
+&lt;img src="img/1-intro/loading-haven.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# R libraries
+
+- Library installation:
+
+&lt;img src="img/1-intro/installation.png" width="37%" style="display: block; margin: auto;" /&gt;
+
+- Library loading:
+
+&lt;img src="img/1-intro/loading.png" width="37%" style="display: block; margin: auto;" /&gt;
+
+- You install R libraries only once in your computer
+
+- You load libraries every time you open a new RStudio window (only load the libraries you will use)
+
+---
+
+class: inverse, center, middle
+name: file-paths
+
+# File paths
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# File paths
+
+File paths are the location of a file or folder in your computer. For example:
+
+
+```r
+C:/WBG/Repos/manage-successful-field-research/2024/R/Presentations/1-intro.Rmd
+```
+
+is the location of this presentation file in my computer.
+
+&lt;img src="img/1-intro/file-path-session1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# File paths
+
+- File paths are important because they define the route from which your computer reads input data or exports outputs
+
+- Remember when you manually loaded `treat_status.csv` in exercise 4? you were using a file path implicitly. This is how the command for loading the data was implicitly applied in my computer:
+
+
+```r
+treat_status &lt;- read.csv("C:/Users/wb532468/Downloads/treat_status.csv")
+```
+
+- This will look different for your computer because the path to your `Downloads` folder is not going to be the same
+
+---
+
+# File paths
+
+## Relative and absolute file paths
+
+- Absolute file paths define a location starting from a disk in Windows (`C:/`) or the folder `/Users/` in Mac.
+
+  + For example: `C:/Users/wb532468/Downloads/treat_status.csv`
+
+- Relative file paths define the location of a file relative to an "anchor" location.
+
+  + For example: `Downloads/treat_status.csv` is the relative path of `treat_status.csv` with respect of `C:/Users/wb532468`
+
+---
+
+# File paths
+
+## Relative and absolute file paths
+
+- You can use both in R
+
+- Relative file paths will work with respect of the current working directory where R is located. You can check it with the function `getwd()`
+
+
+```r
+getwd()
+```
+
+```
+## [1] "C:/WBG/repos/manage-successful-field-research/2024/R/Presentations"
+```
+
+- In Windows, the default working directory when starting R is the Documents folder
+
+---
+
+# File paths
+
+## Relative and absolute file paths
+
+- The current working directory will always be the "anchor" for relative paths in R
+
+- You can change it with the function `setwd()`, as in:
+
+
+```r
+setwd("C:/path/that/only/exists/in/my/computer")
+```
+
+- However, we absolutely recommend not to do it
+
+- Why? **Because having code that sets a working directory with a path that only exists in your computer will break reproducibility**
+
+---
+
+# File paths
+
+## RStudio projects and `here`
+
+- Instead, you should use RStudio projects and the library `here`
+
+- RStudio projects automatically sets the working directory to a "project" folder, so you can use it as anchor to work with relative paths that will work for everyone else that uses the same folder structure
+
+- This is crucial because it allows smooth interoperability between different computers where the exact path to the project root directory differs
+
+- This will become clearer with next two exercises
+
+---
+
+# File paths
+
+Save your current script by clicking in the floppy disk icon **before starting this exercise**.
+
+## Exercise 9
+
+1. Create a folder named `msfr-r-labs` in your preferred location in your computer
+
+1. Go to http://bit.ly/msfr24_materials and download the file: `DataWork.zip`
+
+1. Unzip `DataWork.zip` in the folder `msfr-r-labs`
+
+1. On RStudio, select `File` &gt; `New Project...`
+
+1. Select `Existing Directory`
+
+1. Browse to the location of `msfr-r-labs` and select `Create Project`
+
+1. RStudio will restart after this
+
+---
+
+# File paths
+
+## RStudio projects
+
+&lt;img src="img/1-intro/exercise10.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# File paths
+
+## RStudio projects
+
+&lt;img src="img/1-intro/exercise10a.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# File paths
+
+## Using `here`
+
+- `here` locates files relative to your project root
+
+- It uses the root project directory to build paths to files easily
+
+- It allows for interoperability between different computers where the absolute path to the same file is not the same
+
+---
+
+# File paths
+
+## Using `here`
+
+- Now you'll be able to use `here()` to at point the location of every file relative to your project root
+
+  + For example, to load a `csv` file located in: `C:/WBG/project-root-name/data/raw/data-file.csv`, you should use:
+  
+
+```r
+path &lt;- here("data", "raw", "data-file.csv")
+df &lt;- read.csv(path)
+```
+
+- __Notes:__
+
+  + Your project root is the directory that contains the `.Rproj` file
+  + The arguments of here are the consecutive subfolders where your file is located. The final argument is the file name **with the file extension**
+  + The result of `here()` is an absolute path that points to a file or folder location in your computer
+
+---
+
+# File paths
+
+## Exercise 10
+
+1\. Start a new script with `File` &gt; `New File` &gt; `R Script` 
+
+2\. Load the libraries `here` and `haven` with `library()`
+
+3\. Create an object called `path` that will be a file path to `DataWork/data/raw/TZA_CCT_baseline.dta`. Use `here()` for this:
+
+
+```r
+here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")
+```
+
+4\. Use `read_stata()` to load the file and assign it to an object with `&lt;-`. The argument of `read_stata()` should be the object `path`.
+
+
+```r
+# Loading libraries
+library(here)
+library(haven)
+
+# Importing data
+path &lt;- here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")
+baseline &lt;- read_stata(path)
+```
+
+---
+
+# File paths
+
+
+```r
+# Loading libraries
+library(here)
+library(haven)
+
+# Importing data
+path &lt;- here("DataWork", "data", "raw", "TZA_CCT_baseline.dta")
+baseline &lt;- read_stata(path)
+```
+
+Some notes:
+
++ The lines that start with `#` are code comments. R doesn't run these lines. We're using them to create small sections in the script
+
++ It's usual for R scrips to start with a section loading libraries and a next section loading data
+
+---
+
+# File paths
+
+
+```r
+# Loading libraries
+library(here)
+library(haven)
+
+# Importing data
+path &lt;- here("DataWork", "data", "raw", "TZA_CCT_baseline.dta")
+baseline &lt;- read_stata(path)
+```
+
+Some more notes:
+
++ `read_stata()` is a function from the library `haven`. You can only use it after loading `haven` with `library(haven)` (we did this already in exercise 9)
+  
++ The same happens with `here()`, which is a function from the library `here`. You can only use `here()` after having run `library(here)` (exercise 9)
+
++ Remember to assign the dataframe you're reading to an object. You can call it `baseline` as we did before
+
+---
+
+# File paths
+
+If you did the exercise correctly, you should see `baseline` listed in the environment panel
+
+&lt;img src="img/1-intro/exercise11.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+name: piping
+
+# Piping
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Piping
+
+## Functions inside functions
+
+- R allows you to use functions inside functions. For example, this will show the summary of the logarithm of the dataframe `baseline`
+
+
+```r
+summary(log(baseline$food_cons))
+```
+
+- In this case, R is taking the *output* (result) of `log(baseline$food_cons)` as the *input* of `summary()`
+
+- Also, note that the operator `$` is subsetting the column `food_cons` from the dataframe `baseline`
+
+---
+
+# Piping
+
+## Functions inside functions
+
+- This is convenient because it saves us from having to store intermediate results into objects frequently, keeping our R environment cleaner
+
+- However, it also has the big downside of making code convoluted and unclear, as in the example below
+
+
+```r
+round(mean(log(baseline$food_cons)), 2)
+```
+
+- Piping helps keeping code clear in cases like this
+
+---
+
+# Piping
+
+- The pipe operator is this: `%&gt;%`
+
+- Pipes are used between objects or the results of functions, as in: `log(baseline$food_cons) %&gt;% summary()`
+
+- The meaning of the operator is:
+
+&lt;font size="6"&gt;Take the output (or object) of the function at the left and pass it as the first argument of the function at the right&lt;/font&gt;
+
+In short:
+
+- `x %&gt;% function()` is the same as `function(x)`
+
+- `x %&gt;% function1() %&gt;% function2()` is the same as `function2(function1(x))`
+
+---
+
+# Piping
+
+Hence, these are equivalent:
+
+
+```r
+# The long way, with intermediate objects:
+log_food_cons &lt;- log(baseline$food_cons)
+summary(log_food_cons)
+
+# Shorter, but code is less clear:
+summary(log(baseline$food_cons))
+
+# With pipes, clearer and with no intermediate objects:
+baseline$food_cons %&gt;% log() %&gt;% summary()
+
+# Note that you can also concatenate pipes and include line breaks:
+baseline$food_cons %&gt;%
+  log() %&gt;%
+  summary()
+```
+
+Pipes are part of the libraries included in the tidyverse, such as `dplyr`. When you loaded `dplyr` in exercise 9, the pipes became available for use.
+
+---
+
+# Piping
+
+## Exercise 11: Load data with pipes
+
+We'll load the same data we loaded manually in Exercise 4, this time with code.
+
+1. Use the functions `here()` and `read.csv()` with pipes between them (`%&gt;%`) to read the file `DataWork/Data/Raw/treat_status.csv`. Name the dataframe `treatment`. Some hints:
+
+  + **Very important:** always remember to save the data read into a dataframe object with `&lt;-`, otherwise R will only print the dataframe and it will not be stored in the environment
+  
+  + Remember that the arguments of `here` are the names of the folders in the path to the file, with quotes (`" "`). The last argument is the file name with the file extension, as in: `here("DataWork", "Data", "Raw", "treat_status.csv")`
+
+1. The solution is this:
+
+
+```r
+treatment &lt;- here("DataWork", "Data", "Raw", "treat_status.csv") %&gt;% read.csv()
+```
+
+---
+
+# Piping
+
+
+```r
+# Adding line breaks for code clarity:
+treatment &lt;- 
+  here("DataWork", "Data", "Raw", "treat_status.csv") %&gt;%
+  read.csv()
+```
+
+&lt;img src="img/1-intro/env-treatment.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+
+# Thanks! Gracias!
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+exclude: true
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
