@@ -14,8 +14,8 @@
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
-    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
-    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="libs/remark-css/default.css" type="text/css" />
     <link rel="stylesheet" href="libs/remark-css/metropolis.css" type="text/css" />
     <link rel="stylesheet" href="libs/remark-css/metropolis-fonts.css" type="text/css" />
@@ -50,6 +50,12 @@ class: center, middle, inverse, title-slide
   }
 }
 &lt;/style&gt;
+
+# Before we begin
+
+&lt;font size="7"&gt;Go to &lt;a href="http://bit.ly/msfr24_materials"&gt;http://bit.ly/msfr24_materials&lt;/a&gt; and download &lt;b&gt;2-tidy_clean.pdf&lt;/b&gt;&lt;/font&gt;
+
+---
 
 # Table of contents
 
@@ -90,7 +96,7 @@ name: tidy-data
 
 ## Data tables
 
-- Data can be acquired in multiple formats, bit in development research it is most commonly acquired as one or more **data tables**
+- Data can be acquired in multiple formats, but in development research it is most commonly acquired as one or more **data tables**
 
 .exercise[
 &lt;font size="6"&gt;&lt;b&gt;Data table:&lt;/b&gt;&lt;br&gt;A data format where data is organized into rows and columns&lt;/br&gt;&lt;/font&gt;
@@ -152,7 +158,7 @@ In some statistical software, columns are usually called *variables* and rows ar
 - Unit of observation: **village**
 
 - Attributes measured (variables):
-  + Village
+  + Village ID
   + District
   + Treatment assignment
 
@@ -195,18 +201,17 @@ R has multiple packages and tools for data tidying and cleaning. Today we'll wor
 
 ## Exercise 1: Install and load packages for data tidying and cleaning
 .pull-left[
-1. Install all the packages we'll use:
+1. Install all the packages we'll use: (but omit the ones you know you already installed before)
   + `install.packages("tidyr")`
   + `install.packages("janitor")`
   + `install.packages("labelled")`
   + `install.packages("dplyr")`
   + `install.packages("readxl")`
-  + `install.packages("haven)`
   + `install.packages("stringr)`
 ]
 
 .pull-right[
-2. Load all the packages we'll use:
+2\. Load all the packages we'll use:
   + `library(tidyr)`
   + `library(dplyr)`
   + `library(janitor)`
@@ -233,12 +238,14 @@ R has multiple packages and tools for data tidying and cleaning. Today we'll wor
 
 
 ```r
-df_village &lt;- read_xlsx(here("Data", "treat_status.xlsx")) %&gt;%
+df_village &lt;- read_xlsx(here("DataWork", "Data", "Raw", "treat_status.xlsx")) %&gt;%
   clean_names()
 
-df_hh      &lt;- read_dta(here("Data", "TZA_CCT_baseline.dta")) %&gt;% 
+df_hh      &lt;- read_dta(here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")) %&gt;% 
   clean_names()
 ```
+
+
 
 ---
 # Tidy data
@@ -304,7 +311,7 @@ The next step before tidying is to check if the ID variables uniquely identify t
 # Identifying duplicates
 ## Exercise 4: Check the identifying variables
 
-1. Inspect the deduplicated dataframe with `View(df_hh)` and take note of the identifying variables.
+1. Inspect the dataframe with `View(df_hh)` and take note of the identifying variables.
 
 1. Count the number of rows with `nrow(df_hh)` and the **number of distinct combinations in the identifying variables** with :
 
@@ -348,7 +355,6 @@ nrow(df_hh_dedup) == df_hh_dedup %&gt;% select(vid, hhid) %&gt;% n_distinct()
 ```
 
 - If the condition is `TRUE`then we have successfully removed the duplicates
-# Fixing duplicates
 
 - Now our dataframe is deduplicated and we have verified that the ID variables uniquely identify the observations
 
@@ -591,7 +597,7 @@ Other than fixing information collected or received, data cleaning also gets dat
 
 - Using the correct column types for each attribute is a condition for data analysis
 
-- For example, if the data points of a column are only integers but the type is character, R will not be able to perform mathematical operations such as estimating the mean or standard deviation of the column
+- For example, if the data points of a column are characters but the correct type is integer, R will not be able to perform mathematical operations such as estimating the mean or standard deviation of the column
 
 ---
 
@@ -656,7 +662,6 @@ new_df &lt;- old_df %&gt;%
 
 - Convert the variable `duration` to numeric with the following code:
 
-.smaller-r-code[
 
 ```r
 df_hh_dedup &lt;- df_hh_dedup %&gt;%
@@ -668,7 +673,6 @@ class(df_hh_dedup$duration)
 ```
 ## [1] "numeric"
 ```
-]
 
 ---
 
@@ -688,7 +692,7 @@ class(df_hh_dedup$duration)
 &lt;img src="img/session2/2024-ar-farm-unit.png" width="65%" style="display: block; margin: auto;" /&gt;
 ---
 # Getting data ready for analysis and construction
-## Exercise 10: Convert ar_farm_unit column to numeric
+## Exercise 10: Convert "ar_farm_unit" column to numeric
 
 - `case_when()` is an auxiliary function that is normally used inside `mutate()` to replace column values based on conditions
 
@@ -787,7 +791,7 @@ df_hh_dedup &lt;- df_hh_dedup %&gt;%
 # Getting data ready for analysis and construction
 ## Exercise 11: Clean "crop_other" string variable
 
-- Use `str_replace_all` function
+- Use `str_replace_all()` function
 
 - We will manually define the text to be replaced in the function
 
@@ -796,9 +800,11 @@ df_hh_dedup &lt;- df_hh_dedup %&gt;%
 df_hh_dedup &lt;- df_hh_dedup %&gt;%
   mutate(crop_other_clean = 
            str_replace_all(crop_other, 
-                           c("Coconut trees" ="Coconut",                            "Coconut trees." = "Coconut",                            "Coconut." = "Coconut", 
-                            "Coconuts"="Coconut",
-                            "sesame"="Sesame", 
+                           c("Coconut trees" ="Coconut",
+                             "Coconut trees." = "Coconut",
+                             "Coconut." = "Coconut", 
+                             "Coconuts"="Coconut",
+                             "sesame"="Sesame", 
                              "Sesame."="Sesame")))
 ```
 
@@ -892,8 +898,8 @@ new_df &lt;- old_df %&gt;%
 
 df_hh_dedup &lt;- df_hh_dedup %&gt;%
   mutate(area_farm_hect = 
-           case_when(ar_farm_unit=="Acre" ~ ar_farm*0.405,
-                                    .default = ar_farm))
+           case_when(ar_farm_unit=="Acre" ~ ar_farm * 0.405,
+                     .default = ar_farm))
 ```
 
 ---
@@ -983,7 +989,7 @@ df_hh_dedup &lt;- df_hh_dedup %&gt;%
 .pull-left2[
 - Columns `read_or_write` and `any_member_sick` represent categorical attributes
 
--The columns however, show numeric values but they don't show information on the categories each number represents
+- The columns however, show numeric values but they don't show information on the categories each number represents
 
 ]
 .pull-right2[
@@ -1179,26 +1185,6 @@ View(df_village_labelled)
 
 ---
 # Getting data ready for analysis and construction
-## Exercise: Identify outliers for the variable area_farm_hect
-
-- First generate z scores for the variable measuring the area of farm in hectares(area_farm_hect) and filter observations that are greater than 2.5 standard deviations from the mean
-
-
-```r
-df_hh_dedup &lt;- df_hh_dedup %&gt;%
-  mutate(mean_area_farm_hect = mean(area_farm_hect, na.rm = T),
-         sd_area_farm_hect = sd(area_farm_hect, na.rm=T)) %&gt;%
-  # Calculate the z score
-  mutate(z_score = (abs(area_farm_hect-mean_area_farm_hect)/sd_area_farm_hect)) 
-
-df_outliers &lt;- df_hh_dedup %&gt;%
-  # Filter all observations with z-scores&gt; 2.5
-  filter(z_score&gt;2.5) %&gt;%
-  select(hhid, area_farm_hect, mean_area_farm_hect, z_score)
-```
-
----
-# Getting data ready for analysis and construction
 ## How do we deal with outliers?
 
 - There are multiple approached to dealing with outliers but the ultimate decision belongs to the research team
@@ -1242,6 +1228,27 @@ df_hh_dedup_trim &lt;- df_hh_dedup %&gt;%
 - __Maintaining the observations:__ Once you have ascertained that it's not a data entry error and if you do not want to lose any data point, another alternative is to leave them and use more robust methods during analysis that may be less sensitive to outliers.
 
 - For example, you could use __median__ instead of the __mean__; which can be more sensitive to outliers
+
+---
+
+# Getting data ready for analysis and construction
+## Exercise 20: Identify outliers for the variable "area_farm_hect"
+
+- First generate z scores for the variable measuring the area of farm in hectares(area_farm_hect) and filter observations that are greater than 2.5 standard deviations from the mean
+
+
+```r
+df_hh_dedup &lt;- df_hh_dedup %&gt;%
+  mutate(mean_area_farm_hect = mean(area_farm_hect, na.rm = T),
+         sd_area_farm_hect = sd(area_farm_hect, na.rm=T)) %&gt;%
+  # Calculate the z score
+  mutate(z_score = (abs(area_farm_hect-mean_area_farm_hect)/sd_area_farm_hect)) 
+
+df_outliers &lt;- df_hh_dedup %&gt;%
+  # Filter all observations with z-scores&gt; 2.5
+  filter(z_score&gt;2.5) %&gt;%
+  select(hhid, area_farm_hect, mean_area_farm_hect, z_score)
+```
 
 ---
 
@@ -1296,7 +1303,7 @@ old_df &lt;- old_df %&gt;%
 
 ```r
 # Output folder
-output_folder &lt;- here("DataWork", "data", "intermediate", "clean")
+output_folder &lt;- here("DataWork", "Data", "Clean")
 
 # Saving hh level data
 saveRDS(
@@ -1315,7 +1322,7 @@ saveRDS(
 
 class: inverse, center, middle
 
-# Thanks! // ¡Gracias! //  Asante!
+# Thanks! // Gracias! //  Asante!
 
 &lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
 

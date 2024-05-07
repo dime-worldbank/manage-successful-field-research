@@ -62,6 +62,12 @@ xaringanExtra::use_logo(
 }
 ```
 
+# Before we begin
+
+<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr24_materials</a> and download <b>2-tidy_clean.pdf</b></font>
+
+---
+
 # Table of contents
 
 1. [About the session](#about-this-session)
@@ -103,7 +109,7 @@ name: tidy-data
 
 ## Data tables
 
-- Data can be acquired in multiple formats, bit in development research it is most commonly acquired as one or more **data tables**
+- Data can be acquired in multiple formats, but in development research it is most commonly acquired as one or more **data tables**
 
 .exercise[
 <font size="6"><b>Data table:</b><br>A data format where data is organized into rows and columns</br></font>
@@ -167,7 +173,7 @@ In some statistical software, columns are usually called *variables* and rows ar
 - Unit of observation: **village**
 
 - Attributes measured (variables):
-  + Village
+  + Village ID
   + District
   + Treatment assignment
 
@@ -216,18 +222,17 @@ knitr::include_graphics("img/session3/cleaning-packages-logos.png")
 
 ## Exercise 1: Install and load packages for data tidying and cleaning
 .pull-left[
-1. Install all the packages we'll use:
+1. Install all the packages we'll use: (but omit the ones you know you already installed before)
   + `install.packages("tidyr")`
   + `install.packages("janitor")`
   + `install.packages("labelled")`
   + `install.packages("dplyr")`
   + `install.packages("readxl")`
-  + `install.packages("haven)`
   + `install.packages("stringr)`
 ]
 
 .pull-right[
-2. Load all the packages we'll use:
+2\. Load all the packages we'll use:
   + `library(tidyr)`
   + `library(dplyr)`
   + `library(janitor)`
@@ -237,7 +242,7 @@ knitr::include_graphics("img/session3/cleaning-packages-logos.png")
   + `library(here)`
   + `library(stringr)`
   
-```{r, eval=TRUE, echo=FALSE, message=FALSE}
+```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyr)
 library(dplyr)
 library(janitor)
@@ -261,7 +266,17 @@ library(ggplot2)
   
 - Use the following code to load the data
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
+
+df_village <- read_xlsx(here("DataWork", "Data", "Raw", "treat_status.xlsx")) %>%
+  clean_names()
+
+df_hh      <- read_dta(here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")) %>% 
+  clean_names()
+
+```
+
+```{r, echo=FALSE}
 
 df_village <- read_xlsx(here("Data", "treat_status.xlsx")) %>%
   clean_names()
@@ -325,7 +340,7 @@ The next step before tidying is to check if the ID variables uniquely identify t
 # Identifying duplicates
 ## Exercise 4: Check the identifying variables
 
-1. Inspect the deduplicated dataframe with `View(df_hh)` and take note of the identifying variables.
+1. Inspect the dataframe with `View(df_hh)` and take note of the identifying variables.
 
 1. Count the number of rows with `nrow(df_hh)` and the **number of distinct combinations in the identifying variables** with :
 
@@ -365,7 +380,6 @@ nrow(df_hh_dedup) == df_hh_dedup %>% select(vid, hhid) %>% n_distinct()
 ```
 
 - If the condition is `TRUE`then we have successfully removed the duplicates
-# Fixing duplicates
 
 - Now our dataframe is deduplicated and we have verified that the ID variables uniquely identify the observations
 
@@ -617,7 +631,7 @@ Other than fixing information collected or received, data cleaning also gets dat
 
 - Using the correct column types for each attribute is a condition for data analysis
 
-- For example, if the data points of a column are only integers but the type is character, R will not be able to perform mathematical operations such as estimating the mean or standard deviation of the column
+- For example, if the data points of a column are characters but the correct type is integer, R will not be able to perform mathematical operations such as estimating the mean or standard deviation of the column
 
 ---
 
@@ -676,14 +690,12 @@ new_df <- old_df %>%
 
 - Convert the variable `duration` to numeric with the following code:
 
-.smaller-r-code[
 ```{r}
 df_hh_dedup <- df_hh_dedup %>%
   mutate(duration = as.numeric(duration))
 
 class(df_hh_dedup$duration)
 ```
-]
 
 ---
 
@@ -705,7 +717,7 @@ knitr::include_graphics("img/session2/2024-ar-farm-unit.png")
 ```
 ---
 # Getting data ready for analysis and construction
-## Exercise 10: Convert ar_farm_unit column to numeric
+## Exercise 10: Convert "ar_farm_unit" column to numeric
 
 - `case_when()` is an auxiliary function that is normally used inside `mutate()` to replace column values based on conditions
 
@@ -804,7 +816,7 @@ knitr::include_graphics("img/session2/2024-coconut.png")
 # Getting data ready for analysis and construction
 ## Exercise 11: Clean "crop_other" string variable
 
-- Use `str_replace_all` function
+- Use `str_replace_all()` function
 
 - We will manually define the text to be replaced in the function
 
@@ -812,9 +824,11 @@ knitr::include_graphics("img/session2/2024-coconut.png")
 df_hh_dedup <- df_hh_dedup %>%
   mutate(crop_other_clean = 
            str_replace_all(crop_other, 
-                           c("Coconut trees" ="Coconut",                            "Coconut trees." = "Coconut",                            "Coconut." = "Coconut", 
-                            "Coconuts"="Coconut",
-                            "sesame"="Sesame", 
+                           c("Coconut trees" ="Coconut",
+                             "Coconut trees." = "Coconut",
+                             "Coconut." = "Coconut", 
+                             "Coconuts"="Coconut",
+                             "sesame"="Sesame", 
                              "Sesame."="Sesame")))
 
 ```
@@ -909,8 +923,8 @@ knitr::include_graphics("img/session2/2024-acre-hectare-diff.png")
 
 df_hh_dedup <- df_hh_dedup %>%
   mutate(area_farm_hect = 
-           case_when(ar_farm_unit=="Acre" ~ ar_farm*0.405,
-                                    .default = ar_farm))
+           case_when(ar_farm_unit=="Acre" ~ ar_farm * 0.405,
+                     .default = ar_farm))
 
 ```
 
@@ -1005,7 +1019,7 @@ df_hh_dedup <- df_hh_dedup %>%
 .pull-left2[
 - Columns `read_or_write` and `any_member_sick` represent categorical attributes
 
--The columns however, show numeric values but they don't show information on the categories each number represents
+- The columns however, show numeric values but they don't show information on the categories each number represents
 
 ]
 .pull-right2[
@@ -1218,26 +1232,6 @@ knitr::include_graphics("img/session2/2024-outliers-z-score.png")
 
 ---
 # Getting data ready for analysis and construction
-## Exercise: Identify outliers for the variable area_farm_hect
-
-- First generate z scores for the variable measuring the area of farm in hectares(area_farm_hect) and filter observations that are greater than 2.5 standard deviations from the mean
-
-```{r, echo = TRUE, eval=FALSE}
-df_hh_dedup <- df_hh_dedup %>%
-  mutate(mean_area_farm_hect = mean(area_farm_hect, na.rm = T),
-         sd_area_farm_hect = sd(area_farm_hect, na.rm=T)) %>%
-  # Calculate the z score
-  mutate(z_score = (abs(area_farm_hect-mean_area_farm_hect)/sd_area_farm_hect)) 
-
-df_outliers <- df_hh_dedup %>%
-  # Filter all observations with z-scores> 2.5
-  filter(z_score>2.5) %>%
-  select(hhid, area_farm_hect, mean_area_farm_hect, z_score)
-
-```
-
----
-# Getting data ready for analysis and construction
 ## How do we deal with outliers?
 
 - There are multiple approached to dealing with outliers but the ultimate decision belongs to the research team
@@ -1282,6 +1276,27 @@ df_hh_dedup_trim <- df_hh_dedup %>%
 - __Maintaining the observations:__ Once you have ascertained that it's not a data entry error and if you do not want to lose any data point, another alternative is to leave them and use more robust methods during analysis that may be less sensitive to outliers.
 
 - For example, you could use __median__ instead of the __mean__; which can be more sensitive to outliers
+
+---
+
+# Getting data ready for analysis and construction
+## Exercise 20: Identify outliers for the variable "area_farm_hect"
+
+- First generate z scores for the variable measuring the area of farm in hectares(area_farm_hect) and filter observations that are greater than 2.5 standard deviations from the mean
+
+```{r, echo = TRUE, eval=FALSE}
+df_hh_dedup <- df_hh_dedup %>%
+  mutate(mean_area_farm_hect = mean(area_farm_hect, na.rm = T),
+         sd_area_farm_hect = sd(area_farm_hect, na.rm=T)) %>%
+  # Calculate the z score
+  mutate(z_score = (abs(area_farm_hect-mean_area_farm_hect)/sd_area_farm_hect)) 
+
+df_outliers <- df_hh_dedup %>%
+  # Filter all observations with z-scores> 2.5
+  filter(z_score>2.5) %>%
+  select(hhid, area_farm_hect, mean_area_farm_hect, z_score)
+
+```
 
 ---
 
@@ -1334,7 +1349,7 @@ old_df <- old_df %>%
 
 ```{r eval=FALSE}
 # Output folder
-output_folder <- here("DataWork", "data", "intermediate", "clean")
+output_folder <- here("DataWork", "Data", "Clean")
 
 # Saving hh level data
 saveRDS(
@@ -1353,7 +1368,7 @@ saveRDS(
 
 class: inverse, center, middle
 
-# Thanks! // ¡Gracias! //  Asante!
+# Thanks! // Gracias! //  Asante!
 
 <html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
 
@@ -1362,5 +1377,5 @@ class: inverse, center, middle
 exclude: true
 
 ```{R, include = FALSE, eval = FALSE}
-pagedown::chrome_print("Presentations/3-clean.html", output = "Presentations/3-clean.pdf")
+pagedown::chrome_print("Presentations/2-tidy_clean.html", output = "Presentations/2-tidy_clean.pdf")
 ```
