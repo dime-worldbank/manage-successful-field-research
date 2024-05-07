@@ -228,7 +228,7 @@ knitr::include_graphics("img/session3/cleaning-packages-logos.png")
   + `install.packages("labelled")`
   + `install.packages("dplyr")`
   + `install.packages("readxl")`
-  + `install.packages("stringr)`
+  + `install.packages("stringr")`
 ]
 
 .pull-right[
