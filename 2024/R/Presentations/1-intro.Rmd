@@ -1,7 +1,7 @@
 ---
 title: "1 - Introduction to statistical programming in R"
 subtitle: "R labs - Manage Successful Field Research"
-author: "Luis Eduardo San Martin"
+author: "Galileu Kim, Luis Eduardo San Martin"
 date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2024"
 output:
   xaringan::moon_reader:
@@ -55,6 +55,12 @@ xaringanExtra::use_logo(
   }
 }
 ```
+
+# Before we begin
+
+<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr24_materials</a> and download <b>1-intro-R.pdf</b></font>
+
+---
 
 # Table of contents
 
@@ -397,7 +403,7 @@ name: data-in-r
 ## Exercise 4: Loading data into R
 
 .pull-left[
-1. Go to this page: https://osf.io/XXXXX/ and download the file in `XXX` >> `treat_status.csv`
+1. Click on this link: http://bit.ly/msfr24_materials and download the file `treat_status.csv`
 
 2. In RStudio, go to `File` > `Import Dataset` > `From Text (base)` and select the file `treat_status.csv`
   + If you don't know where the file is, check in your `Downloads` folder
@@ -544,7 +550,7 @@ knitr::include_graphics("img/1-intro/exercise6-annotated.png")
 
 - Remember that dataframes are just objects in R. R differentiates which dataframe the code refers to with the dataframe name
 
-```{r echo = FALSE, out.width="70%"}
+```{r echo = FALSE, out.width="60%"}
 knitr::include_graphics("img/1-intro/environment3.png")
 ```
 
@@ -585,7 +591,7 @@ knitr::include_graphics("img/1-intro/function-elements.png")
 
 - **Arguments:** inputs and specifications for the function to be applied.
 
-  + Arguments go inside the parentheses
+  + Arguments go inside the parentheses and are separated by commas
   + The first argument is the object you apply the function on
 
 ---
@@ -617,7 +623,7 @@ name: r-libraries
 
 - Additionally, you can also install libraries. Libraries are packages of additional R functions that allow you to do:
 
-  + Operations that basic R functions don't do (example: work with geographic data)
+  + Operations that basic R functions don't do (example: geospatial data analysis)
   
   + Operations that basic R functions do, but easier (example: data cleaning)
 
@@ -818,7 +824,7 @@ Save your current script by clicking in the floppy disk icon **before starting t
 
 1. Create a folder named `msfr-r-labs` in your preferred location in your computer
 
-1. Go to https://osf.io/XXXXX/ and download the file: `XXXX` >> `DataWork.zip`
+1. Go to http://bit.ly/msfr24_materials and download the file: `DataWork.zip`
 
 1. Unzip `DataWork.zip` in the folder `msfr-r-labs`
 
@@ -868,7 +874,7 @@ knitr::include_graphics("img/1-intro/exercise10a.png")
 
 ## Using `here`
 
-- Now you'll be able to use `here()` to point the location of every file relative to your project root
+- Now you'll be able to use `here()` to at point the location of every file relative to your project root
 
   + For example, to load a `csv` file located in: `C:/WBG/project-root-name/data/raw/data-file.csv`, you should use:
   
@@ -880,6 +886,7 @@ df <- read.csv(path)
 - __Notes:__
 
   + Your project root is the directory that contains the `.Rproj` file
+  + The arguments of here are the consecutive subfolders where your file is located. The final argument is the file name **with the file extension**
   + The result of `here()` is an absolute path that points to a file or folder location in your computer
 
 ---
@@ -888,21 +895,25 @@ df <- read.csv(path)
 
 ## Exercise 10
 
-1. Start a new script with `File` > `New File` > `R Script` 
+1\. Start a new script with `File` > `New File` > `R Script` 
 
-1. Load the libraries `here` and `haven` with `install.packages()`
+2\. Load the libraries `here` and `haven` with `library()`
 
-1. Create an object called `path` that will be a file path to `DataWork/data/raw/TZA_CCT_baseline.dta`. Use here for this, as in `here("DataWork", "data", "raw", "TZA_CCT_baseline.dta")`
+3\. Create an object called `path` that will be a file path to `DataWork/data/raw/TZA_CCT_baseline.dta`. Use `here()` for this:
 
-1. Use `read_stata()` to load the file and assign it to an object with `<-`. The argument of `read_stata()` should be the object `path`.
+```{r, eval=FALSE}
+here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")
+```
 
-```{r eval=FALSE}
+4\. Use `read_stata()` to load the file and assign it to an object with `<-`. The argument of `read_stata()` should be the object `path`.
+
+```{r, eval=FALSE}
 # Loading libraries
 library(here)
 library(haven)
 
 # Importing data
-path <- here("DataWork", "data", "raw", "TZA_CCT_baseline.dta")
+path <- here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")
 baseline <- read_stata(path)
 ```
 
@@ -922,7 +933,7 @@ baseline <- read_stata(path)
 
 Some notes:
 
-+ The lines that start with `#` are code comments. R doesn't run these lines. We're using them to create sections in the script
++ The lines that start with `#` are code comments. R doesn't run these lines. We're using them to create small sections in the script
 
 + It's usual for R scrips to start with a section loading libraries and a next section loading data
 
@@ -1040,7 +1051,7 @@ baseline$food_cons %>%
   summary()
 ```
 
-Pipes are part of the libraries included in the tidyverse `dplyr`. When you loaded `dplyr` in exercise 9, the pipes become available for use
+Pipes are part of the libraries included in the tidyverse, such as `dplyr`. When you loaded `dplyr` in exercise 9, the pipes became available for use.
 
 ---
 
@@ -1048,16 +1059,18 @@ Pipes are part of the libraries included in the tidyverse `dplyr`. When you load
 
 ## Exercise 11: Load data with pipes
 
-- Use the functions `here()` and `read.csv()` with pipes between them (`%>%`) to read the file `DataWork/data/raw/treat_status.csv`. Name the dataframe `treatment`. Some hints:
+We'll load the same data we loaded manually in Exercise 4, this time with code.
+
+1. Use the functions `here()` and `read.csv()` with pipes between them (`%>%`) to read the file `DataWork/Data/Raw/treat_status.csv`. Name the dataframe `treatment`. Some hints:
 
   + **Very important:** always remember to save the data read into a dataframe object with `<-`, otherwise R will only print the dataframe and it will not be stored in the environment
   
-  + Remember that the arguments of `here` are the names of the folders in the path to the file, with quotes (`" "`). The last argument is the file name with the file extension, as in: `here("DataWork", "data", "raw", "treat_status.csv")`
+  + Remember that the arguments of `here` are the names of the folders in the path to the file, with quotes (`" "`). The last argument is the file name with the file extension, as in: `here("DataWork", "Data", "Raw", "treat_status.csv")`
 
-- The solution is this:
+1. The solution is this:
 
 ```{r eval=FALSE}
-treatment <- here("DataWork", "data", "raw", "treat_status.csv") %>% read.csv()
+treatment <- here("DataWork", "Data", "Raw", "treat_status.csv") %>% read.csv()
 ```
 
 ---
@@ -1067,14 +1080,7 @@ treatment <- here("DataWork", "data", "raw", "treat_status.csv") %>% read.csv()
 ```{r, eval=FALSE}
 # Adding line breaks for code clarity:
 treatment <- 
-  here("DataWork", "data", "raw", "treat_status.csv") %>%
-  read.csv()
-```
-
-```{r, eval=TRUE, echo=FALSE}
-# Adding line breaks for code clarity:
-treatment <- 
-  here("Data", "DataWork", "data", "raw", "treat_status.csv") %>%
+  here("DataWork", "Data", "Raw", "treat_status.csv") %>%
   read.csv()
 ```
 

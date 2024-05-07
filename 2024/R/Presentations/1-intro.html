@@ -3,7 +3,7 @@
   <head>
     <title>1 - Introduction to statistical programming in R</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Luis Eduardo San Martin" />
+    <meta name="author" content="Galileu Kim, Luis Eduardo San Martin" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
@@ -31,7 +31,7 @@ class: center, middle, inverse, title-slide
 ## R labs - Manage Successful Field Research
 ]
 .author[
-### Luis Eduardo San Martin
+### Galileu Kim, Luis Eduardo San Martin
 ]
 .date[
 ### The World Bank | <a href="https://github.com/worldbank">WB Github</a> <br> May 2024
@@ -49,6 +49,12 @@ class: center, middle, inverse, title-slide
   }
 }
 &lt;/style&gt;
+
+# Before we begin
+
+&lt;font size="7"&gt;Go to &lt;a href="http://bit.ly/msfr24_materials"&gt;http://bit.ly/msfr24_materials&lt;/a&gt; and download &lt;b&gt;1-intro-R.pdf&lt;/b&gt;&lt;/font&gt;
+
+---
 
 # Table of contents
 
@@ -198,7 +204,7 @@ The rest of this session focuses on the basics of writing R code...
 
 1. Press Enter to run the code
 
-&lt;img src="img/1-intro/console.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/1-intro/console.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -378,7 +384,7 @@ name: data-in-r
 ## Exercise 4: Loading data into R
 
 .pull-left[
-1. Go to this page: https://osf.io/XXXXX/ and download the file in `XXX` &gt;&gt; `treat_status.csv``
+1. Click on this link: http://bit.ly/msfr24_materials and download the file `treat_status.csv`
 
 2. In RStudio, go to `File` &gt; `Import Dataset` &gt; `From Text (base)` and select the file `treat_status.csv`
   + If you don't know where the file is, check in your `Downloads` folder
@@ -400,7 +406,7 @@ name: data-in-r
 - You can click on the `x` next to `treat_status` to return to the script
 - To open the viewer again, use the code: `View(treat_status)` (notice the uppercase "V")
 
-&lt;img src="img/1-intro/data-viewer.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/1-intro/data-viewer.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -455,7 +461,7 @@ Knowing the data you use is extremely important. For the lab sessions, `treat_st
 
 Does anything look out of place?
 
-&lt;img src="img/1-intro/exercise5.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/1-intro/exercise5.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -508,7 +514,7 @@ Note that this time R didn't print the resulting dataframe in the console, it on
 
 - Remember that dataframes are just objects in R. R differentiates which dataframe the code refers to with the dataframe name
 
-&lt;img src="img/1-intro/environment3.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/1-intro/environment3.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -543,7 +549,7 @@ Functions have the following elements:
 
 - **Arguments:** inputs and specifications for the function to be applied.
 
-  + Arguments go inside the parentheses
+  + Arguments go inside the parentheses and are separated by commas
   + The first argument is the object you apply the function on
 
 ---
@@ -573,7 +579,7 @@ name: r-libraries
 
 - Additionally, you can also install libraries. Libraries are packages of additional R functions that allow you to do:
 
-  + Operations that basic R functions don't do (example: work with geographic data)
+  + Operations that basic R functions don't do (example: geospatial data analysis)
   
   + Operations that basic R functions do, but easier (example: data cleaning)
 
@@ -673,7 +679,7 @@ C:/WBG/Repos/manage-successful-field-research/2024/R/Presentations/1-intro.Rmd
 
 is the location of this presentation file in my computer.
 
-&lt;img src="img/1-intro/file-path-session1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/1-intro/file-path-session1.png" width="65%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -702,7 +708,7 @@ treat_status &lt;- read.csv("C:/Users/wb532468/Downloads/treat_status.csv")
 
 - Relative file paths define the location of a file relative to an "anchor" location.
 
-  + For example: `Downloads/admin_data.csv` is the relative path of `admin_data.csv` with respect of `C:/Users/wb532468`
+  + For example: `Downloads/treat_status.csv` is the relative path of `treat_status.csv` with respect of `C:/Users/wb532468`
 
 ---
 
@@ -720,7 +726,7 @@ getwd()
 ```
 
 ```
-## [1] "C:/WBG/Repos/manage-successful-field-research/2024/R/Presentations"
+## [1] "C:/WBG/repos/manage-successful-field-research/2024/R/Presentations"
 ```
 
 - In Windows, the default working directory when starting R is the Documents folder
@@ -768,7 +774,7 @@ Save your current script by clicking in the floppy disk icon **before starting t
 
 1. Create a folder named `msfr-r-labs` in your preferred location in your computer
 
-1. Go to https://osf.io/XXXXX/ and download the file: `XXXX` &gt;&gt; `DataWork.zip`
+1. Go to http://bit.ly/msfr24_materials and download the file: `DataWork.zip`
 
 1. Unzip `DataWork.zip` in the folder `msfr-r-labs`
 
@@ -814,7 +820,7 @@ Save your current script by clicking in the floppy disk icon **before starting t
 
 ## Using `here`
 
-- Now you'll be able to use `here()` to point the location of every file relative to your project root
+- Now you'll be able to use `here()` to at point the location of every file relative to your project root
 
   + For example, to load a `csv` file located in: `C:/WBG/project-root-name/data/raw/data-file.csv`, you should use:
   
@@ -827,6 +833,7 @@ df &lt;- read.csv(path)
 - __Notes:__
 
   + Your project root is the directory that contains the `.Rproj` file
+  + The arguments of here are the consecutive subfolders where your file is located. The final argument is the file name **with the file extension**
   + The result of `here()` is an absolute path that points to a file or folder location in your computer
 
 ---
@@ -835,13 +842,18 @@ df &lt;- read.csv(path)
 
 ## Exercise 10
 
-1. Start a new script with `File` &gt; `New File` &gt; `R Script` 
+1\. Start a new script with `File` &gt; `New File` &gt; `R Script` 
 
-1. Load the libraries `here` and `haven` with `install.packages()`
+2\. Load the libraries `here` and `haven` with `library()`
 
-1. Create an object called `path` that will be a file path to `DataWork/data/raw/TZA_CCT_baseline.dta`. Use here for this, as in `here("DataWork", "data", "raw", "TZA_CCT_baseline.dta")`
+3\. Create an object called `path` that will be a file path to `DataWork/data/raw/TZA_CCT_baseline.dta`. Use `here()` for this:
 
-1. Use `read_stata()` to load the file and assign it to an object with `&lt;-`. The argument of `read_stata()` should be the object `path`.
+
+```r
+here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")
+```
+
+4\. Use `read_stata()` to load the file and assign it to an object with `&lt;-`. The argument of `read_stata()` should be the object `path`.
 
 
 ```r
@@ -850,7 +862,7 @@ library(here)
 library(haven)
 
 # Importing data
-path &lt;- here("DataWork", "data", "raw", "TZA_CCT_baseline.dta")
+path &lt;- here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")
 baseline &lt;- read_stata(path)
 ```
 
@@ -871,9 +883,9 @@ baseline &lt;- read_stata(path)
 
 Some notes:
 
-+ The lines that start with `#` are code comments. R doesn't run these lines. We're using them to create sections in the script here
++ The lines that start with `#` are code comments. R doesn't run these lines. We're using them to create small sections in the script
 
-+ It's usual for R sctips to start with a section loading libraries and a next section loading data
++ It's usual for R scrips to start with a section loading libraries and a next section loading data
 
 ---
 
@@ -991,7 +1003,7 @@ baseline$food_cons %&gt;%
   summary()
 ```
 
-Pipes are part of the libraries included in the tidyverse `dplyr`. When you loaded `dplyr` in exercise 9, the pipes become available for use
+Pipes are part of the libraries included in the tidyverse, such as `dplyr`. When you loaded `dplyr` in exercise 9, the pipes became available for use.
 
 ---
 
@@ -999,17 +1011,19 @@ Pipes are part of the libraries included in the tidyverse `dplyr`. When you load
 
 ## Exercise 11: Load data with pipes
 
-- Use the functions `here()` and `read.csv()` with pipes between them (`%&gt;%`) to read the file `DataWork/data/raw/treat_status.csv`. Name the dataframe `treatment`. Some hints:
+We'll load the same data we loaded manually in Exercise 4, this time with code.
+
+1. Use the functions `here()` and `read.csv()` with pipes between them (`%&gt;%`) to read the file `DataWork/Data/Raw/treat_status.csv`. Name the dataframe `treatment`. Some hints:
 
   + **Very important:** always remember to save the data read into a dataframe object with `&lt;-`, otherwise R will only print the dataframe and it will not be stored in the environment
   
-  + Remember that the arguments of `here` are the names of the folders in the path to the file, with quotes (`" "`). The last argument is the file name with the file extension, as in: `here("DataWork", "data", "raw", "treat_status.csv")`
+  + Remember that the arguments of `here` are the names of the folders in the path to the file, with quotes (`" "`). The last argument is the file name with the file extension, as in: `here("DataWork", "Data", "Raw", "treat_status.csv")`
 
-- The solution is this:
+1. The solution is this:
 
 
 ```r
-treatment &lt;- here("DataWork", "data", "raw", "treat_status.csv") %&gt;% read.csv()
+treatment &lt;- here("DataWork", "Data", "Raw", "treat_status.csv") %&gt;% read.csv()
 ```
 
 ---
@@ -1020,11 +1034,9 @@ treatment &lt;- here("DataWork", "data", "raw", "treat_status.csv") %&gt;% read.
 ```r
 # Adding line breaks for code clarity:
 treatment &lt;- 
-  here("DataWork", "data", "raw", "treat_status.csv") %&gt;%
+  here("DataWork", "Data", "Raw", "treat_status.csv") %&gt;%
   read.csv()
 ```
-
-
 
 &lt;img src="img/1-intro/env-treatment.png" width="70%" style="display: block; margin: auto;" /&gt;
 
