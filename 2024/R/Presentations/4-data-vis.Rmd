@@ -1096,7 +1096,8 @@ ggsave(
   filename = here("Data", "DataWork", "Outputs", "boxplot.png"),
   dpi = 300,
   scale = 0.8,
-  width = 8
+  width = 8,
+  bg = "white"
 )
 ```
 
@@ -1110,13 +1111,14 @@ ggsave(
 
 2. Save them with `ggsave()`. Remember the syntax:
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, eval=FALSE}
 ggsave(
   my_figure,
   filename = here("DataWork", "Outputs", "figure_name.png"),
   dpi = 300,
   scale = 0.8,
-  width = 8
+  width = 8,
+  bg = "white"
 )
 ```
 
@@ -1136,7 +1138,9 @@ Before you're left on your own wandering in the fascinating world of R programmi
 
 - Link: https://bit.ly/msfr24_day3
 
-- Image: ADD
+```{r echo = FALSE, out.width="35%"}
+knitr::include_graphics("img/4-data-vis/bit.ly_4b6saSs.png")
+```
 
 ---
 

@@ -13,7 +13,7 @@
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xf1db2af98534770b754cff1cf0ae481","expires":1}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x1c45e29fd7940d9a862ab90a92627e8","expires":1}</script>
     <script src="libs/himalaya/himalaya.js"></script>
     <script src="libs/js-cookie/js.cookie.js"></script>
     <link href="libs/editable/editable.css" rel="stylesheet" />
@@ -135,7 +135,7 @@ name: about-this-session
 - To analyze data to understand causes, outcomes, and specifics.
 - Examples: Summary tables, balance tables, Regression tables
 
-&lt;img src="img/4-data-vis/regression-table.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/4-data-vis/regression-table.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -212,6 +212,8 @@ install.packages("ggplot2")
 
 ```r
 library(ggplot2)
+library(dplyr)   # we'll also need dplyr
+library(forcats) # we'll also need forcats for re-categorizing factors easily later
 ```
 
 ---
@@ -782,8 +784,6 @@ Create a bar plot of the number of households that use each type of energy sourc
 
 
 ```r
-library(dplyr)
-library(forcats)
 df_energy &lt;- df_hh %&gt;%
   group_by(energy) %&gt;%
   summarize(N = n()) %&gt;%
@@ -925,7 +925,7 @@ Therefore, if you want to plot it again, you can just type `fig` in the console.
 ```r
 ggsave(
   fig,
-  filename = here("DataWork", "outputs", "plots", "boxplot-*YOUR INITIALS*.png"),
+  filename = here("DataWork", "Outputs", "boxplot-*YOUR INITIALS*.png"),
   dpi = 300,
   scale = 0.8,
   width = 12
@@ -933,6 +933,46 @@ ggsave(
 ```
 
 
+
+---
+
+# Data visualization
+
+## Exercise 9: Export the rest of your plots
+
+1. Go back to your code for exercises 4-6 and assign each of the plots you created to objects using the arrow operator (`&lt;-`)
+
+2. Save them with `ggsave()`. Remember the syntax:
+
+
+```r
+ggsave(
+  my_figure,
+  filename = here("DataWork", "Outputs", "figure_name.png"),
+  dpi = 300,
+  scale = 0.8,
+  width = 8,
+  bg = "white"
+)
+```
+
+---
+
+class: inverse, center, middle
+
+# Before you go: feedback!
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Before you go: feedback!
+
+Before you're left on your own wandering in the fascinating world of R programming and start coding to your heart's content, **please provide for today's MSFR sessions**:
+
+- Link: https://bit.ly/msfr24_day3
+
+&lt;img src="img/4-data-vis/bit.ly_4b6saSs.png" width="35%" style="display: block; margin: auto;" /&gt;
 
 ---
 
