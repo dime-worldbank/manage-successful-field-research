@@ -179,6 +179,7 @@ install.packages("openxlsx") # this is a dependency for huxtable to export resul
 library(here)
 library(haven)
 library(dplyr)
+library(forcats)
 library(janitor)
 library(modelsummary)
 library(huxtable)
