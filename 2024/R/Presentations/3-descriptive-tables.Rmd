@@ -68,6 +68,12 @@ xaringanExtra::use_logo(
 }
 ```
 
+# Before we begin
+
+<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr24_materials</a> and download <b>3-descriptive-tables.pdf</b></font>
+
+---
+
 # Table of contents
 
 1. [About the session](#about-this-session)
@@ -184,10 +190,10 @@ library(huxtable)
 
 ## Exercise 2: Read the data
 
-1\. Use `here()` and `read_stata()` to read the file in `DataWork/data/intermediate/clean/LWH-households-clean.Rds`. Apply `as_factor()` on the result to transform labeled values into factors.
+1\. Use `here()` and `read_stata()` to read the file in `DataWork/Data/Raw/LWH-households-clean.Rds`. Apply `as_factor()` on the result to transform labeled values into factors.
 
 ```{r eval=FALSE}
-path  <- here("DataWork", "Data")
+path  <- here("DataWork", "Data", "Raw")
 df_hh <- read_stata(here(path, "TZA_CCT_baseline.dta")) %>% as_factor()
 ```
 
@@ -410,22 +416,18 @@ datasummary_skim(
 df_hh %>% datasummary_skim()
 ```
 
-SHOW TABLE AFTER SOLVING RENDERING ISSUE
-
 ---
 
 # Descriptive tables
 
 - `datasummary_skim()` summarizes only numeric variables by default
 
-- To summarize categorical variables, use the argument `type`
+- To summarize categorical variables, use the argument `type = "categorical"`
 
 ```{r, eval=FALSE, warning=FALSE}
 # Selecting only one variables so table fits
 df_hh %>% select(energy) %>% datasummary_skim(type = "categorical")
 ```
-
-SHOW TABLE AFTER SOLVING RENDERING ISSUE
 
 ---
 
@@ -475,8 +477,6 @@ datasummary(
 )
 ```
 
-SHOW TABLE AFTER SOLVING RENDERING ISSUE
-
 ---
 
 # Descriptive tables
@@ -493,7 +493,7 @@ SHOW TABLE AFTER SOLVING RENDERING ISSUE
 
 ## Exercise 7: Exporting descriptive tables to Excel
 
-1. Save the last table you created to and object called `descriptives_income` and add the argument `output = "huxtable"`
+1. Save the last table you created to and object called `descriptives_HH_members` and add the argument `output = "huxtable"`
 
 2. Export this object to Excel with `quick_xlsx()`
 
@@ -509,7 +509,7 @@ descriptives_income <-
 # Exporting
 quick_xlsx(
   descriptives_income,
-  file = here("DataWork", "outputs", "descriptives_income.xlsx")
+  file = here("DataWork", "Outputs", "descriptives_HH_members.xlsx")
 )
 ```
 
@@ -525,7 +525,7 @@ desc_income <-
 # Exporting
 quick_xlsx(
   desc_income,
-  file = here("Data", "DataWork", "outputs", "descriptives_income.xlsx")
+  file = here("Data", "DataWork", "outputs", "descriptives_HH_members.xlsx")
 )
 ```
 
@@ -565,6 +565,8 @@ df_table <- df_hh %>%
   )
 ```
 
+Note that the "labels" are enclosed in backticks. For R, they are not variable labels but the actual variables names of `df_table`. Variable names in R **can have space characters**. Whent they do, you enclose them in  backticks so R understands where the variable name starts and ends.
+
 ---
 
 # Descriptive tables
@@ -588,7 +590,7 @@ desc_income <-
 ```{r, eval=FALSE}
 quick_xlsx(
   desc_income,
-  file = here("DataWork", "outputs", "descriptives_income_formatted.xlsx")
+  file = here("DataWork", "Outputs", "descriptives_HH_members_formatted.xlsx")
 )
 
 ```
@@ -611,7 +613,7 @@ desc_income <-
 
 quick_xlsx(
   desc_income,
-  file = here("Data", "DataWork", "outputs", "descriptives_income_formatted.xlsx")
+  file = here("Data", "DataWork", "outputs", "descriptives_HH_members_formatted.xlsx")
 )
 ```
 
@@ -627,7 +629,9 @@ knitr::include_graphics("img/3-descriptive-tables/descriptive-table-excel-format
 
 --
 
-`datasummary()` allows to apply multiple customization and themes to the results. You can explore them [here](https://modelsummary.com/). You can also manually apply changes directly to the Excel output.
+- We used the theme function `theme_basic()` for this table.
+
+- `datasummary()` allows to apply multiple customization and themes to the results. You can explore them [here](https://modelsummary.com/). You can also manually apply changes directly to the Excel output.
 
 ---
 
@@ -848,7 +852,7 @@ lm(
 
 ## Exercise 10: Estimate regression models
 
-1\. Estimate three regressions of `livestock_now` on (1) `hh_size` only; (2) `hh_size` and `livestock_before`; (3) `hh_size`, `livestock_before`, and `energy` (note that this last variable is a facotr). Let's not focus on the correctness of proposing these models for now.
+1\. Estimate three regressions of `livestock_now` on (1) `hh_size` only; (2) `hh_size` and `livestock_before`; (3) `hh_size`, `livestock_before`, and `energy` (note that this last variable is a factor). Let's not focus on the correctness of proposing these models for now.
 
 ```{r}
 m1 <- lm(livestock_now ~ hh_size,                             data = df_hh)
@@ -924,7 +928,7 @@ huxreg(
 ) %>%
   theme_basic() %>%
   quick_xlsx(
-    file = here("Datawork", "outputs", "regression_table.xlsx")
+    file = here("Datawork", "Outputs", "regression_table.xlsx")
 )
 ```
 ]
