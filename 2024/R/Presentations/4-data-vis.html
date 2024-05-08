@@ -13,7 +13,7 @@
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"b27db1a1d44743d9b7a5d76cce13c3dd","expires":1}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xf1db2af98534770b754cff1cf0ae481","expires":1}</script>
     <script src="libs/himalaya/himalaya.js"></script>
     <script src="libs/js-cookie/js.cookie.js"></script>
     <link href="libs/editable/editable.css" rel="stylesheet" />
@@ -56,6 +56,12 @@ class: center, middle, inverse, title-slide
 }
 &lt;/style&gt;
 
+# Before we begin
+
+&lt;font size="7"&gt;Go to &lt;a href="http://bit.ly/msfr24_materials"&gt;http://bit.ly/msfr24_materials&lt;/a&gt; and download &lt;b&gt;4-data-vis.pdf&lt;/b&gt;&lt;/font&gt;
+
+---
+
 # Table of contents
 
 1. [About the session](#about-this-session)
@@ -94,7 +100,11 @@ name: about-this-session
 .pull-left[
 - Regression tables are useful to present detailed results
 
-- However, they take some time to review
+- However:
+
+  + They require specialized knowledge to be interpreted
+  
+  + they take time to review
 ]
 
 .pull-right[
@@ -125,6 +135,8 @@ name: about-this-session
 - To analyze data to understand causes, outcomes, and specifics.
 - Examples: Summary tables, balance tables, Regression tables
 
+&lt;img src="img/4-data-vis/regression-table.png" width="60%" style="display: block; margin: auto;" /&gt;
+
 ]
 
 .pull-right[
@@ -133,6 +145,8 @@ name: about-this-session
 - To simplify complex data to highlight important results  in an easy-to-digest format
 - To visualize patterns and trends in data, or to find or show relationships between key variables
 - Examples: Distribution curves, bar graphs, scatter plots, line graphs
+
+&lt;img src="img/4-data-vis/visualization.png" width="65%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -385,7 +399,7 @@ df_hh %&gt;%
 
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-19-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -514,7 +528,7 @@ ggplot(
 
 .pull-right[
 
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-26-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -582,7 +596,7 @@ ggplot(
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -619,7 +633,7 @@ ggplot(
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -656,7 +670,7 @@ ggplot(
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -693,7 +707,7 @@ ggplot(
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -731,7 +745,7 @@ ggplot(
 
 # Customization
 
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -809,7 +823,7 @@ ggplot(df_energy,
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -835,7 +849,7 @@ ggplot(df_hh,
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -862,7 +876,7 @@ ggplot(df_hh,
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---

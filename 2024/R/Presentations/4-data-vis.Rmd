@@ -66,6 +66,12 @@ xaringanExtra::use_logo(
 }
 ```
 
+# Before we begin
+
+<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr24_materials</a> and download <b>4-data-vis.pdf</b></font>
+
+---
+
 # Table of contents
 
 1. [About the session](#about-this-session)
@@ -106,7 +112,11 @@ knitr::include_graphics("img/4-data-vis/data-work-outputs.png")
 .pull-left[
 - Regression tables are useful to present detailed results
 
-- However, they take some time to review
+- However:
+
+  + They require specialized knowledge to be interpreted
+  
+  + they take time to review
 ]
 
 .pull-right[
@@ -141,6 +151,10 @@ knitr::include_graphics("img/4-data-vis/visualization.png")
 - To analyze data to understand causes, outcomes, and specifics.
 - Examples: Summary tables, balance tables, Regression tables
 
+```{r echo = FALSE, out.width="40%"}
+knitr::include_graphics("img/4-data-vis/regression-table.png")
+```
+
 ]
 
 .pull-right[
@@ -149,6 +163,10 @@ knitr::include_graphics("img/4-data-vis/visualization.png")
 - To simplify complex data to highlight important results  in an easy-to-digest format
 - To visualize patterns and trends in data, or to find or show relationships between key variables
 - Examples: Distribution curves, bar graphs, scatter plots, line graphs
+
+```{r echo = FALSE, out.width="65%"}
+knitr::include_graphics("img/4-data-vis/visualization.png")
+```
 
 ]
 
@@ -216,6 +234,8 @@ install.packages("ggplot2")
 
 ```{r, warning=FALSE}
 library(ggplot2)
+library(dplyr)   # we'll also need dplyr
+library(forcats) # we'll also need forcats for re-categorizing factors easily later
 ```
 
 ---
@@ -896,8 +916,6 @@ Create a bar plot of the number of households that use each type of energy sourc
 1\. Start by doing some data wrangling to collapse `df_hh` by enumerator:
 
 ```{r, warning=FALSE}
-library(dplyr)
-library(forcats)
 df_energy <- df_hh %>%
   group_by(energy) %>%
   summarize(N = n()) %>%
@@ -1065,7 +1083,7 @@ Therefore, if you want to plot it again, you can just type `fig` in the console.
 ```{r, eval=FALSE}
 ggsave(
   fig,
-  filename = here("DataWork", "outputs", "plots", "boxplot-*YOUR INITIALS*.png"),
+  filename = here("DataWork", "Outputs", "boxplot-*YOUR INITIALS*.png"),
   dpi = 300,
   scale = 0.8,
   width = 12
@@ -1075,12 +1093,50 @@ ggsave(
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ggsave(
   fig,
-  filename = here("Data", "DataWork", "outputs", "boxplot.png"),
+  filename = here("Data", "DataWork", "Outputs", "boxplot.png"),
   dpi = 300,
   scale = 0.8,
   width = 8
 )
 ```
+
+---
+
+# Data visualization
+
+## Exercise 9: Export the rest of your plots
+
+1. Go back to your code for exercises 4-6 and assign each of the plots you created to objects using the arrow operator (`<-`)
+
+2. Save them with `ggsave()`. Remember the syntax:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggsave(
+  my_figure,
+  filename = here("DataWork", "Outputs", "figure_name.png"),
+  dpi = 300,
+  scale = 0.8,
+  width = 8
+)
+```
+
+---
+
+class: inverse, center, middle
+
+# Before you go: feedback!
+
+<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+
+---
+
+# Before you go: feedback!
+
+Before you're left on your own wandering in the fascinating world of R programming and start coding to your heart's content, **please provide for today's MSFR sessions**:
+
+- Link: https://bit.ly/msfr24_day3
+
+- Image: ADD
 
 ---
 
