@@ -132,10 +132,10 @@
 	//Task 16
 	* Create a iecodebook template and then replace template with apply 
 	* iecodebook
-	iecodebook template using "$datawork/Outputs/codebook.xlsx", replace
+	*iecodebook template using "$datawork/Outputs/codebook.xlsx", replace
 	
 	* repalce template with apply 
-	iecorrect apply using "$datawork/Outputs/codebook.xlsx"
+	iecodebook apply using "$datawork/Outputs/codebook.xlsx"
 	
 	* Save the dataset 
 	save "$datawork/Data/Final/TZA_CCT_baseline_village.dta", replace
