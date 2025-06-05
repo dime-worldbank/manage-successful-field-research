@@ -100,8 +100,8 @@ hr, .title-slide h2::after, .mline h1::after {
   content: '';
   display: block;
   border: none;
-  background-color: #D38C28;
-  color: #D38C28;
+  background-color: #e7e8e2;
+  color: #e7e8e2;
   height: 1px;
 }
 
