@@ -3,7 +3,6 @@
   <head>
     <title>4 - Data visualization</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Rony Rodriguez Ramirez, Luis Eduardo San Martin" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
@@ -13,7 +12,7 @@
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x1c45e29fd7940d9a862ab90a92627e8","expires":1}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xa16ad4242b74e05b0697e6a57209f7d","expires":1}</script>
     <script src="libs/himalaya/himalaya.js"></script>
     <script src="libs/js-cookie/js.cookie.js"></script>
     <link href="libs/editable/editable.css" rel="stylesheet" />
@@ -36,11 +35,8 @@ class: center, middle, inverse, title-slide
 .subtitle[
 ## R labs - Manage Successful Field Research
 ]
-.author[
-### Rony Rodriguez Ramirez, Luis Eduardo San Martin
-]
 .date[
-### The World Bank | <a href="https://github.com/worldbank">WB Github</a> <br> May 2024
+### The World Bank | <a href="https://github.com/worldbank">WB Github</a> <br> Jun 2025
 ]
 
 ---
@@ -58,7 +54,7 @@ class: center, middle, inverse, title-slide
 
 # Before we begin
 
-&lt;font size="7"&gt;Go to &lt;a href="http://bit.ly/msfr24_materials"&gt;http://bit.ly/msfr24_materials&lt;/a&gt; and download &lt;b&gt;4-data-vis.pdf&lt;/b&gt;&lt;/font&gt;
+&lt;font size="7"&gt;Go to &lt;a href="http://bit.ly/msfr25_materials"&gt;http://bit.ly/msfr25-materials&lt;/a&gt; and download &lt;b&gt;4-data-vis.pdf&lt;/b&gt;&lt;/font&gt;
 
 ---
 
@@ -163,14 +159,14 @@ name: about-this-session
 ## .red[Remember: Not reproducible]
 
 Anything that requires
-<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ac142a;overflow:visible;position:relative;"><path d="M80 96v16c0 17.7 14.3 32 32 32h60.8c16.6-28.7 47.6-48 83.2-48h62c-7.1-27.6-32.2-48-62-48H215.4C211.6 20.9 188.2 0 160 0s-51.6 20.9-55.4 48H64C28.7 48 0 76.7 0 112V384c0 35.3 28.7 64 64 64h96V400H64c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H80zm64-40a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM256 464c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H384v48c0 17.7 14.3 32 32 32h48V448c0 8.8-7.2 16-16 16H256zm192 48c35.3 0 64-28.7 64-64V227.9c0-12.7-5.1-24.9-14.1-33.9l-51.9-51.9c-9-9-21.2-14.1-33.9-14.1H256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H448z"/></svg> Copy-pasting
+<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ac142a;overflow:visible;position:relative;"><path d="M104.6 48H64C28.7 48 0 76.7 0 112V384c0 35.3 28.7 64 64 64h96V400H64c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H80c0 17.7 14.3 32 32 32h72.4C202 108.4 227.6 96 256 96h62c-7.1-27.6-32.2-48-62-48H215.4C211.6 20.9 188.2 0 160 0s-51.6 20.9-55.4 48zM144 56a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM448 464H256c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16l140.1 0L464 243.9V448c0 8.8-7.2 16-16 16zM256 512H448c35.3 0 64-28.7 64-64V243.9c0-12.7-5.1-24.9-14.1-33.9l-67.9-67.9c-9-9-21.2-14.1-33.9-14.1H256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64z"/></svg> Copy-pasting
 <svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ac142a;overflow:visible;position:relative;"><path d="M339.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L568.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S517.7-4.4 499.1 9.6L262.4 187.2c-24 18-38.2 46.1-38.4 76.1L339.3 367.1zm-19.6 25.4l-116-104.4C143.9 290.3 96 339.6 96 400c0 3.9 .2 7.8 .6 11.6C98.4 429.1 86.4 448 68.8 448H64c-17.7 0-32 14.3-32 32s14.3 32 32 32H208c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg> Manual formatting after exported
 
 --
 
 ## .green[Reproducible]
 
-<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#046307;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> R Markdown: dynamic document containing code and text that is exported directly from R into PDF, HTML, Word, Power Point and other formats 
+<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#046307;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> R Markdown/Quarto: dynamic documents containing code and text that is exported directly from R into PDF, HTML, Word, Power Point and other formats 
 <svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#046307;overflow:visible;position:relative;"><path d="M64 464c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16H224v80c0 17.7 14.3 32 32 32h80V448c0 8.8-7.2 16-16 16H64zM64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0H64zm56 256c-13.3 0-24 10.7-24 24s10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H120z"/></svg> LaTeX: typesetting system used for scientific publications that automatically reloads tables and figures every time the document is rendered 
 
 ---
@@ -193,6 +189,14 @@ For this session we'll use another package: `ggplot2`. This library is the absol
 &lt;img src="img/4-data-vis/ggplot2.png" width="27%" style="display: block; margin: auto;" /&gt;
 
 ---
+class: inverse, center, top
+name: ea
+
+# ggplot
+
+&lt;img src="img/session4/ggplot2_dib.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
 
 # Data visualization
 
@@ -203,14 +207,14 @@ For this session we'll use another package: `ggplot2`. This library is the absol
 2\. In the console, install `ggplot2` with:
 
 
-```r
+``` r
 install.packages("ggplot2")
 ```
 
 3\. In a new script, load `ggplot2` with:
 
 
-```r
+``` r
 library(ggplot2)
 library(dplyr)   # we'll also need dplyr
 library(forcats) # we'll also need forcats for re-categorizing factors easily later
@@ -225,7 +229,7 @@ library(forcats) # we'll also need forcats for re-categorizing factors easily la
 1\. Use `here()` and `read_stata()` to read the file in `DataWork/data/intermediate/clean/LWH-households-clean.Rds`. Apply `as_factor()` on the result to transform labeled values into factors.
 
 
-```r
+``` r
 path  &lt;- here("DataWork", "Data")
 df_hh &lt;- read_stata(here(path, "TZA_CCT_baseline.dta")) %&gt;% as_factor()
 ```
@@ -252,6 +256,20 @@ It is a powerful and easy to use tool (once you understand its logic) that produ
 
 ---
 
+# The grammar of graphics
+
+## The Structure of ggplot2  
+
+Creating a plot with ggplot2 requires **three basic components**:  
+
+1. **Data**: The dataset you want to visualize.  
+2. **Aesthetics (aes)**: How you map your data to visual elements (e.g., x-axis, y-axis, color).  
+3. **Geometry (geom)**: The type of plot you want (e.g., bar graph, scatter plot).  
+
+(and many more, we will see some examples at the end of the presentation)
+
+---
+
 # Data visualization
 
 ## Basic structure
@@ -259,7 +277,7 @@ It is a powerful and easy to use tool (once you understand its logic) that produ
 The basic ggplot structure is:
 
 
-```r
+``` r
 ggplot(data = DATA) +
   GEOM_FUNCTION(mapping = aes(AESTHETIC MAPPINGS))
 ```
@@ -370,7 +388,7 @@ name: basic-plots
 Create a scatter plot (with the encoding `geom_point()`) with the x-axis set to `food_cons` and the y-axis to `hh_size`.
 
 
-```r
+``` r
 ggplot(
   data = df_hh,
   aes(
@@ -387,7 +405,7 @@ ggplot(
 
 .pull-left[
 
-```r
+``` r
 # With pipes:
 df_hh %&gt;%
   ggplot(
@@ -401,7 +419,7 @@ df_hh %&gt;%
 
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -433,7 +451,7 @@ In summary, our basic plots should have the following:
 .pull-left[
 
 
-```r
+``` r
 *whr_panel %&gt;%
   ggplot(
     aes(
@@ -460,7 +478,7 @@ In summary, our basic plots should have the following:
 .pull-left[
 
 
-```r
+``` r
 whr_panel %&gt;%
   ggplot(
 *   aes(
@@ -487,7 +505,7 @@ In summary, our basic plots should have the following:
 .pull-left[
 
 
-```r
+``` r
 whr_panel %&gt;%
   ggplot(
     aes(
@@ -514,7 +532,7 @@ We can also **map** colors.
 .pull-left[
 
 
-```r
+``` r
 df_hh %&gt;%
 ggplot(
   aes(
@@ -530,7 +548,7 @@ ggplot(
 
 .pull-right[
 
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-26-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-27-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -575,7 +593,7 @@ Now, let's try to modify our plots. In the next exercise, we are going to:
 
 .smaller-r-code[
 
-```r
+``` r
 df_hh %&gt;%
 ggplot(
   aes(
@@ -598,7 +616,7 @@ ggplot(
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -612,7 +630,7 @@ Now, let's try to modify our plots. In the next exercise, we are going to:
 
 .smaller-r-code[
 
-```r
+``` r
 df_hh %&gt;%
 ggplot(
   aes(
@@ -635,7 +653,7 @@ ggplot(
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -649,7 +667,7 @@ Now, let's try to modify our plots. In the next exercise, we are going to:
 
 .smaller-r-code[
 
-```r
+``` r
 df_hh %&gt;%
 ggplot(
   aes(
@@ -672,7 +690,7 @@ ggplot(
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -686,7 +704,7 @@ Now, let's try to modify our plots. In the next exercise, we are going to:
 
 .smaller-r-code[
 
-```r
+``` r
 df_hh %&gt;%
 ggplot(
   aes(
@@ -709,7 +727,7 @@ ggplot(
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -722,7 +740,7 @@ Bring all the elements we saw in the last slides to the plot you produced in the
 
 .smaller-r-code[
 
-```r
+``` r
 df_hh %&gt;%
 ggplot(
   aes(
@@ -747,7 +765,7 @@ ggplot(
 
 # Customization
 
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-37-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -780,10 +798,10 @@ name: other-geometries
 
 Create a bar plot of the number of households that use each type of energy source for lightning.
 
-1\. Start by doing some data wrangling to collapse `df_hh` by enumerator:
+1\. Start by doing some data wrangling to collapse `df_hh` by energy:
 
 
-```r
+``` r
 df_energy &lt;- df_hh %&gt;%
   group_by(energy) %&gt;%
   summarize(N = n()) %&gt;%
@@ -801,13 +819,13 @@ df_energy &lt;- df_hh %&gt;%
 
 ## Exercise 5: Create a bar plot
 
-Create a bar plot of the average survey time per enumerator.
+Create a bar plot of the number of households that use each type of energy source for lightning.
 
 2\. Produce the plot
 
 .pull-left[
 
-```r
+``` r
 ggplot(df_energy,
        aes(x = energy,
            y = N)) +
@@ -823,7 +841,7 @@ ggplot(df_energy,
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-40-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -836,7 +854,7 @@ ggplot(df_energy,
 
 .pull-left[
 
-```r
+``` r
 ggplot(df_hh,
        aes(x = food_cons)) +
   geom_histogram(fill = "cyan2") +
@@ -849,7 +867,7 @@ ggplot(df_hh,
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -862,7 +880,7 @@ Produce a box plot with the distribution of survey duration by enumerator.
 
 .pull-left[
 
-```r
+``` r
 ggplot(df_hh,
        aes(x = factor(enid),
            y = as.numeric(duration))) +
@@ -876,7 +894,7 @@ ggplot(df_hh,
 ]
 
 .pull-right[
-&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="4-data-vis_files/figure-html/unnamed-chunk-44-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -895,7 +913,7 @@ name: saving
 Remember that in R we can always assign our functions to an object. In this case, we can assign our `ggplot2` code to an object called fig as follows.
 
 
-```r
+``` r
 fig &lt;- ggplot(df_hh,
        aes(x = factor(enid),
            y = as.numeric(duration))) +
@@ -922,7 +940,7 @@ Therefore, if you want to plot it again, you can just type `fig` in the console.
   + The syntax of `ggsave()` is `ggsave(PLOT_OBJECT, filename = FILEPATH, height = ..., width = ..., dpi = ...)`
 
 
-```r
+``` r
 ggsave(
   fig,
   filename = here("DataWork", "Outputs", "boxplot-*YOUR INITIALS*.png"),
@@ -945,7 +963,7 @@ ggsave(
 2. Save them with `ggsave()`. Remember the syntax:
 
 
-```r
+``` r
 ggsave(
   my_figure,
   filename = here("DataWork", "Outputs", "figure_name.png"),
@@ -966,21 +984,11 @@ class: inverse, center, middle
 
 ---
 
-# Before you go: feedback!
-
-Before you're left on your own wandering in the fascinating world of R programming and start coding to your heart's content, **please provide for today's MSFR sessions**:
-
-- Link: https://bit.ly/msfr24_day3
-
-&lt;img src="img/4-data-vis/bit.ly_4b6saSs.png" width="35%" style="display: block; margin: auto;" /&gt;
-
----
-
-class: inverse, center, middle
+class: inverse, center, top
 
 # Thanks! Gracias! Asante!
 
-&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+&lt;img src="img/session4/r_learners.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -991,10 +999,10 @@ exclude: true
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"ratio": "16:9",
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false
+  "ratio": "16:9",
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));

@@ -1,8 +1,7 @@
 ---
 title: "4 - Data visualization"
 subtitle: "R labs - Manage Successful Field Research"
-author: "Rony Rodriguez Ramirez, Luis Eduardo San Martin"
-date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2024"
+date: "The World Bank | [WB Github](https://github.com/worldbank) <br> Jun 2025"
 output:
   xaringan::moon_reader:
     css: ["libs/remark-css/default.css",
@@ -68,7 +67,7 @@ xaringanExtra::use_logo(
 
 # Before we begin
 
-<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr24_materials</a> and download <b>4-data-vis.pdf</b></font>
+<font size="7">Go to <a href="http://bit.ly/msfr25_materials">http://bit.ly/msfr25-materials</a> and download <b>4-data-vis.pdf</b></font>
 
 ---
 
@@ -192,7 +191,7 @@ Anything that requires
 
 ## .green[Reproducible]
 
-`r fa("r-project", fill = "#046307")` R Markdown: dynamic document containing code and text that is exported directly from R into PDF, HTML, Word, Power Point and other formats 
+`r fa("r-project", fill = "#046307")` R Markdown/Quarto: dynamic documents containing code and text that is exported directly from R into PDF, HTML, Word, Power Point and other formats 
 `r fa("file-lines", fill= "#046307")` LaTeX: typesetting system used for scientific publications that automatically reloads tables and figures every time the document is rendered 
 
 ---
@@ -214,6 +213,16 @@ For this session we'll use another package: `ggplot2`. This library is the absol
 
 ```{r echo = FALSE, out.width="27%"}
 knitr::include_graphics("img/4-data-vis/ggplot2.png")
+```
+
+---
+class: inverse, center, top
+name: ea
+
+# ggplot
+
+```{r, echo = FALSE, out.width="80%"}
+knitr::include_graphics("img/session4/ggplot2_dib.png")
 ```
 
 ---
@@ -273,6 +282,20 @@ df_hh <- read_stata(here(path, "TZA_CCT_baseline.dta")) %>% as_factor()
 4. Community
 
 It is a powerful and easy to use tool (once you understand its logic) that produces complex and multifaceted plots.
+
+---
+
+# The grammar of graphics
+
+## The Structure of ggplot2  
+
+Creating a plot with ggplot2 requires **three basic components**:  
+
+1. **Data**: The dataset you want to visualize.  
+2. **Aesthetics (aes)**: How you map your data to visual elements (e.g., x-axis, y-axis, color).  
+3. **Geometry (geom)**: The type of plot you want (e.g., bar graph, scatter plot).  
+
+(and many more, we will see some examples at the end of the presentation)
 
 ---
 
@@ -913,7 +936,7 @@ name: other-geometries
 
 Create a bar plot of the number of households that use each type of energy source for lightning.
 
-1\. Start by doing some data wrangling to collapse `df_hh` by enumerator:
+1\. Start by doing some data wrangling to collapse `df_hh` by energy:
 
 ```{r, warning=FALSE}
 df_energy <- df_hh %>%
@@ -933,7 +956,7 @@ df_energy <- df_hh %>%
 
 ## Exercise 5: Create a bar plot
 
-Create a bar plot of the average survey time per enumerator.
+Create a bar plot of the number of households that use each type of energy source for lightning.
 
 2\. Produce the plot
 
@@ -1132,23 +1155,13 @@ class: inverse, center, middle
 
 ---
 
-# Before you go: feedback!
-
-Before you're left on your own wandering in the fascinating world of R programming and start coding to your heart's content, **please provide for today's MSFR sessions**:
-
-- Link: https://bit.ly/msfr24_day3
-
-```{r echo = FALSE, out.width="35%"}
-knitr::include_graphics("img/4-data-vis/bit.ly_4b6saSs.png")
-```
-
----
-
-class: inverse, center, middle
+class: inverse, center, top
 
 # Thanks! Gracias! Asante!
 
-<html><div style='float:left'></div><hr color='#D38C28' size=1px width=1100px></html>
+```{r, echo = FALSE, out.width="80%"}
+knitr::include_graphics("img/session4/r_learners.png")
+```
 
 ---
 

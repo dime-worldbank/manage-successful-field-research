@@ -1,5 +1,5 @@
 # manage-successful-field-research
-Materials for the R labs of the 2024 edition of course Manage Successful Field Research, created by DIME Analytics
+Materials for the R labs of the 2025 edition of course Manage Successful Field Research, created by DIME Analytics
 
 ## Authors
 
@@ -8,6 +8,7 @@ Materials for the R labs of the 2024 edition of course Manage Successful Field R
 - Christine Okeyo
 - Rony Rodriguez Ramirez
 - Luis Eduardo San Martin
+- Maria Reyes Retana
 
 ## Sessions
 
