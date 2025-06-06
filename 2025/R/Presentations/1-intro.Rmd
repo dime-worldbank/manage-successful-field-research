@@ -1,8 +1,7 @@
 ---
 title: "1 - Introduction to statistical programming in R"
 subtitle: "R labs - Manage Successful Field Research"
-author: "Galileu Kim, Luis Eduardo San Martin"
-date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2024"
+date: "The World Bank | [WB Github](https://github.com/worldbank) <br> June 2025"
 output:
   xaringan::moon_reader:
     css: ["libs/remark-css/default.css", "libs/remark-css/metropolis.css", "libs/remark-css/metropolis-fonts.css"]
@@ -29,7 +28,6 @@ opts_chunk$set(
   cache = T
   )
 xaringanExtra::use_panelset()
-xaringanExtra::use_webcam()
 xaringanExtra::use_clipboard()
 htmltools::tagList(
   xaringanExtra::use_clipboard(
@@ -58,12 +56,13 @@ xaringanExtra::use_logo(
 
 # Before we begin
 
-<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr24_materials</a> and download <b>1-intro-R.pdf</b></font>
+<font size="7">Go to <a href="http://bit.ly/msfr25_materials">http://bit.ly/msfr25_materials</a> and download <b>1-intro-R.pdf</b></font>
 
 ---
 
 # Table of contents
 
+.font150[
 1. [About the training](#about-this-training)
 1. [Statistical programming](#statistical-programming)
 1. [Writing R code](#writing-r-code)
@@ -72,6 +71,7 @@ xaringanExtra::use_logo(
 1. [R libraries](#r-libraries)
 1. [File paths](#file-paths)
 1. [Piping](#piping)
+]
 
 ---
 
@@ -86,9 +86,11 @@ name: about-this-training
 
 # About the R lab sessions of MSFR
 
+.font180[
 - This is an **introduction** to statistical programming and reproducible research in R
 
 - Content is focused on usual tasks for field research
+]
 
 ---
 
@@ -144,7 +146,7 @@ knitr::include_graphics("img/1-intro/data-work-with-instructions.png")
 
 ## Reproducibility
 
-In science, the formal definition of reproducibility was provided by [Bollen et al. (2015)](https://www.nsf.gov/sbe/AC_Materials/SBE_Robust_and_Reliable_Research_Report.pdf):
+In science, the formal definition of reproducibility was provided by Bollen et al. (2015):
 
 *the ability […] to duplicate the results of a prior study using the same materials and procedures as were used by the original investigator*
 
@@ -242,10 +244,10 @@ knitr::include_graphics("img/1-intro/exercise1.png")
 
 ## Exercise 2: writing a short script
 
-.pull-left5[
-- Open a new script with `File` >> `New File` >> `R Script`
+.pull-left[
+1. Open a new script with `File` >> `New File` >> `R Script`
 
-- Write or copy the following text into the script
+1. Write or copy the following text into the script
 
 ```{r eval=FALSE}
 print("hello")
@@ -258,7 +260,7 @@ print("bom dia")
 
 1. Press "Run"
 ]
-.pull-right5[
+.pull-right[
 ```{r echo = FALSE, out.width="90%"}
 knitr::include_graphics("img/1-intro/script.png")
 ```
@@ -381,11 +383,13 @@ knitr::include_graphics("img/1-intro/exercise3.png")
 
 # Writing R code
 
+.font150[
 - These are the very basics of writing R code. You'll become more familiarized with it in this and the next sessions
 
 - Now we know how to use RStudio to write R code and produce scripts
 
 - However, we haven't still introduced the data to our data work. That comes next
+]
 
 ---
 
@@ -403,7 +407,7 @@ name: data-in-r
 ## Exercise 4: Loading data into R
 
 .pull-left[
-1. Click on this link: http://bit.ly/msfr24_materials and download the file `treat_status.csv`
+1. Click on this link: http://bit.ly/msfr25_materials and download the file `treat_status.csv`
 
 2. In RStudio, go to `File` > `Import Dataset` > `From Text (base)` and select the file `treat_status.csv`
   + If you don't know where the file is, check in your `Downloads` folder
@@ -729,7 +733,7 @@ name: file-paths
 File paths are the location of a file or folder in your computer. For example:
 
 ```{r eval=FALSE}
-C:/WBG/Repos/manage-successful-field-research/2024/R/Presentations/1-intro.Rmd
+C:/WBG/Repos/manage-successful-field-research/2025/R/Presentations/1-intro.Rmd
 ```
 
 is the location of this presentation file in my computer.
@@ -824,7 +828,7 @@ Save your current script by clicking in the floppy disk icon **before starting t
 
 1. Create a folder named `msfr-r-labs` in your preferred location in your computer
 
-1. Go to http://bit.ly/msfr24_materials and download the file: `DataWork.zip`
+1. Go to http://bit.ly/msfr25_materials and download the file: `DataWork.zip`
 
 1. Unzip `DataWork.zip` in the folder `msfr-r-labs`
 
