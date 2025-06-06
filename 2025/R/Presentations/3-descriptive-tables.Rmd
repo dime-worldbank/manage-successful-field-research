@@ -1,8 +1,7 @@
 ---
 title: "3 - Descriptive statistics and tables"
 subtitle: "R labs - Manage Successful Field Research"
-author: "Rony Rodriguez Ramirez, Luis Eduardo San Martin"
-date: "The World Bank | [WB Github](https://github.com/worldbank) <br> May 2024"
+date: "The World Bank | [WB Github](https://github.com/worldbank) <br> June 2025"
 output:
   xaringan::moon_reader:
     css: ["libs/remark-css/default.css",
@@ -33,6 +32,7 @@ library(hrbrthemes)
 library(flair)
 here::i_am("Presentations/3-descriptive-tables.Rmd")
 options(htmltools.dir.version = FALSE)
+options(modelsummary_factory_default = 'kableExtra')
 opts_chunk$set(
   fig.align = "center",
   fig.height = 4,
@@ -40,7 +40,6 @@ opts_chunk$set(
   cache = T
   )
 xaringanExtra::use_panelset()
-xaringanExtra::use_webcam()
 xaringanExtra::use_clipboard()
 xaringanExtra::use_editable(expires = 1)
 htmltools::tagList(
@@ -70,12 +69,13 @@ xaringanExtra::use_logo(
 
 # Before we begin
 
-<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr24_materials</a> and download <b>3-descriptive-tables.pdf</b></font>
+<font size="7">Go to <a href="http://bit.ly/msfr25_materials">http://bit.ly/msfr25_materials</a> and download <b>3-descriptive-tables.pdf</b></font>
 
 ---
 
 # Table of contents
 
+.font130[
 1. [About the session](#about-this-session)
 
 1. [Creating outputs](#creating-outputs)
@@ -87,6 +87,7 @@ xaringanExtra::use_logo(
 1. [Balance tables](#balance-tables)
 
 1. [Regression tables](#regression-tables)
+]
 
 ---
 
@@ -199,11 +200,6 @@ df_hh <- read_stata(here(path, "TZA_CCT_baseline.dta")) %>% as_factor()
 ```
 
 2\. Inspect the dataframe with `View()`
-
-```{r echo=FALSE}
-path  <- here("Data")
-df_hh <- read_stata(here(path, "TZA_CCT_baseline.dta")) %>% as_factor()
-```
 
 ---
 
@@ -409,26 +405,42 @@ datasummary_skim(
 
 - Use `datasummary_skim()` to create a descriptive statistics table for `df_hh`
 
----
-
-# Descriptive tables
-
 ```{r, eval=FALSE}
-df_hh %>% datasummary_skim()
+df_hh %>%datasummary_skim()
 ```
 
 ---
 
 # Descriptive tables
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+df_hh %>% datasummary_skim() %>% kableExtra::kable_styling(font_size = 8, full_width = FALSE)
+```
+
+
+---
+
+# Descriptive tables
+
+.pull-left[
 - `datasummary_skim()` summarizes only numeric variables by default
 
 - To summarize categorical variables, use the argument `type = "categorical"`
 
-```{r, eval=FALSE, warning=FALSE}
+```{r, eval=FALSE}
 # Selecting only one variables so table fits
-df_hh %>% select(energy) %>% datasummary_skim(type = "categorical")
+df_hh %>% select(energy) %>%
+  datasummary_skim(type = "categorical")
 ```
+]
+
+.pull-right[
+```{r, echo=FALSE, warning=FALSE}
+# Selecting only one variables so table fits
+df_hh %>% select(energy) %>%
+  datasummary_skim(type = "categorical")
+```
+]
 
 ---
 
@@ -471,7 +483,7 @@ datasummary(
 
 # Descriptive tables
 
-```{r, eval=FALSE, warning=FALSE}
+```{r, warning=FALSE}
 datasummary(
   hh_size + n_child_5 + n_elder ~ N + Mean + SD + Median + Min + Max,
   data = df_hh
@@ -498,7 +510,7 @@ datasummary(
 
 2. Export this object to Excel with `quick_xlsx()`
 
-```{r eval=FALSE}
+```{r}
 # Storing summary table into a huxtable object
 descriptives_income <-
   datasummary(
@@ -511,22 +523,6 @@ descriptives_income <-
 quick_xlsx(
   descriptives_income,
   file = here("DataWork", "Outputs", "descriptives_HH_members.xlsx")
-)
-```
-
-```{r echo=FALSE}
-# Storing summary table into a huxtable object
-desc_income <-
-  datasummary(
-    hh_size + n_child_5 + n_elder ~ N + Mean + SD + Median + Min + Max,
-    data = df_hh,
-    output = "huxtable"
-  )
-
-# Exporting
-quick_xlsx(
-  desc_income,
-  file = here("Data", "DataWork", "outputs", "descriptives_HH_members.xlsx")
 )
 ```
 
@@ -614,7 +610,7 @@ desc_income <-
 
 quick_xlsx(
   desc_income,
-  file = here("Data", "DataWork", "outputs", "descriptives_HH_members_formatted.xlsx")
+  file = here("DataWork", "Outputs", "descriptives_HH_members_formatted.xlsx")
 )
 ```
 

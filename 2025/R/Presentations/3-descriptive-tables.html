@@ -3,24 +3,15 @@
   <head>
     <title>3 - Descriptive statistics and tables</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Rony Rodriguez Ramirez, Luis Eduardo San Martin" />
     <script src="libs/header-attrs/header-attrs.js"></script>
-    <link href="libs/panelset/panelset.css" rel="stylesheet" />
-    <script src="libs/panelset/panelset.js"></script>
-    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
-    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="libs/clipboard/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
-    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x271475365b84f2b95b2113b0d8c6b78","expires":1}</script>
-    <script src="libs/himalaya/himalaya.js"></script>
-    <script src="libs/js-cookie/js.cookie.js"></script>
-    <link href="libs/editable/editable.css" rel="stylesheet" />
-    <script src="libs/editable/editable.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
     <link href="libs/font-awesome/css/all.min.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="libs/remark-css/default.css" type="text/css" />
     <link rel="stylesheet" href="libs/remark-css/metropolis.css" type="text/css" />
     <link rel="stylesheet" href="libs/remark-css/metropolis-fonts.css" type="text/css" />
@@ -36,11 +27,8 @@ class: center, middle, inverse, title-slide
 .subtitle[
 ## R labs - Manage Successful Field Research
 ]
-.author[
-### Rony Rodriguez Ramirez, Luis Eduardo San Martin
-]
 .date[
-### The World Bank | <a href="https://github.com/worldbank">WB Github</a> <br> May 2024
+### The World Bank | <a href="https://github.com/worldbank">WB Github</a> <br> June 2025
 ]
 
 ---
@@ -58,12 +46,13 @@ class: center, middle, inverse, title-slide
 
 # Before we begin
 
-&lt;font size="7"&gt;Go to &lt;a href="http://bit.ly/msfr24_materials"&gt;http://bit.ly/msfr24_materials&lt;/a&gt; and download &lt;b&gt;3-descriptive-tables.pdf&lt;/b&gt;&lt;/font&gt;
+&lt;font size="7"&gt;Go to &lt;a href="http://bit.ly/msfr25_materials"&gt;http://bit.ly/msfr25_materials&lt;/a&gt; and download &lt;b&gt;3-descriptive-tables.pdf&lt;/b&gt;&lt;/font&gt;
 
 ---
 
 # Table of contents
 
+.font130[
 1. [About the session](#about-this-session)
 
 1. [Creating outputs](#creating-outputs)
@@ -75,6 +64,7 @@ class: center, middle, inverse, title-slide
 1. [Balance tables](#balance-tables)
 
 1. [Regression tables](#regression-tables)
+]
 
 ---
 
@@ -119,7 +109,7 @@ name: creating-outputs
 ## .red[Not reproducible]
 
 Anything that requires
-<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ac142a;overflow:visible;position:relative;"><path d="M80 96v16c0 17.7 14.3 32 32 32h60.8c16.6-28.7 47.6-48 83.2-48h62c-7.1-27.6-32.2-48-62-48H215.4C211.6 20.9 188.2 0 160 0s-51.6 20.9-55.4 48H64C28.7 48 0 76.7 0 112V384c0 35.3 28.7 64 64 64h96V400H64c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H80zm64-40a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM256 464c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H384v48c0 17.7 14.3 32 32 32h48V448c0 8.8-7.2 16-16 16H256zm192 48c35.3 0 64-28.7 64-64V227.9c0-12.7-5.1-24.9-14.1-33.9l-51.9-51.9c-9-9-21.2-14.1-33.9-14.1H256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H448z"/></svg> Copy-pasting
+<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ac142a;overflow:visible;position:relative;"><path d="M104.6 48H64C28.7 48 0 76.7 0 112V384c0 35.3 28.7 64 64 64h96V400H64c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H80c0 17.7 14.3 32 32 32h72.4C202 108.4 227.6 96 256 96h62c-7.1-27.6-32.2-48-62-48H215.4C211.6 20.9 188.2 0 160 0s-51.6 20.9-55.4 48zM144 56a16 16 0 1 1 32 0 16 16 0 1 1 -32 0zM448 464H256c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16l140.1 0L464 243.9V448c0 8.8-7.2 16-16 16zM256 512H448c35.3 0 64-28.7 64-64V243.9c0-12.7-5.1-24.9-14.1-33.9l-67.9-67.9c-9-9-21.2-14.1-33.9-14.1H256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64z"/></svg> Copy-pasting
 <svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#ac142a;overflow:visible;position:relative;"><path d="M339.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L568.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S517.7-4.4 499.1 9.6L262.4 187.2c-24 18-38.2 46.1-38.4 76.1L339.3 367.1zm-19.6 25.4l-116-104.4C143.9 290.3 96 339.6 96 400c0 3.9 .2 7.8 .6 11.6C98.4 429.1 86.4 448 68.8 448H64c-17.7 0-32 14.3-32 32s14.3 32 32 32H208c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg> Manual formatting after exported
 
 --
@@ -150,7 +140,7 @@ As usual, there are several options for exporting tables in R. Today we'll use:
 - Install `modelsummary` and `huxtable` with:
 
 
-```r
+``` r
 install.packages("modelsummary")
 install.packages("huxtable")
 install.packages("openxlsx") # this is a dependency for huxtable to export results to Excel
@@ -159,7 +149,7 @@ install.packages("openxlsx") # this is a dependency for huxtable to export resul
 - Load all the libraries we'll use with:
 
 
-```r
+``` r
 library(here)
 library(haven)
 library(dplyr)
@@ -178,14 +168,12 @@ library(huxtable)
 1\. Use `here()` and `read_stata()` to read the file in `DataWork/Data/Raw/LWH-households-clean.Rds`. Apply `as_factor()` on the result to transform labeled values into factors.
 
 
-```r
+``` r
 path  &lt;- here("DataWork", "Data", "Raw")
 df_hh &lt;- read_stata(here(path, "TZA_CCT_baseline.dta")) %&gt;% as_factor()
 ```
 
 2\. Inspect the dataframe with `View()`
-
-
 
 ---
 
@@ -223,14 +211,14 @@ name: #data-exploration
 - Print the summary of `df_hh`
 
 
-```r
+``` r
 summary(df_hh)
 ```
 
 - Print the summary of the column `hh_size` of `df_hh` (use the `$` operator)
 
 
-```r
+``` r
 summary(df_hh$hh_size)
 ```
 
@@ -239,7 +227,7 @@ summary(df_hh$hh_size)
 # Data exploration
 
 
-```r
+``` r
 # Summary of a dataframe
 summary(df_hh)
 ```
@@ -253,133 +241,117 @@ summary(df_hh)
 ##  3rd Qu.:62.00   3rd Qu.:7122   3rd Qu.:818.0   Grass          :   0  
 ##  Max.   :82.00   Max.   :9922   Max.   :828.0   Other (specify):   0  
 ##                                                                       
-##               roof                 walls     
-##  Thatch         :811   Mud/Mud brick  :1526  
-##  Iron sheets    :616   Wood/Bamboo    : 153  
-##  Mud            :333   Concrete/Cement:  81  
-##  Wood           :  0   Stone          :   0  
-##  Concrete/Cement:  0   Burnt bricks   :   0  
-##  Roofing tiles  :  0   Iron sheets    :   0  
-##  (Other)        :  0   (Other)        :   0  
-##                           water                   energy    
-##  Uncovered Well              :446   Kerosine/paraffin:1320  
-##  River, lake, pond           :421   Firewood         : 393  
-##  Pipe bourne water treated   :336   Battery          :  30  
-##  Piped bourne water untreated:208   Main electricity :  11  
-##  Bore hole/hand pump         :123   Other (specify)  :   3  
-##  Unprotected spring          : 98   Gas              :   2  
-##  (Other)                     :128   (Other)          :   1  
-##             rel_head            female_head      hh_size         n_child_5     
-##  Muslim         :1067   No            :1072   Min.   : 1.000   Min.   :0.0000  
-##  Protestant     : 299   Yes           : 688   1st Qu.: 2.000   1st Qu.:0.0000  
-##  Catholic       : 235   Don't Know    :   0   Median : 3.000   Median :0.0000  
-##  Other Christian:  92   Not Applicable:   0   Mean   : 3.976   Mean   :0.4676  
-##  Traditionalist :  57   Refused       :   0   3rd Qu.: 5.000   3rd Qu.:1.0000  
-##  No Religion    :  10                         Max.   :17.000   Max.   :5.0000  
-##  (Other)        :   0                                                          
-##    n_child_17        n_adult         n_elder        gender_1       age_1       
-##  Min.   : 0.000   Min.   :0.000   Min.   :0.000   Male  :767   Min.   :  0.00  
-##  1st Qu.: 0.000   1st Qu.:0.000   1st Qu.:1.000   Female:993   1st Qu.: 14.00  
-##  Median : 1.000   Median :1.000   Median :1.000                Median : 57.00  
-##  Mean   : 1.185   Mean   :1.061   Mean   :1.262                Mean   : 45.88  
-##  3rd Qu.: 2.000   3rd Qu.:2.000   3rd Qu.:2.000                3rd Qu.: 70.00  
-##  Max.   :10.000   Max.   :8.000   Max.   :4.000                Max.   :105.00  
+##               roof                 walls                               water    
+##  Thatch         :811   Mud/Mud brick  :1526   Uncovered Well              :446  
+##  Iron sheets    :616   Wood/Bamboo    : 153   River, lake, pond           :421  
+##  Mud            :333   Concrete/Cement:  81   Pipe bourne water treated   :336  
+##  Wood           :  0   Stone          :   0   Piped bourne water untreated:208  
+##  Concrete/Cement:  0   Burnt bricks   :   0   Bore hole/hand pump         :123  
+##  Roofing tiles  :  0   Iron sheets    :   0   Unprotected spring          : 98  
+##  (Other)        :  0   (Other)        :   0   (Other)                     :128  
+##                energy                rel_head            female_head      hh_size      
+##  Kerosine/paraffin:1320   Muslim         :1067   No            :1072   Min.   : 1.000  
+##  Firewood         : 393   Protestant     : 299   Yes           : 688   1st Qu.: 2.000  
+##  Battery          :  30   Catholic       : 235   Don't Know    :   0   Median : 3.000  
+##  Main electricity :  11   Other Christian:  92   Not Applicable:   0   Mean   : 3.976  
+##  Other (specify)  :   3   Traditionalist :  57   Refused       :   0   3rd Qu.: 5.000  
+##  Gas              :   2   No Religion    :  10                         Max.   :17.000  
+##  (Other)          :   1   (Other)        :   0                                         
+##    n_child_5        n_child_17        n_adult         n_elder        gender_1  
+##  Min.   :0.0000   Min.   : 0.000   Min.   :0.000   Min.   :0.000   Male  :767  
+##  1st Qu.:0.0000   1st Qu.: 0.000   1st Qu.:0.000   1st Qu.:1.000   Female:993  
+##  Median :0.0000   Median : 1.000   Median :1.000   Median :1.000               
+##  Mean   :0.4676   Mean   : 1.185   Mean   :1.061   Mean   :1.262               
+##  3rd Qu.:1.0000   3rd Qu.: 2.000   3rd Qu.:2.000   3rd Qu.:2.000               
+##  Max.   :5.0000   Max.   :10.000   Max.   :8.000   Max.   :4.000               
 ##                                                                                
-##             read_1     clinic_visit_1               sick_1      days_sick_1   
-##  No            :1081   Min.   :  0.000   No            :1212   Min.   : 1.00  
-##  Yes           : 622   1st Qu.:  0.000   Yes           : 548   1st Qu.: 4.00  
-##  Don't Know    :   0   Median :  1.000   Don't Know    :   0   Median : 7.00  
-##  Not Applicable:   0   Mean   :  2.484   Not Applicable:   0   Mean   :10.93  
-##  Refused       :   0   3rd Qu.:  3.000   Refused       :   0   3rd Qu.:14.00  
-##  NA's          :  57   Max.   :106.000                         Max.   :28.00  
-##                                                                NA's   :1212   
-##            treat_fin_1    treat_cost_1            ill_impact_1 
-##  Own cash        : 290   Min.   :   -88   No            : 632  
-##  Free treatment  : 106   1st Qu.:   175   Yes           :1128  
-##  Got assistance  :  75   Median :  1000   Don't Know    :   0  
-##  Health insurance:  12   Mean   :  2817   Not Applicable:   0  
-##  Other (specify) :   5   3rd Qu.:  2000   Refused       :   0  
-##  (Other)         :   4   Max.   :300000                        
-##  NA's            :1268   NA's   :1321                          
-##  days_impact_1      gender_2       age_2                  read_2   
-##  Min.   :  0.00   Male  :680   Min.   : 0.00   No            :843  
-##  1st Qu.:  7.00   Female:785   1st Qu.:12.00   Yes           :562  
-##  Median : 14.00   NA's  :295   Median :35.00   Don't Know    :  0  
-##  Mean   : 29.28                Mean   :39.21   Not Applicable:  0  
-##  3rd Qu.: 30.00                3rd Qu.:66.00   Refused       :  0  
-##  Max.   :365.00                Max.   :99.00   NA's          :355  
-##  NA's   :632                   NA's   :295                         
-##  clinic_visit_2              sick_2      days_sick_2              treat_fin_2  
-##  Min.   : 0.000   No            :1062   Min.   : 1.00   Own cash        : 214  
-##  1st Qu.: 0.000   Yes           : 403   1st Qu.: 4.00   Free treatment  :  94  
-##  Median : 1.000   Don't Know    :   0   Median : 7.00   Got assistance  :  34  
-##  Mean   : 2.711   Not Applicable:   0   Mean   :10.14   Other (specify) :   7  
-##  3rd Qu.: 3.000   Refused       :   0   3rd Qu.:14.00   Health insurance:   6  
-##  Max.   :73.000   NA's          : 295   Max.   :28.00   (Other)         :   3  
-##  NA's   :295                            NA's   :1357    NA's            :1402  
-##   treat_cost_2            ill_impact_2 days_impact_2     food_cons      
-##  Min.   :   -88   No            :570   Min.   :  0.0   Min.   :   5096  
-##  1st Qu.:   100   Yes           :895   1st Qu.:  6.0   1st Qu.: 261217  
-##  Median :  1000   Don't Know    :  0   Median : 13.0   Median : 517400  
-##  Mean   :  3690   Not Applicable:  0   Mean   : 29.1   Mean   : 638718  
-##  3rd Qu.:  2500   Refused       :  0   3rd Qu.: 30.0   3rd Qu.: 858000  
-##  Max.   :200000   NA's          :295   Max.   :365.0   Max.   :4903600  
-##  NA's   :1452                          NA's   :865                      
-##   nonfood_cons                 farm         ar_farm       ar_farm_unit      
-##  Min.   :      0   No            : 138   Min.   : 0.125   Length:1760       
-##  1st Qu.:  23452   Yes           :1622   1st Qu.: 1.000   Class :character  
-##  Median :  69933   Don't Know    :   0   Median : 1.214   Mode  :character  
-##  Mean   : 146789   Not Applicable:   0   Mean   : 1.321                     
-##  3rd Qu.: 166525   Refused       :   0   3rd Qu.: 2.000                     
-##  Max.   :4108400                         Max.   :32.376                     
-##                                          NA's   :138                        
-##         crop_1             crop_2     crop_other       
-##  Maize     :759   Maize       :327   Length:1760       
-##  Cassava   :393   Sorghum     :240   Class :character  
-##  Sorghum   :178   Cassava     :183   Mode  :character  
-##  Paddy     :129   Paddy       :168                     
-##  Cashew nut: 49   Other pulses:161                     
-##  (Other)   :114   (Other)     :543                     
-##  NA's      :138   NA's        :138                     
-##                        crop_prp_1                        crop_prp_2 
-##  Only for Food              :808   Only for Food              :623  
-##  Mainly for food            :653   Mainly for food            :553  
-##  Food and sale (about 50/50): 77   Food and sale (about 50/50): 88  
-##  Only for sale              : 22   Only for sale              :125  
-##  Mainly for sale            : 62   Mainly for sale            :122  
-##  other specify              :  0   other specify              :  0  
-##  NA's                       :138   NA's                       :249  
-##  livestock_now     livestock_before         drought_flood          crop_damage 
-##  Min.   :  0.000   Min.   :  0.000   No            : 721   No            :847  
-##  1st Qu.:  0.000   1st Qu.:  0.000   Yes           :1039   Yes           :913  
-##  Median :  0.000   Median :  3.000   Don't Know    :   0   Don't Know    :  0  
-##  Mean   :  2.989   Mean   :  6.632   Not Applicable:   0   Not Applicable:  0  
-##  3rd Qu.:  4.000   3rd Qu.: 10.000   Refused       :   0   Refused       :  0  
-##  Max.   :160.000   Max.   :150.000                                             
+##      age_1                   read_1     clinic_visit_1               sick_1    
+##  Min.   :  0.00   No            :1081   Min.   :  0.000   No            :1212  
+##  1st Qu.: 14.00   Yes           : 622   1st Qu.:  0.000   Yes           : 548  
+##  Median : 57.00   Don't Know    :   0   Median :  1.000   Don't Know    :   0  
+##  Mean   : 45.88   Not Applicable:   0   Mean   :  2.484   Not Applicable:   0  
+##  3rd Qu.: 70.00   Refused       :   0   3rd Qu.:  3.000   Refused       :   0  
+##  Max.   :105.00   NA's          :  57   Max.   :106.000                        
 ##                                                                                
-##           trust_mem            trust_lead  
-##  No            :777   No            : 342  
-##  Yes           :973   Yes           :1410  
-##  88            : 10   88            :   8  
-##  Don't Know    :  0   Don't Know    :   0  
-##  Not Applicable:  0   Not Applicable:   0  
-##  Refused       :  0   Refused       :   0  
-##                                            
-##                                assoc                 health    
-##  -88                              : 172   No            : 667  
-##  Yes                              : 197   Yes           :1005  
-##  No                               :1271   88            :  88  
-##  DK - Don't have a schooling child: 120   Don't Know    :   0  
-##  DK                               :   0   Not Applicable:   0  
-##                                           Refused       :   0  
-##                                                                
-##    duration             key           
-##  Length:1760        Length:1760       
-##  Class :character   Class :character  
-##  Mode  :character   Mode  :character  
-##                                       
-##                                       
-##                                       
+##   days_sick_1              treat_fin_1    treat_cost_1            ill_impact_1 
+##  Min.   : 1.00   Own cash        : 290   Min.   :   -88   No            : 632  
+##  1st Qu.: 4.00   Free treatment  : 106   1st Qu.:   175   Yes           :1128  
+##  Median : 7.00   Got assistance  :  75   Median :  1000   Don't Know    :   0  
+##  Mean   :10.93   Health insurance:  12   Mean   :  2817   Not Applicable:   0  
+##  3rd Qu.:14.00   Other (specify) :   5   3rd Qu.:  2000   Refused       :   0  
+##  Max.   :28.00   (Other)         :   4   Max.   :300000                        
+##  NA's   :1212    NA's            :1268   NA's   :1321                          
+##  days_impact_1      gender_2       age_2                  read_2    clinic_visit_2  
+##  Min.   :  0.00   Male  :680   Min.   : 0.00   No            :843   Min.   : 0.000  
+##  1st Qu.:  7.00   Female:785   1st Qu.:12.00   Yes           :562   1st Qu.: 0.000  
+##  Median : 14.00   NA's  :295   Median :35.00   Don't Know    :  0   Median : 1.000  
+##  Mean   : 29.28                Mean   :39.21   Not Applicable:  0   Mean   : 2.711  
+##  3rd Qu.: 30.00                3rd Qu.:66.00   Refused       :  0   3rd Qu.: 3.000  
+##  Max.   :365.00                Max.   :99.00   NA's          :355   Max.   :73.000  
+##  NA's   :632                   NA's   :295                          NA's   :295     
+##             sick_2      days_sick_2              treat_fin_2    treat_cost_2   
+##  No            :1062   Min.   : 1.00   Own cash        : 214   Min.   :   -88  
+##  Yes           : 403   1st Qu.: 4.00   Free treatment  :  94   1st Qu.:   100  
+##  Don't Know    :   0   Median : 7.00   Got assistance  :  34   Median :  1000  
+##  Not Applicable:   0   Mean   :10.14   Other (specify) :   7   Mean   :  3690  
+##  Refused       :   0   3rd Qu.:14.00   Health insurance:   6   3rd Qu.:  2500  
+##  NA's          : 295   Max.   :28.00   (Other)         :   3   Max.   :200000  
+##                        NA's   :1357    NA's            :1402   NA's   :1452    
+##          ill_impact_2 days_impact_2     food_cons        nonfood_cons    
+##  No            :570   Min.   :  0.0   Min.   :   5096   Min.   :      0  
+##  Yes           :895   1st Qu.:  6.0   1st Qu.: 261217   1st Qu.:  23452  
+##  Don't Know    :  0   Median : 13.0   Median : 517400   Median :  69933  
+##  Not Applicable:  0   Mean   : 29.1   Mean   : 638718   Mean   : 146789  
+##  Refused       :  0   3rd Qu.: 30.0   3rd Qu.: 858000   3rd Qu.: 166525  
+##  NA's          :295   Max.   :365.0   Max.   :4903600   Max.   :4108400  
+##                       NA's   :865                                        
+##              farm         ar_farm       ar_farm_unit              crop_1   
+##  No            : 138   Min.   : 0.125   Length:1760        Maize     :759  
+##  Yes           :1622   1st Qu.: 1.000   Class :character   Cassava   :393  
+##  Don't Know    :   0   Median : 1.214   Mode  :character   Sorghum   :178  
+##  Not Applicable:   0   Mean   : 1.321                      Paddy     :129  
+##  Refused       :   0   3rd Qu.: 2.000                      Cashew nut: 49  
+##                        Max.   :32.376                      (Other)   :114  
+##                        NA's   :138                         NA's      :138  
+##           crop_2     crop_other                              crop_prp_1 
+##  Maize       :327   Length:1760        Only for Food              :808  
+##  Sorghum     :240   Class :character   Mainly for food            :653  
+##  Cassava     :183   Mode  :character   Food and sale (about 50/50): 77  
+##  Paddy       :168                      Only for sale              : 22  
+##  Other pulses:161                      Mainly for sale            : 62  
+##  (Other)     :543                      other specify              :  0  
+##  NA's        :138                      NA's                       :138  
+##                        crop_prp_2  livestock_now     livestock_before 
+##  Only for Food              :623   Min.   :  0.000   Min.   :  0.000  
+##  Mainly for food            :553   1st Qu.:  0.000   1st Qu.:  0.000  
+##  Food and sale (about 50/50): 88   Median :  0.000   Median :  3.000  
+##  Only for sale              :125   Mean   :  2.989   Mean   :  6.632  
+##  Mainly for sale            :122   3rd Qu.:  4.000   3rd Qu.: 10.000  
+##  other specify              :  0   Max.   :160.000   Max.   :150.000  
+##  NA's                       :249                                      
+##         drought_flood          crop_damage           trust_mem            trust_lead  
+##  No            : 721   No            :847   No            :777   No            : 342  
+##  Yes           :1039   Yes           :913   Yes           :973   Yes           :1410  
+##  Don't Know    :   0   Don't Know    :  0   88            : 10   88            :   8  
+##  Not Applicable:   0   Not Applicable:  0   Don't Know    :  0   Don't Know    :   0  
+##  Refused       :   0   Refused       :  0   Not Applicable:  0   Not Applicable:   0  
+##                                             Refused       :  0   Refused       :   0  
+##                                                                                       
+##                                assoc                 health       duration        
+##  -88                              : 172   No            : 667   Length:1760       
+##  Yes                              : 197   Yes           :1005   Class :character  
+##  No                               :1271   88            :  88   Mode  :character  
+##  DK - Don't have a schooling child: 120   Don't Know    :   0                     
+##  DK                               :   0   Not Applicable:   0                     
+##                                           Refused       :   0                     
+##                                                                                   
+##      key           
+##  Length:1760       
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
 ## 
 ```
 
@@ -388,7 +360,7 @@ summary(df_hh)
 # Data exploration
 
 
-```r
+``` r
 # Summary of a dataframe column
 summary(df_hh$hh_size)
 ```
@@ -421,14 +393,14 @@ summary(df_hh$hh_size)
 - Tabulate the variable `energy` (main source of energy for lightning) of `df_hh` with:
 
 
-```r
+``` r
 df_hh %&gt;% tabyl(energy)
 ```
 
 - Cross-tabulate the variables `energy` and `floor` with:
 
 
-```r
+``` r
 df_hh %&gt;% tabyl(energy, floor)
 ```
 
@@ -437,7 +409,7 @@ df_hh %&gt;% tabyl(energy, floor)
 # Data exploration
 
 
-```r
+``` r
 # Tabulating district
 df_hh %&gt;% tabyl(energy)
 ```
@@ -459,7 +431,7 @@ df_hh %&gt;% tabyl(energy)
 # Data exploration
 
 
-```r
+``` r
 # Cross-tabulating sector and district
 df_hh %&gt;% tabyl(energy, water)
 ```
@@ -532,7 +504,7 @@ name: descriptive-tables
 - `datasummary_skim()` produces a quick summary table of numerical or categorical variables
 
 
-```r
+``` r
 datasummary_skim(
   data,
   type = "numeric",
@@ -558,28 +530,333 @@ datasummary_skim(
 
 - Use `datasummary_skim()` to create a descriptive statistics table for `df_hh`
 
----
 
-# Descriptive tables
-
-
-```r
-df_hh %&gt;% datasummary_skim()
+``` r
+df_hh %&gt;%datasummary_skim()
 ```
 
 ---
 
 # Descriptive tables
 
+&lt;table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto; font-size: 8px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Unique &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Missing Pct. &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; SD &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Min &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Median &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Max &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; anonymous village ID &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 41.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 23.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 41.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 82.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Household ID &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1758 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5166.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2531.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1001.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5026.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9922.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Enumerator ID &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 716.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 129.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 420.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 805.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 828.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Number of members in the household &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Number of childeren below or equal to 5 years of age &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Number of children between 6 to 17 years of age &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 10.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Number of Adults (18-59 years) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Number of Elderly (&amp;gt; 60 years) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; What is the age of the member [FIRST]? &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 102 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 45.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 29.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 57.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 105.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In the past 12 months, how many times has the member attended the clinic? [FIRST &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 31 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 106.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No. of days in the last 4 weeks the member suffered from the heath problem? [FIR &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 69 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 10.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 28.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; How much did it cost? [FIRST] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 55 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 75 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2816.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 15053.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; −88.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1000.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 300000.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No. of days member was unable to perform dailt acitvities due to illness? [FIRST &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 97 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 36 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 29.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 47.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 365.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; What is the age of the member [SECOND]? &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 99 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 39.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 28.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 35.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 99.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In the past 12 months, how many times has the member attended the clinic? [SECON &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 29 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 73.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No. of days in the last 4 weeks the member suffered from theheath problem? [SECO &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 77 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 10.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 28.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; How much did it cost? [SECOND] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 82 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3689.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14430.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; −88.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1000.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 200000.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No. of days member was unable to perform dailt acitvities due to illness? [SECON &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 96 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 49 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 29.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 365.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Annual food consumption value &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 965 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 638718.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 513109.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5096.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 517400.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4903600.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Annual non-food consumption value &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1328 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 146788.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 250899.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 69933.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4108400.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; How much land do you farm? AREA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 42 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 32.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; How many livestock does the HH own today? &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 38 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 160.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; How many livestock did the HH own 12 months ago? &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 54 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 10.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+# Descriptive tables
+
+.pull-left[
 - `datasummary_skim()` summarizes only numeric variables by default
 
 - To summarize categorical variables, use the argument `type = "categorical"`
 
 
-```r
+``` r
 # Selecting only one variables so table fits
-df_hh %&gt;% select(energy) %&gt;% datasummary_skim(type = "categorical")
+df_hh %&gt;% select(energy) %&gt;%
+  datasummary_skim(type = "categorical")
 ```
+]
+
+.pull-right[
+&lt;table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; energy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; N &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Kerosine/paraffin &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1320 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 75.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Gas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Main electricity &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Solar panels/private generator &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Battery &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Candles &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Firewood &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 393 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Other (specify) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
 
 ---
 
@@ -588,7 +865,7 @@ df_hh %&gt;% select(energy) %&gt;% datasummary_skim(type = "categorical")
 - Other than `datasummary_skim()`, we can use `datasummary()` to customize the variables and statistics to include using a formula
 
 
-```r
+``` r
 datasummary(
   var1 + var2 + var3 ~ stat1 + stat2 + stat3 + stat4,
   data = data,
@@ -613,7 +890,7 @@ datasummary(
 - Create a table showing the number of observations, mean, standard deviation, minimum, maximum, and median value for the variables `hh_size`, `n_child_5`, and `n_elder` in `df_hh` with the code below
 
 
-```r
+``` r
 datasummary(
   hh_size + n_child_5 + n_elder ~ N + Mean + SD + Median + Min + Max,
   data = df_hh
@@ -625,12 +902,55 @@ datasummary(
 # Descriptive tables
 
 
-```r
+``` r
 datasummary(
   hh_size + n_child_5 + n_elder ~ N + Mean + SD + Median + Min + Max,
   data = df_hh
 )
 ```
+
+&lt;table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; N &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; SD &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Max &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; hh_size &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1760 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.98 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; n_child_5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1760 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.47 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; n_elder &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1760 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.72 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.00 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 
@@ -653,7 +973,7 @@ datasummary(
 2. Export this object to Excel with `quick_xlsx()`
 
 
-```r
+``` r
 # Storing summary table into a huxtable object
 descriptives_income &lt;-
   datasummary(
@@ -668,8 +988,6 @@ quick_xlsx(
   file = here("DataWork", "Outputs", "descriptives_HH_members.xlsx")
 )
 ```
-
-
 
 ---
 
@@ -697,7 +1015,7 @@ We'll add these in the next exercise
 1\. Create a new dataframe changing the variable names of `hh_size`, `n_child_5`, and `n_elder` with the following code:
 
 
-```r
+``` r
 df_table &lt;- df_hh %&gt;%
   select(
     `Household size`                    = hh_size,
@@ -717,7 +1035,7 @@ Note that the "labels" are enclosed in backticks. For R, they are not variable l
 2\. Use this new dataframe to produce a datasummary and add `theme_basic()` on top of it
 
 
-```r
+``` r
 desc_income &lt;-
   datasummary(
     All(df_table) ~ N + Mean + SD + Median + Min + Max,
@@ -730,7 +1048,7 @@ desc_income &lt;-
 3\. Export the result with `quick_xlsx()`
 
 
-```r
+``` r
 quick_xlsx(
   desc_income,
   file = here("DataWork", "Outputs", "descriptives_HH_members_formatted.xlsx")
@@ -769,7 +1087,7 @@ name: balance-tables
 - The library `modelsummary` has a function for easily exporting balance tables: `datasummary_balance()`
 
 
-```r
+``` r
 datasummary_balance(
   ~ balance_variable,
   data  = data
@@ -791,7 +1109,7 @@ datasummary_balance(
 # Balance tables
 
 
-```r
+``` r
 datasummary_balance(
   ~ balance_variable,
   data  = data
@@ -821,7 +1139,7 @@ datasummary_balance(
 1\. Create a new dataframe keeping only HHs with "Yes" or "No" for `female_head` and changing the variable names of `hh_size`, `n_child_5`, and `n_elder` with the following code:
 
 
-```r
+``` r
 df_balance &lt;- df_hh %&gt;%
   mutate(female_head = droplevels(female_head)) %&gt;% # removes unused levels of factor variable
   select(
@@ -841,7 +1159,7 @@ df_balance &lt;- df_hh %&gt;%
 2\. Generate a formatted balance table with `datasummary_balance()`:
 
 
-```r
+``` r
 balance_table &lt;-
   datasummary_balance(
     ~ female_head,
@@ -863,7 +1181,7 @@ balance_table &lt;-
 3\. Export the result with `quick_xlsx()`:
 
 
-```r
+``` r
 quick_xlsx(
   balance_table,
   file = here("DataWork", "Outputs", "balance_table.xlsx")
@@ -871,6 +1189,11 @@ quick_xlsx(
 ```
 
 
+```
+## Warning in file.create(to[okay]): cannot create file
+## 'C:/WBG/repos/manage-successful-field-research/2025/R/Data/DataWork/Outputs/balance_table.xlsx',
+## reason 'No such file or directory'
+```
 
 ---
 
@@ -906,7 +1229,7 @@ Exporting regression tables also involves a two-step process, similar to how we 
 1\. First, estimate your regressions. You can use R's base command `lm()` (short for *linear model*) or functions from regression estimation libraries.
 
 
-```r
+``` r
 model1 &lt;- lm(y ~ x1,           data = df)
 model2 &lt;- lm(y ~ x1 + x2,      data = df)
 model3 &lt;- lm(y ~ x1 + x2 + x3, data = df)
@@ -915,7 +1238,7 @@ model3 &lt;- lm(y ~ x1 + x2 + x3, data = df)
 2\. Then, export the regression results into a table with `huxreg()`
 
 
-```r
+``` r
 huxreg(model1, model2, model3) %&gt;%
   quick_xlsx(file = "my-regresion.xlsx")
 ```
@@ -927,7 +1250,7 @@ huxreg(model1, model2, model3) %&gt;%
 Regressions using `lm()` follow this syntax
 
 
-```r
+``` r
 lm(
   formula,
   data,
@@ -956,7 +1279,7 @@ lm(
 1\. Estimate three regressions of `livestock_now` on (1) `hh_size` only; (2) `hh_size` and `livestock_before`; (3) `hh_size`, `livestock_before`, and `energy` (note that this last variable is a factor). Let's not focus on the correctness of proposing these models for now.
 
 
-```r
+``` r
 m1 &lt;- lm(livestock_now ~ hh_size,                             data = df_hh)
 m2 &lt;- lm(livestock_now ~ hh_size + livestock_before,          data = df_hh)
 m3 &lt;- lm(livestock_now ~ hh_size + livestock_before + energy, data = df_hh)
@@ -965,7 +1288,7 @@ m3 &lt;- lm(livestock_now ~ hh_size + livestock_before + energy, data = df_hh)
 2\. Check the results of `m3` using `summary()`.
 
 
-```r
+``` r
 summary(m3)
 ```
 
@@ -975,7 +1298,7 @@ summary(m3)
 
 .small[
 
-```r
+``` r
 summary(m3)
 ```
 
@@ -1039,7 +1362,7 @@ Use the following code to export `m1`, `m2`, and `m3` to a regression table in E
 
 .small[
 
-```r
+``` r
 models &lt;- list("Model A" = m1, "Model B" = m2, "Model C" = m3)
 
 huxreg(
@@ -1092,10 +1415,10 @@ exclude: true
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"ratio": "16:9",
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false
+  "ratio": "16:9",
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
