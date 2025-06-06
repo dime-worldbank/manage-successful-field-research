@@ -129,8 +129,10 @@ tokens/
 2023/R/Data/DataWork.zip
 !2024/R/**/*.png
 !2024/R/Data/**
+!2025/R/DataWork/Data**
 2024/R/Data/DataWork.zip
 
 #######################
 # Files for preparing datasets
 !2024/Data/**
+2025/R/DataWork/Data/.DS_Store
