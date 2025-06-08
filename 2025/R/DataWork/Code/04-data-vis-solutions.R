@@ -9,7 +9,7 @@ library(here)
 library(scales)
 
 # Exercise 2: Read and label data
-df_hh <- read_stata(here("DataWork","Data", "TZA_CCT_baseline.dta")) %>%
+df_hh <- read_stata(here("DataWork","Data","Raw", "TZA_CCT_baseline.dta")) %>%
   as_factor()
 
 # Exercise 3: Basic scatterplot
