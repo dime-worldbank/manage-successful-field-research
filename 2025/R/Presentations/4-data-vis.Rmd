@@ -50,7 +50,7 @@ htmltools::tagList(
 xaringanExtra::use_logo(
   image_url = here("Presentations",
                    "img",
-                   "lightbulb.png"),
+                   "logos.png"),
   exclude_class = c("inverse", 
                     "hide_logo"),
   width = "40px"
@@ -67,7 +67,7 @@ xaringanExtra::use_logo(
 
 # Before we begin
 
-<font size="7">Go to <a href="http://bit.ly/msfr25_materials">http://bit.ly/msfr25-materials</a> and download <b>4-data-vis.pdf</b></font>
+<font size="7">Go to <a href="http://bit.ly/msfr25_materials">http://bit.ly/msfr2025-materials</a> and download <b>4-data-vis.pdf</b></font>
 
 ---
 
