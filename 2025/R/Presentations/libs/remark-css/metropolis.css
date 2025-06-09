@@ -9,10 +9,12 @@
 
 .title-slide {
   background-color: #FFFFFF;
-  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQm-BqPfNF1xgT-HzzKkeetCZP72hbFBiz4BQ&usqp=CAU);
-  background-position:4.5% 90%;
-  background-size: 100px;
+  background-image: url(https://raw.githubusercontent.com/dime-worldbank/manage-successful-field-research/main/2025/R/Presentations/img/logos.png);
+  background-position: 4.5% 88%;
+  background-size: 500px; /* Try 200px or larger */
+  background-repeat: no-repeat;
 }
+
 
 .inverse {
   background-color: #9a2598;

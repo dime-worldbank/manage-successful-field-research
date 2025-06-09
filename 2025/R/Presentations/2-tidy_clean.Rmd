@@ -43,7 +43,7 @@ xaringanExtra::use_logo(
   image_url = here(
     "Presentations",
     "img",
-    "combined_logo.png"
+    "logos.png"
   ),
   exclude_class = c(
     "inverse", 
@@ -63,7 +63,7 @@ xaringanExtra::use_logo(
 
 # Before we begin
 
-<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr24_materials</a> and download <b>2-tidy_clean.pdf</b></font>
+<font size="7">Go to <a href="http://bit.ly/msfr24_materials">http://bit.ly/msfr2025-materials</a> and download <b>2-tidy_clean.pdf</b></font>
 
 ---
 
