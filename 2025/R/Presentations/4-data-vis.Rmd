@@ -256,7 +256,7 @@ library(forcats) # we'll also need forcats for re-categorizing factors easily la
 1\. Use `here()` and `read_stata()` to read the file in `DataWork/data/intermediate/clean/LWH-households-clean.Rds`. Apply `as_factor()` on the result to transform labeled values into factors.
 
 ```{r, eval=FALSE}
-path  <- here("DataWork", "Data")
+path  <- here("DataWork", "Data", "Raw")
 df_hh <- read_stata(here(path, "TZA_CCT_baseline.dta")) %>% as_factor()
 ```
 
@@ -1116,7 +1116,7 @@ ggsave(
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ggsave(
   fig,
-  filename = here("Data", "DataWork", "Outputs", "boxplot.png"),
+  filename = here("DataWork", "Outputs", "boxplot.png"),
   dpi = 300,
   scale = 0.8,
   width = 8,

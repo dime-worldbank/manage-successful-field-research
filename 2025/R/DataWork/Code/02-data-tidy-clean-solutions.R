@@ -13,10 +13,10 @@ library(stringr)
 
 # Exercise 2
 # Load data
-df_village <- read_xlsx(here("DataWork", "Data", "treat_status.xlsx")) %>%
+df_village <- read_xlsx(here("DataWork", "Data","Raw","treat_status.xlsx")) %>%
               clean_names()
 
-df_hh <- read_dta(here("DataWork","Data", "TZA_CCT_baseline.dta")) %>%
+df_hh <- read_dta(here("DataWork","Data", "Raw","TZA_CCT_baseline.dta")) %>%
         clean_names()
 
 # Exercise 3
