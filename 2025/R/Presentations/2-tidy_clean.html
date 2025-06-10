@@ -1333,13 +1333,13 @@ output_folder &lt;- here("DataWork", "Data", "Clean")
 # Saving hh level data
 saveRDS(
   df_hh_dedup,
-  here(output_folder, "TZA_CCT_baseline-YOUR_INITIALS.Rds")
+  here(output_folder, "TZA_CCT_baseline.Rds")
 )
 
 # Saving village level data
 saveRDS(
   df_village,
-  here(output_folder, "TZA_CCT_Village-YOUR_INITIALS.Rds")
+  here(output_folder, "TZA_CCT_Village.Rds")
 )
 ```
 
@@ -1351,6 +1351,47 @@ class: inverse, center, middle
 
 &lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#FFFFFF' size=1px width=1100px&gt;&lt;/html&gt;
 
+---
+
+# Annex: Reshape
+
+- Real-world data is often **not tidy**
+  - Variables in rows
+  - Multiple values in a single cell
+  - Wide formats that hide structure
+
+#### Original (Wide) Format
+
+&lt;img src="img/session2/wide.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+- Harder to **analyze**, **filter**, or **plot** by site or species.
+- Not tidy: site names are **column headers**, not values.
+
+
+---
+
+# Reshape
+
+### ✅ After Reshape: Long Format with `pivot_longer()`
+
+```r
+library(tidyr)
+pivot_longer(data, 
+             cols = starts_with("Site"),
+             names_to = "Site",
+             values_to = "DBH_cm")
+```             
+
+.pull-right4[
+&lt;img src="img/session2/long.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-left4[
+- Easier for:
+  - 🧪 filtering (e.g. only *Quercus*)
+  - 📈 plotting (e.g. DBH by site)
+  - 📊 modeling (grouped summaries, regression)
+]  
 ---
 
 exclude: true

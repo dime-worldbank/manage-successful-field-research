@@ -123,3 +123,20 @@ df_hh_dedup <- df_hh_dedup %>%
 df_outliers <- df_hh_dedup %>%
   filter(z_score > 2.5) %>%
   select(hhid, area_farm_hect, mean_area_farm_hect, z_score)
+
+# Exercise Save: 
+
+# Output folder
+output_folder <- here("DataWork", "Data", "Clean")
+
+# Saving hh level data
+saveRDS(
+  df_hh_dedup,
+  here(output_folder, "TZA_CCT_baseline.Rds")
+)
+
+# Saving village level data
+saveRDS(
+  df_village,
+  here(output_folder, "TZA_CCT_Village.Rds")
+)
