@@ -245,6 +245,8 @@ install.packages("ggplot2")
 library(ggplot2)
 library(dplyr)   # we'll also need dplyr
 library(forcats) # we'll also need forcats for re-categorizing factors easily later
+library(here)
+library(haven)
 ```
 
 ---
@@ -498,7 +500,7 @@ In summary, our basic plots should have the following:
 .pull-left[
 
 ```{r eval = FALSE}
-whr_panel %>% #<<
+df_hh %>% #<<
   ggplot(
     aes(
       x = food_cons,
@@ -524,7 +526,7 @@ In summary, our basic plots should have the following:
 .pull-left[
 
 ```{r eval = FALSE}
-whr_panel %>%
+df_hh %>%
   ggplot(
     aes( #<<
       x = food_cons, #<<
@@ -550,7 +552,7 @@ In summary, our basic plots should have the following:
 .pull-left[
 
 ```{r eval = FALSE}
-whr_panel %>%
+df_hh %>%
   ggplot(
     aes(
       x = food_cons,
@@ -1106,7 +1108,7 @@ Therefore, if you want to plot it again, you can just type `fig` in the console.
 ```{r, eval=FALSE}
 ggsave(
   fig,
-  filename = here("DataWork", "Outputs", "boxplot-*YOUR INITIALS*.png"),
+  filename = here("DataWork", "Outputs", "boxplot.png"),
   dpi = 300,
   scale = 0.8,
   width = 12

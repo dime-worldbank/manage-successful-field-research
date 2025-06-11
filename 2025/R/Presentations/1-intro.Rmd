@@ -931,7 +931,7 @@ library(here)
 library(haven)
 
 # Importing data
-path <- here("DataWork", "data", "raw", "TZA_CCT_baseline.dta")
+path <- here("DataWork", "Data", "Raw", "TZA_CCT_baseline.dta")
 baseline <- read_stata(path)
 ```
 
@@ -1074,6 +1074,7 @@ We'll load the same data we loaded manually in Exercise 4, this time with code.
 1. The solution is this:
 
 ```{r eval=FALSE}
+lirbary(dplyr) # the pipes are from the library dplyr
 treatment <- here("DataWork", "Data", "Raw", "treat_status.csv") %>% read.csv()
 ```
 
